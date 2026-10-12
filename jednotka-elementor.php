@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Jednotka Elementor
+ * Plugin Name: wp-jednotka
  * Description: Custom Elementor Free widgets for the Jednotka website.
- * Version: 0.11.0
+ * Version: 0.11.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Requires Plugins: elementor
