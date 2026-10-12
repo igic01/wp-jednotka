@@ -1,0 +1,11 @@
+/* Elementor integration; copied visual rules live in reference-services.css. */
+@font-face { font-family: 'Urbanist'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/Urbanist-700.ttf') format('truetype'); }
+.services-overview-section.jn-services, .services-overview-section.jn-services * { box-sizing: content-box; }
+.jn-services .jn-service-item { position: relative; min-width: 0; }
+.jn-services .service-icon > :is(img, video), .jn-services .service-arrow > :is(img, video) { display: block; object-fit: contain; }
+.jn-services .jn-services__video-toggle { position: absolute; top: -12px; left: 0; z-index: 2; width: 24px; height: 24px; padding: 0; border: 1px solid #ffffff99; border-radius: 50%; background: #121212; color: #fff; font: 11px Arial,sans-serif; cursor: pointer; opacity: 0; }
+.jn-services .jn-service-item:hover .jn-services__video-toggle, .jn-services .jn-services__video-toggle:focus-visible { opacity: 1; }
+.jn-services .service-row:focus-visible { outline: 2px solid currentColor; outline-offset: 8px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .jn-services .service-arrow, .jn-services .service-arrow-icon, .jn-services .service-row:hover .service-arrow, .jn-services .service-row:hover .service-arrow-icon { transform: none; transition: none; }
+}

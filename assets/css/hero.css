@@ -1,0 +1,49 @@
+/* Elementor integration only. The visual design is copied in reference-hero.css. */
+.jn-hero, .jn-hero * { box-sizing: border-box; }
+.jn-hero { background: #0f0f0f; }
+.jn-hero .site-header { padding: 0; width: auto; gap: 0; background: transparent !important; color: #fff; }
+.jn-hero .site-header-logo { color: inherit; }
+.jn-hero .site-nav { flex: initial; flex-wrap: nowrap; min-width: 0; }
+.jn-hero .site-nav a { padding: 0; }
+.jn-hero .jn-header__nav-text { font: inherit; line-height: inherit; }
+.jn-hero .site-nav a:hover .jn-header__nav-text { color: inherit; }
+.jn-hero .site-nav-toggle { flex: initial; color: #fff; border-radius: 0; }
+.jn-hero .jn-header__brand { position: relative; }
+.jn-hero .jn-header__media { border: 0; border-radius: 0; object-fit: contain; }
+.jn-hero .hero-title-line .jn-hero__media { display: block; width: 100%; max-width: 100%; height: auto; }
+.jn-hero .hero-title-line { color: #fff; font: 650 clamp(32px, 8vw, 130px)/1 "Aspekta Variable", Arial, sans-serif; letter-spacing: -.055em; text-align: center; }
+.jn-hero .jn-hero__icon { display: contents; }
+.jn-hero .jn-hero__badge-text { font: inherit; line-height: inherit; }
+.jn-hero .jn-hero__motion { position: absolute; bottom: 20px; right: 20px; z-index: 3; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 1px solid #ffffff99; border-radius: 50%; color: #fff; background: #190638; font: 12px Arial, sans-serif; cursor: pointer; opacity: 0; }
+.jn-hero:hover .jn-hero__motion, .jn-hero .jn-hero__motion:focus-visible { opacity: 1; }
+.jn-hero .jn-hero__motion[hidden] { display: none; }
+.jn-hero :is(a, button):focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.jn-hero.is-text-editing .button-label, .elementor-editor-active .jn-hero .button-label { height: auto; overflow: visible; }
+.jn-hero.is-text-editing .button-label-track, .elementor-editor-active .jn-hero .button-label-track { transform: none; }
+.elementor-editor-active .jn-hero .button-label-line[aria-hidden="true"] { display: none; }
+
+/* Reset the standalone header's tablet rules; the reference collapses at 700px. */
+@media (min-width: 701px) {
+  .jn-hero .site-header { --jn-logo-width: 165px; }
+  .jn-hero .site-header-logo, .jn-hero .jn-header__media { width: 165px; height: 52px; }
+  .jn-hero .site-nav { position: static; display: flex; flex-direction: row; align-items: center; padding: 0; border-radius: 0; background: transparent; backdrop-filter: none; box-shadow: none; }
+  .jn-hero .site-header-button { display: inline-flex; }
+  .jn-hero .site-nav-toggle { display: none; }
+}
+@media (max-width: 900px) {
+  /* Saved badge positions apply only to desktop, as their controls describe. */
+  .jn-hero .hero-badge-row .hero-badge { top: auto !important; left: auto !important; }
+}
+@media (max-width: 700px) {
+  .jn-hero .site-header { --jn-logo-width: 130px; }
+  .jn-hero .jn-header__media { height: auto; }
+  .jn-hero .site-nav { align-items: stretch; background: var(--jn-mobile-background, rgb(15 10 35 / 92%)); }
+}
+@media (max-width: 520px) {
+  .jn-hero .site-header { --jn-logo-width: 118px; }
+}
+
+/* Compatibility for pages that still use the earlier two-widget container. */
+.jednotka-hero-layout { position: relative; }
+.jednotka-hero-layout .elementor-widget-jednotka-header { position: absolute; top: 16px; left: 16px; width: calc(100% - 32px); z-index: 20; }
+.jednotka-hero-layout .elementor-widget-jednotka-header .jn-header { background: transparent !important; }

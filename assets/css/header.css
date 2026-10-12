@@ -1,0 +1,116 @@
+@font-face {
+  font-family: "Jednotka Aspekta";
+  src: url("../fonts/AspektaVariable.woff2") format("woff2");
+  font-weight: 50 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+.jn-header {
+  --jn-logo-width: 165px;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  padding: 40px 6.8%;
+  background: #09031a;
+  color: #fff;
+  font-family: "Jednotka Aspekta", Arial, sans-serif;
+}
+.jn-header, .jn-header * { box-sizing: border-box; }
+.jn-header a { text-decoration: none; box-shadow: none; }
+.jn-header a:focus-visible, .jn-header button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+.jn-header__brand { position: relative; flex: 0 0 var(--jn-logo-width); }
+.jn-header .jn-header__logo { display: block; width: var(--jn-logo-width); color: inherit; }
+.jn-header .jn-header__media { display: block; width: 100%; height: 52px; object-fit: contain; border: 0; border-radius: 0; }
+.jn-header__nav { display: flex; flex: 1; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 38px; min-width: 0; }
+.jn-header .jn-header__nav-link { display: block; padding: 8px 0; color: #fff; }
+.jn-header__nav-text { display: block; font-size: 16px; font-weight: 400; line-height: 1.2; transition: color 180ms ease; }
+.jn-header__nav-link:hover .jn-header__nav-text { color: #d9caff; }
+.jn-header .jn-header__cta {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 49px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: #5f2df5;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.jn-header__button-label { display: block; height: 1.22em; overflow: hidden; }
+.jn-header__button-track { display: flex; flex-direction: column; gap: .32em; transition: transform 360ms cubic-bezier(.16,1,.3,1); }
+.jn-header__button-text, .jn-header__button-copy { display: block; line-height: 1.22; min-height: 1.22em; white-space: nowrap; }
+.jn-header__cta:is(:hover, :focus-visible) .jn-header__button-track { transform: translateY(-1.54em); }
+.jn-header__arrow { flex: 0 0 18px; width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transform: rotate(45deg); transition: transform 360ms cubic-bezier(.16,1,.3,1); }
+.jn-header__cta:is(:hover, :focus-visible) .jn-header__arrow { transform: rotate(0); }
+.jn-header .jn-header__toggle {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+}
+.jn-header__toggle span { display: block; width: 22px; height: 2px; background: currentColor; border-radius: 2px; transition: transform 220ms ease, opacity 220ms ease; }
+.jn-header.is-open .jn-header__toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.jn-header.is-open .jn-header__toggle span:nth-child(2) { opacity: 0; }
+.jn-header.is-open .jn-header__toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.jn-header .jn-header__video-toggle { position: absolute; right: 0; bottom: -8px; display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 1px solid #ffffff80; border-radius: 50%; background: #09031a; color: #fff; font: 10px Arial, sans-serif; cursor: pointer; }
+
+/* Keep the live text accessible while editing instead of swapping hover copies. */
+.elementor-editor-active .jn-header__button-label { height: auto; overflow: visible; }
+.elementor-editor-active .jn-header__button-track { transform: none; }
+.elementor-editor-active .jn-header__button-copy { display: none; }
+
+@media (max-width: 1024px) {
+  .jn-header { --jn-logo-width: 130px; justify-content: space-between; gap: 16px; padding: 20px; }
+  .jn-header .jn-header__media { height: 42px; }
+  .jn-header .jn-header__cta { display: none; }
+  .jn-header .jn-header__toggle { display: flex; }
+  .jn-header__nav {
+    position: absolute;
+    top: calc(100% - 4px);
+    right: 20px;
+    left: 20px;
+    display: none;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px;
+    border-radius: 18px;
+    background: var(--jn-mobile-background, rgb(15 10 35 / 96%));
+    backdrop-filter: blur(14px);
+    box-shadow: 0 20px 40px rgb(0 0 0 / 35%);
+  }
+  .jn-header.is-open .jn-header__nav { display: flex; }
+  .jn-header .jn-header__nav-link { padding: 12px 14px; border-radius: 12px; }
+  .jn-header__nav-link:is(:hover, :focus-visible) { background: rgb(255 255 255 / 8%); }
+}
+@media (max-width: 520px) {
+  .jn-header { --jn-logo-width: 118px; padding: 16px; }
+  .jn-header__nav { right: 16px; left: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jn-header *, .jn-header *::before, .jn-header *::after { transition: none; }
+  .jn-header__cta:is(:hover, :focus-visible) .jn-header__button-track { transform: none; }
+}

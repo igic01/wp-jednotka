@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="sk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jednotka - Marketing na Jednotku</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Momo+Trust+Sans:wght@400;500;600;700;800&family=Urbanist:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/pages/home.css" />
+  </head>
+  <body>
+    <main class="hero">
+      <header class="site-header" aria-label="Hlavná navigácia">
+        <a class="site-header-logo" href="/" aria-label="Jednotka">
+          <img src="assets/logo/Jednotka.svg" alt="" />
+        </a>
+
+        <nav class="site-nav" id="site-nav" aria-label="Primárna navigácia">
+          <a href="/">Domov</a>
+          <a href="about.html">O nás</a>
+          <a href="sluzby.html">Služby</a>
+          <a href="#kariera">Kariéra</a>
+          <a href="blog.html">Blog</a>
+        </nav>
+
+        <a class="button button--primary site-header-button" href="sluzby.html" aria-label="Pozrieť služby">
+          <span class="button-label" aria-hidden="true">
+            <span class="button-label-track">
+              <span class="button-label-line">Pozrieť služby</span>
+              <span class="button-label-line">Pozrieť služby</span>
+            </span>
+          </span>
+          <span class="button-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 17 17 7" />
+              <path d="M8 7h9v9" />
+            </svg>
+          </span>
+        </a>
+
+        <button
+          class="site-nav-toggle"
+          type="button"
+          aria-label="Otvoriť menu"
+          aria-expanded="false"
+          aria-controls="site-nav"
+        >
+          <span class="site-nav-toggle-line"></span>
+          <span class="site-nav-toggle-line"></span>
+          <span class="site-nav-toggle-line"></span>
+        </button>
+      </header>
+
+      <div class="hero-frame">
+        <div class="hero-badge-row">
+          <div class="hero-badge hero-badge--web">
+            <img class="hero-badge-icon" src="assets/icons/web.png" alt="" />
+            <span>Web</span>
+          </div>
+
+          <div class="hero-badge hero-badge--eshopy">
+            <img class="hero-badge-icon" src="assets/icons/services-eshop.svg" alt="" />
+            <span>E-shopy</span>
+          </div>
+
+          <div class="hero-badge hero-badge--emaily">
+            <img class="hero-badge-icon" src="assets/icons/email.png" alt="" />
+            <span>Emaily</span>
+          </div>
+
+          <div class="hero-badge hero-badge--grafika">
+            <img class="hero-badge-icon" src="assets/icons/grafika.png" alt="" />
+            <span>Grafika</span>
+          </div>
+
+          <div class="hero-badge hero-badge--reklamy">
+            <img class="hero-badge-icon" src="assets/icons/ppc.png" alt="" />
+            <span>Reklamy</span>
+          </div>
+        </div>
+
+        <h1 class="hero-title" aria-label="Marketing na Jednotku">
+          <img
+            class="hero-title-line hero-title-line--top"
+            src="assets/logo/Marketing na.svg"
+            alt=""
+          />
+          <img
+            class="hero-title-line hero-title-line--bottom"
+            src="assets/logo/Jednotku.png"
+            alt=""
+          />
+        </h1>
+
+        <div class="hero-copy">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus at dapibus nisl, et
+            volutpat ex. Donec blandit euismod felis pulvinar facilisis.
+          </p>
+
+          <a class="button button--primary" href="sluzby.html" aria-label="Pozrieť služby">
+            <span class="button-label" aria-hidden="true">
+              <span class="button-label-track">
+                <span class="button-label-line">Pozrieť služby</span>
+                <span class="button-label-line">Pozrieť služby</span>
+              </span>
+            </span>
+            <span class="button-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M7 17 17 7" />
+                <path d="M8 7h9v9" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <section class="logo-strip" id="logo-strip" aria-label="Naši klienti">
+      <div class="logo-strip-track">
+        <div class="logo-strip-group">
+          <img src="assets/logo/moving-stripe/logo-stripe-1.svg" alt="" />
+          <img src="assets/logo/moving-stripe/logo-stripe-2.svg" alt="" />
+        </div>
+        <div class="logo-strip-group" aria-hidden="true">
+          <img src="assets/logo/moving-stripe/logo-stripe-1.svg" alt="" />
+          <img src="assets/logo/moving-stripe/logo-stripe-2.svg" alt="" />
+        </div>
+      </div>
+    </section>
+    <section class="stats-section" id="stats" aria-label="Výsledky agentúry">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <strong data-count-to="100" data-count-suffix="+">100+</strong>
+          <span>klientov</span>
+        </div>
+        <div class="stat-item">
+          <strong data-count-to="5">5</strong>
+          <span>rokov praxe</span>
+        </div>
+        <div class="stat-item">
+          <strong data-count-to="15" data-count-suffix="+">15+</strong>
+          <span>odvetví</span>
+        </div>
+      </div>
+
+      <div class="testimonials-wrap" aria-labelledby="testimonials-title">
+        <div class="testimonials-intro">
+          <span>Klienti</span>
+          <h2 id="testimonials-title">Za číslami sú naši klienti</h2>
+        </div>
+
+        <div class="testimonials-field">
+          <article class="testimonial-card testimonial-card--one">
+            <div class="testimonial-card-inner">
+              <p>“Jednotka nám upratala marketing do jedného systému. Konečne vieme, čo funguje a prečo.”</p>
+              <footer>
+                <span class="testimonial-avatar testimonial-avatar--one" aria-hidden="true"></span>
+                <span>
+                  <strong>Mária Kováčová</strong>
+                  <small>E-shop s kozmetikou</small>
+                </span>
+              </footer>
+            </div>
+          </article>
+
+          <article class="testimonial-card testimonial-card--two">
+            <div class="testimonial-card-inner">
+              <p>“Web, reklamy aj emaily začali spolupracovať. Výsledky prišli rýchlejšie, než sme čakali.”</p>
+              <footer>
+                <span class="testimonial-avatar testimonial-avatar--two" aria-hidden="true"></span>
+                <span>
+                  <strong>Tomáš Hric</strong>
+                  <small>Fitness centrum</small>
+                </span>
+              </footer>
+            </div>
+          </article>
+
+          <article class="testimonial-card testimonial-card--three">
+            <div class="testimonial-card-inner">
+              <p>“Najviac oceňujem, že neriešili len pekný dizajn, ale celý predajný tok.”</p>
+              <footer>
+                <span class="testimonial-avatar testimonial-avatar--three" aria-hidden="true"></span>
+                <span>
+                  <strong>Lucia Benková</strong>
+                  <small>Lokálna značka</small>
+                </span>
+              </footer>
+            </div>
+          </article>
+
+          <article class="testimonial-card testimonial-card--four">
+            <div class="testimonial-card-inner">
+              <p>“Komunikácia bola jednoduchá, výstupy čisté a kampane mali jasný smer.”</p>
+              <footer>
+                <span class="testimonial-avatar testimonial-avatar--four" aria-hidden="true"></span>
+                <span>
+                  <strong>Peter Varga</strong>
+                  <small>B2B služby</small>
+                </span>
+              </footer>
+            </div>
+          </article>
+
+          <article class="testimonial-card testimonial-card--five">
+            <div class="testimonial-card-inner">
+              <p>“Zrazu sme mali jasné priority. Menej chaosu, viac objednávok a lepší prehľad.”</p>
+              <footer>
+                <span class="testimonial-avatar testimonial-avatar--five" aria-hidden="true"></span>
+                <span>
+                  <strong>Nina Poláková</strong>
+                  <small>Prémiový retail</small>
+                </span>
+              </footer>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="approach-section" aria-label="Ako premýšľame nad marketingom">
+      <div class="approach-grid">
+        <p class="gradient-wave-text" data-gradient-wave-text>
+          Email, reklamu aj web riešime spolu, nie ako samostatné projekty. Výsledok je jednoduchý: viac ľudí, ktorí u vás nakúpia.
+        </p>
+        <div class="approach-window" aria-hidden="true"></div>
+      </div>
+    </section>
+    <section class="results-section" aria-labelledby="results-title">
+      <div class="results-grid">
+        <div class="results-column results-column--left">
+          <h2 id="results-title">Naše<br />výsledky</h2>
+
+          <article class="project-card">
+            <a class="project-card-link" href="#">
+              <figure class="project-media">
+                <img src="img/projects/placeholder.jpg" alt="" />
+                <span class="content-badge">
+                  <svg class="content-badge-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 13h3l8 4V7l-8 4H4z" />
+                    <path d="M7 13v5.5" />
+                    <path d="M15 10.5h3" />
+                    <circle cx="19" cy="14" r="2.4" />
+                  </svg>
+                  Redizajn
+                </span>
+              </figure>
+              <h3>Progym</h3>
+              <p>Fitness centrum</p>
+            </a>
+          </article>
+
+          <article class="project-card">
+            <a class="project-card-link" href="#">
+              <figure class="project-media">
+                <img src="img/projects/placeholder.jpg" alt="" />
+                <span class="content-badge">
+                  <svg class="content-badge-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 13h3l8 4V7l-8 4H4z" />
+                    <path d="M7 13v5.5" />
+                    <path d="M15 10.5h3" />
+                    <circle cx="19" cy="14" r="2.4" />
+                  </svg>
+                  Redizajn
+                </span>
+              </figure>
+              <h3>Štýlová a krásna</h3>
+              <p>E-shop s kozmetikou</p>
+            </a>
+          </article>
+        </div>
+
+        <div class="results-column results-column--right">
+          <article class="project-card">
+            <a class="project-card-link" href="#">
+              <figure class="project-media">
+                <img src="img/projects/placeholder.jpg" alt="" />
+                <span class="content-badge">
+                  <svg class="content-badge-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 13h3l8 4V7l-8 4H4z" />
+                    <path d="M7 13v5.5" />
+                    <path d="M15 10.5h3" />
+                    <circle cx="19" cy="14" r="2.4" />
+                  </svg>
+                  Redizajn
+                </span>
+              </figure>
+              <h3>Cammino OZ</h3>
+              <p>Nezisková organizácia</p>
+            </a>
+          </article>
+
+          <article class="project-card">
+            <a class="project-card-link" href="#">
+              <figure class="project-media">
+                <img src="img/projects/placeholder.jpg" alt="" />
+                <span class="content-badge">
+                  <svg class="content-badge-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 13h3l8 4V7l-8 4H4z" />
+                    <path d="M7 13v5.5" />
+                    <path d="M15 10.5h3" />
+                    <circle cx="19" cy="14" r="2.4" />
+                  </svg>
+                  Redizajn
+                </span>
+              </figure>
+              <h3>Štýlová a krásna</h3>
+              <p>E-shop s kozmetikou</p>
+            </a>
+          </article>
+
+          <article class="project-card">
+            <a class="project-card-link" href="#">
+              <figure class="project-media">
+                <img src="img/projects/placeholder.jpg" alt="" />
+                <span class="content-badge">
+                  <svg class="content-badge-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 13h3l8 4V7l-8 4H4z" />
+                    <path d="M7 13v5.5" />
+                    <path d="M15 10.5h3" />
+                    <circle cx="19" cy="14" r="2.4" />
+                  </svg>
+                  Redizajn
+                </span>
+              </figure>
+              <h3>Štýlová a krásna</h3>
+              <p>E-shop s kozmetikou</p>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="services-overview-section" id="sluzby" aria-labelledby="services-overview-title">
+      <div class="services-overview-header">
+        <h2 id="services-overview-title">Čo robíme</h2>
+        <p>Komplexný online marketing pre biznisy, ktoré chcú rásť</p>
+      </div>
+
+      <div class="services-overview-list">
+        <a class="service-row" href="sluzby.html">
+          <span class="content-badge service-icon" aria-hidden="true">
+            <img class="content-badge-icon" src="assets/icons/web.png" alt="" />
+          </span>
+          <strong>Web</strong>
+          <span class="service-copy">Weby a e-shopy navrhujeme tak, aby neboli len pekné, ale hlavne prehľadné, funkčné a pripravené premieňať návštevníkov na zákazníkov.</span>
+          <span class="service-arrow" aria-hidden="true">
+            <svg class="service-arrow-icon" viewBox="0 0 24 24">
+              <path d="M7 17 17 7" />
+              <path d="M8 7h9v9" />
+            </svg>
+          </span>
+        </a>
+
+        <a class="service-row" href="sluzby.html">
+          <span class="content-badge service-icon" aria-hidden="true">
+            <img class="content-badge-icon" src="assets/icons/services-eshop.svg" alt="" />
+          </span>
+          <strong>Správa eshopov</strong>
+          <span class="service-copy">Nastavíme, upravíme aj rozbehneme e-shop na platforme, ktorú už používate. Platobné brány, redizajn, úpravy na mieru — všetko tak, aby e-shop reálne predával.</span>
+          <span class="service-arrow" aria-hidden="true">
+            <svg class="service-arrow-icon" viewBox="0 0 24 24">
+              <path d="M7 17 17 7" />
+              <path d="M8 7h9v9" />
+            </svg>
+          </span>
+        </a>
+
+        <a class="service-row" href="sluzby.html">
+          <span class="content-badge service-icon" aria-hidden="true">
+            <img class="content-badge-icon" src="assets/icons/email.png" alt="" />
+          </span>
+          <strong>Email marketing</strong>
+          <span class="service-copy">Tvoríme email marketing a automatizácie, ktoré pracujú s vašou databázou dlhodobo. Od prvého kontaktu až po opakovaný nákup.</span>
+          <span class="service-arrow" aria-hidden="true">
+            <svg class="service-arrow-icon" viewBox="0 0 24 24">
+              <path d="M7 17 17 7" />
+              <path d="M8 7h9v9" />
+            </svg>
+          </span>
+        </a>
+
+        <a class="service-row" href="sluzby.html">
+          <span class="content-badge service-icon" aria-hidden="true">
+            <img class="content-badge-icon" src="assets/icons/ppc.png" alt="" />
+          </span>
+          <strong>PPC Reklamy</strong>
+          <span class="service-copy">Tvoríme všetky vizuálne materiály, ktoré váš biznis potrebuje: od príspevkov, reklám a bannerov až po tlačoviny a podklady pre každodennú komunikáciu.</span>
+          <span class="service-arrow" aria-hidden="true">
+            <svg class="service-arrow-icon" viewBox="0 0 24 24">
+              <path d="M7 17 17 7" />
+              <path d="M8 7h9v9" />
+            </svg>
+          </span>
+        </a>
+
+        <a class="service-row" href="sluzby.html">
+          <span class="content-badge service-icon" aria-hidden="true">
+            <img class="content-badge-icon" src="assets/icons/grafika.png" alt="" />
+          </span>
+          <strong>Grafika</strong>
+          <span class="service-copy">Tvoríme vizuály a komunikáciu, ktoré držia jednotný štýl naprieč reklamami, sociálnymi sieťami, emailami aj webom.</span>
+          <span class="service-arrow" aria-hidden="true">
+            <svg class="service-arrow-icon" viewBox="0 0 24 24">
+              <path d="M7 17 17 7" />
+              <path d="M8 7h9v9" />
+            </svg>
+          </span>
+        </a>
+
+        <a class="service-row" href="sluzby.html">
+          <span class="content-badge service-icon" aria-hidden="true">
+            <img class="content-badge-icon" src="assets/icons/branding.png" alt="" />
+          </span>
+          <strong>Branding</strong>
+          <span class="service-copy">Pomáhame značkám vytvoriť jasnú identitu a komunikáciu, vďaka ktorej sú rozpoznateľné, zapamätateľné a odlíšia sa od konkurencie.</span>
+          <span class="service-arrow" aria-hidden="true">
+            <svg class="service-arrow-icon" viewBox="0 0 24 24">
+              <path d="M7 17 17 7" />
+              <path d="M8 7h9v9" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </section>
+    <section class="clients-cta-section" aria-labelledby="clients-cta-title">
+      <div class="cursor-trail-layer" aria-hidden="true"></div>
+
+      <div class="floating-project-card floating-project-card--one">
+        <img src="img/projects/placeholder.jpg" alt="" />
+      </div>
+      <div class="floating-project-card floating-project-card--two">
+        <img src="img/projects/placeholder.jpg" alt="" />
+      </div>
+      <div class="floating-project-card floating-project-card--three">
+        <img src="img/projects/placeholder.jpg" alt="" />
+      </div>
+      <div class="floating-project-card floating-project-card--four">
+        <img src="img/projects/placeholder.jpg" alt="" />
+      </div>
+      <div class="floating-project-card floating-project-card--five">
+        <img src="img/projects/placeholder.jpg" alt="" />
+      </div>
+      <div class="floating-project-card floating-project-card--six">
+        <img src="img/projects/placeholder.jpg" alt="" />
+      </div>
+
+      <div class="clients-cta-content">
+        <h2 id="clients-cta-title">Pridajte sa<br />k spokojným klientom</h2>
+        <a class="button button--primary" href="sluzby.html" aria-label="Tu je miesto pre váš biznis">
+          <span class="button-label" aria-hidden="true">
+            <span class="button-label-track">
+              <span class="button-label-line">Tu je miesto pre váš biznis</span>
+              <span class="button-label-line">Tu je miesto pre váš biznis</span>
+            </span>
+          </span>
+          <span class="button-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 17 17 7" />
+              <path d="M8 7h9v9" />
+            </svg>
+          </span>
+        </a>
+      </div>
+      <footer class="site-footer-card" aria-label="Päta stránky">
+        <div class="footer-brand">
+          <a class="footer-logo" href="index.html" aria-label="Jednotka">
+            <img src="assets/logo/Jednotka.svg" alt="" />
+          </a>
+          <p>Jeden tím pre web, reklamu, emaily a vizuál. Bez chaosu medzi kanálmi.</p>
+          <form class="footer-newsletter">
+            <label for="footer-email">Odber noviniek</label>
+            <div class="footer-newsletter-field">
+              <input id="footer-email" type="email" placeholder="Váš email" />
+              <button type="submit" aria-label="Odoslať">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7" />
+                  <path d="M8 7h9v9" />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="footer-nav-wrap">
+          <nav class="footer-nav" aria-label="Päta navigácia">
+            <div class="footer-nav-group">
+              <span>Menu</span>
+              <a href="sluzby.html">Služby</a>
+              <a href="blog.html">Blog</a>
+              <a href="about.html">O nás</a>
+              <a href="contact.html">Kontakt</a>
+            </div>
+            <div class="footer-nav-group">
+              <span>Kontakt</span>
+              <a href="mailto:hello@jednotka.sk">hello@jednotka.sk</a>
+              <a href="tel:+421000000000">+421 000 000 000</a>
+              <a href="contact.html">Začať projekt</a>
+            </div>
+          </nav>
+        </div>
+
+        <div class="footer-side">
+          <div class="footer-socials" aria-label="Sociálne siete">
+            <a href="#" aria-label="Instagram">Ig</a>
+            <a href="#" aria-label="Behance">Bē</a>
+            <a href="#" aria-label="LinkedIn">In</a>
+          </div>
+          <p>© 2026 Jednotka</p>
+        </div>
+      </footer>
+    </section>
+    <script src="js/site-nav.js" defer></script>
+    <script src="js/gradient-wave-text.js" defer></script>
+    <script src="js/project-reveal.js" defer></script>
+    <script src="js/services-reveal.js" defer></script>
+    <script src="js/hero-badges.js" defer></script>
+    <script src="js/testimonials-reveal.js" defer></script>
+    <script src="js/floating-projects.js" defer></script>
+    <script src="js/stats-counter.js" defer></script>
+  </body>
+</html>

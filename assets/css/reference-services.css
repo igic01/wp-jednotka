@@ -1,0 +1,344 @@
+/* Copied reference services section. Regenerate with tools/copy-reference-css.py. */
+@font-face {
+  font-family: "Aspekta Variable";
+  src: url("../fonts/AspektaVariable.woff2") format("woff2-variations");
+  font-weight: 50 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+.jn-services {
+
+  --color-page-bg: #0f0f0f;
+  --color-white: #ffffff;
+  --color-primary: #5f2df5;
+
+  --font-secondary: "Aspekta Variable", Arial, sans-serif;
+  --font-primary: var(--font-secondary);
+  --font-display: "Urbanist", Arial, sans-serif;
+  --font-accent: "Momo Trust Sans", Arial, sans-serif;
+
+  --page-frame-margin: 16px;
+  --hero-frame-radius: 32px;
+  --section-padding-x: clamp(16px, 7vw, 110px);
+
+  --gradient-hero:
+    radial-gradient(ellipse at 48% 48%, rgb(62 30 174 / 74%) 0%, transparent 46%),
+    radial-gradient(ellipse at 5% 86%, rgb(255 255 255 / 78%) 0%, transparent 38%),
+    radial-gradient(ellipse at 96% 82%, rgb(247 242 255 / 82%) 0%, transparent 36%),
+    linear-gradient(180deg, #09031a 0%, #170540 28%, #522fc7 56%, #f4efff 100%);
+
+  --logo-strip-height: 96px;
+  --logo-strip-bg: #0f0f0f;
+  --logo-strip-speed: 34s;
+
+  --section-dark-bg: #0f0f0f;
+  --stats-number-size: clamp(96px, 10vw, 150px);
+  --stats-label-size: clamp(32px, 3vw, 48px);
+
+  --button-height: 51px;
+  --button-padding-x: 22px;
+  --button-radius: 999px;
+  --button-bg: var(--color-primary);
+  --button-color: var(--color-white);
+  --button-font-size: 17px;
+  --button-font-weight: 700;
+  --button-letter-spacing: 0.04em;
+}
+
+
+.jn-services .content-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 45px;
+  padding: 0 18px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  background: rgb(26 26 26 / 48%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 16%);
+  backdrop-filter: blur(14px);
+}
+
+.jn-services .content-badge-icon {
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+  object-fit: contain;
+  fill: none;
+  stroke: #ff6b00;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+.jn-services .service-row {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}
+
+.jn-services {
+  background: var(--section-dark-bg);
+  color: var(--color-white);
+  padding: 96px var(--section-padding-x) 128px;
+}
+
+.jn-services .services-overview-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(270px, 355px);
+  gap: 64px;
+  align-items: start;
+  max-width: 1290px;
+  margin: 0 auto 78px;
+}
+
+.jn-services .services-overview-header h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(100px, 10.4vw, 140px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.82;
+}
+
+.jn-services .services-overview-header p {
+  margin: 22px 0 0;
+  color: rgb(255 255 255 / 70%);
+  font-family: var(--font-secondary);
+  font-size: clamp(24px, 1.9vw, 24px);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.13;
+}
+
+.jn-services .services-overview-list {
+  display: grid;
+  gap: 80px;
+  max-width: 1290px;
+  margin: 0 auto;
+}
+
+.jn-services .service-row {
+  display: grid;
+  grid-template-columns: 124px minmax(360px, 0.86fr) minmax(480px, 1fr) 62px;
+  gap: 34px;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+  transform-origin: center;
+  will-change: opacity, filter, transform;
+}
+
+.jn-services .service-icon {
+  justify-content: center;
+  width: 124px;
+  height: 64px;
+  min-height: 64px;
+  padding: 0;
+}
+
+.jn-services .service-icon .content-badge-icon {
+  width: 38px;
+  height: 38px;
+  fill: #cfadff;
+  stroke: #cfadff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0.8;
+}
+
+.jn-services .service-row strong {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 3.8vw, 48px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+.jn-services .service-copy {
+  color: rgb(255 255 255 / 70%);
+  font-family: var(--font-secondary);
+  font-size: clamp(22px, 1.85vw, 24px);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.12;
+}
+
+.jn-services .service-arrow {
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  width: 62px;
+  height: 62px;
+  border-radius: 999px;
+  color: #090909;
+  background: var(--color-white);
+  transform: translate(var(--arrow-scroll-x, 0), var(--arrow-scroll-y, 0));
+  transition: background 180ms ease, transform 220ms ease;
+  will-change: transform;
+}
+
+.jn-services .service-arrow-icon {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.8;
+  transform: rotate(0deg);
+  transform-origin: center;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jn-services .service-row:hover .service-arrow {
+  transform: translate(
+    calc(var(--arrow-scroll-x, 0px) + 3px),
+    calc(var(--arrow-scroll-y, 0px) - 3px)
+  );
+}
+
+.jn-services .service-row:hover .service-arrow-icon {
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 900px) {
+.jn-services {
+    padding: 94px var(--section-padding-x) 108px;
+  }
+
+.jn-services .services-overview-header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 58px;
+  }
+
+.jn-services .services-overview-header p {
+    max-width: 430px;
+    margin-top: 0;
+  }
+
+.jn-services .services-overview-list {
+    gap: 54px;
+  }
+
+.jn-services .service-row {
+    position: relative;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 20px 18px;
+    align-items: start;
+    padding-right: 58px;
+  }
+
+.jn-services .service-icon {
+    width: 76px;
+    height: 48px;
+    min-height: 48px;
+  }
+
+.jn-services .service-icon .content-badge-icon {
+    width: 27px;
+    height: 27px;
+  }
+
+.jn-services .service-copy {
+    grid-column: 1 / -1;
+    max-width: 620px;
+    font-size: 23px;
+  }
+
+.jn-services .service-arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 48px;
+  }
+
+.jn-services .service-arrow-icon {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 520px) {
+.jn-services {
+    padding: 76px var(--section-padding-x) 82px;
+  }
+
+.jn-services .services-overview-header {
+    margin-bottom: 46px;
+  }
+
+.jn-services .services-overview-header h2 {
+    font-size: 68px;
+  }
+
+.jn-services .services-overview-header p,
+.jn-services .service-copy {
+    font-size: 19px;
+  }
+
+.jn-services .services-overview-list {
+    gap: 42px;
+  }
+
+.jn-services .service-row {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 16px 14px;
+    padding-right: 46px;
+  }
+
+.jn-services .service-icon {
+    width: 64px;
+    height: 42px;
+    min-height: 42px;
+  }
+
+.jn-services .service-icon .content-badge-icon {
+    width: 23px;
+    height: 23px;
+  }
+
+.jn-services .service-row strong {
+    font-size: 34px;
+  }
+
+.jn-services .service-copy {
+    grid-column: 1 / -1;
+  }
+
+.jn-services .service-arrow {
+    width: 42px;
+    height: 42px;
+  }
+
+.jn-services .service-arrow-icon {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+@media (max-width: 900px) {
+.jn-services {
+    --section-padding-x: 24px;
+  }
+}
+
+@media (max-width: 520px) {
+.jn-services {
+    --section-padding-x: 16px;
+  }
+}

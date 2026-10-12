@@ -1,0 +1,272 @@
+/* Copied reference results section. Regenerate with tools/copy-reference-css.py. */
+@font-face {
+  font-family: "Aspekta Variable";
+  src: url("../fonts/AspektaVariable.woff2") format("woff2-variations");
+  font-weight: 50 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+.jn-results {
+
+  --color-page-bg: #0f0f0f;
+  --color-white: #ffffff;
+  --color-primary: #5f2df5;
+
+  --font-secondary: "Aspekta Variable", Arial, sans-serif;
+  --font-primary: var(--font-secondary);
+  --font-display: "Urbanist", Arial, sans-serif;
+  --font-accent: "Momo Trust Sans", Arial, sans-serif;
+
+  --page-frame-margin: 16px;
+  --hero-frame-radius: 32px;
+  --section-padding-x: clamp(16px, 7vw, 110px);
+
+  --gradient-hero:
+    radial-gradient(ellipse at 48% 48%, rgb(62 30 174 / 74%) 0%, transparent 46%),
+    radial-gradient(ellipse at 5% 86%, rgb(255 255 255 / 78%) 0%, transparent 38%),
+    radial-gradient(ellipse at 96% 82%, rgb(247 242 255 / 82%) 0%, transparent 36%),
+    linear-gradient(180deg, #09031a 0%, #170540 28%, #522fc7 56%, #f4efff 100%);
+
+  --logo-strip-height: 96px;
+  --logo-strip-bg: #0f0f0f;
+  --logo-strip-speed: 34s;
+
+  --section-dark-bg: #0f0f0f;
+  --stats-number-size: clamp(96px, 10vw, 150px);
+  --stats-label-size: clamp(32px, 3vw, 48px);
+
+  --button-height: 51px;
+  --button-padding-x: 22px;
+  --button-radius: 999px;
+  --button-bg: var(--color-primary);
+  --button-color: var(--color-white);
+  --button-font-size: 17px;
+  --button-font-weight: 700;
+  --button-letter-spacing: 0.04em;
+}
+
+
+.jn-results .content-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 45px;
+  padding: 0 18px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  background: rgb(26 26 26 / 48%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 16%);
+  backdrop-filter: blur(14px);
+}
+
+.jn-results .content-badge-icon {
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+  object-fit: contain;
+  fill: none;
+  stroke: #ff6b00;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+}
+
+.jn-results {
+  background: var(--section-dark-bg);
+  color: var(--color-white);
+  padding: 140px var(--section-padding-x) 150px;
+}
+
+.jn-results .results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 58px;
+  max-width: 1290px;
+  margin: 0 auto;
+}
+
+.jn-results .results-column {
+  display: grid;
+  align-content: start;
+  gap: 62px;
+}
+
+.jn-results .results-column--right {
+  padding-top: 0;
+}
+
+.jn-results h2 {
+  margin: 0 0 -12px;
+  font-family: var(--font-display);
+  font-size: clamp(76px, 7.8vw, 130px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+.jn-results .project-card {
+  min-width: 0;
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+  transform-origin: center top;
+  will-change: opacity, filter, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+.jn-results .project-card {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}
+
+.jn-results .project-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.jn-results .project-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.31;
+  margin: 0 0 18px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: #202020;
+}
+
+.jn-results .project-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.jn-results .project-media::after {
+  position: absolute;
+  inset: 44% 0 0;
+  background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 38%) 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.jn-results .project-media .content-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 22px;
+  z-index: 1;
+  min-height: 37px;
+  padding: 0 14px;
+  font-size: 18px;
+}
+
+.jn-results .project-media .content-badge-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.jn-results .project-card h3 {
+  margin: 0;
+  font-family: var(--font-accent);
+  font-size: clamp(34px, 3.1vw, 48px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.jn-results .project-card p {
+  margin: 8px 0 0;
+  color: rgb(255 255 255 / 67%);
+  font-family: var(--font-accent);
+  font-size: clamp(19px, 1.7vw, 25px);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.08;
+}
+
+@media (max-width: 900px) {
+.jn-results {
+    padding: 110px var(--section-padding-x) 112px;
+  }
+
+.jn-results .results-grid {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+.jn-results .results-column {
+    gap: 42px;
+  }
+
+.jn-results h2 {
+    margin-bottom: -4px;
+    font-size: clamp(68px, 18vw, 104px);
+  }
+
+.jn-results .project-card h3 {
+    font-size: clamp(34px, 9vw, 46px);
+  }
+
+.jn-results .project-card p {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+.jn-results {
+    padding: 92px var(--section-padding-x) 86px;
+  }
+
+.jn-results .results-column,
+.jn-results .results-grid {
+    gap: 38px;
+  }
+
+.jn-results .project-media {
+    margin-bottom: 14px;
+    border-radius: 22px;
+  }
+
+.jn-results .project-media .content-badge {
+    bottom: 12px;
+    left: 14px;
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 16px;
+  }
+
+.jn-results .project-media .content-badge-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+.jn-results .project-card h3 {
+    font-size: 32px;
+  }
+
+.jn-results .project-card p {
+    margin-top: 6px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 900px) {
+.jn-results {
+    --section-padding-x: 24px;
+  }
+}
+
+@media (max-width: 520px) {
+.jn-results {
+    --section-padding-x: 16px;
+  }
+}

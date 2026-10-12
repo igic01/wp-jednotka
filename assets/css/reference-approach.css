@@ -1,0 +1,147 @@
+/* Copied reference approach section. Regenerate with tools/copy-reference-css.py. */
+@font-face {
+  font-family: "Aspekta Variable";
+  src: url("../fonts/AspektaVariable.woff2") format("woff2-variations");
+  font-weight: 50 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+.jn-approach {
+
+  --color-page-bg: #0f0f0f;
+  --color-white: #ffffff;
+  --color-primary: #5f2df5;
+
+  --font-secondary: "Aspekta Variable", Arial, sans-serif;
+  --font-primary: var(--font-secondary);
+  --font-display: "Urbanist", Arial, sans-serif;
+  --font-accent: "Momo Trust Sans", Arial, sans-serif;
+
+  --page-frame-margin: 16px;
+  --hero-frame-radius: 32px;
+  --section-padding-x: clamp(16px, 7vw, 110px);
+
+  --gradient-hero:
+    radial-gradient(ellipse at 48% 48%, rgb(62 30 174 / 74%) 0%, transparent 46%),
+    radial-gradient(ellipse at 5% 86%, rgb(255 255 255 / 78%) 0%, transparent 38%),
+    radial-gradient(ellipse at 96% 82%, rgb(247 242 255 / 82%) 0%, transparent 36%),
+    linear-gradient(180deg, #09031a 0%, #170540 28%, #522fc7 56%, #f4efff 100%);
+
+  --logo-strip-height: 96px;
+  --logo-strip-bg: #0f0f0f;
+  --logo-strip-speed: 34s;
+
+  --section-dark-bg: #0f0f0f;
+  --stats-number-size: clamp(96px, 10vw, 150px);
+  --stats-label-size: clamp(32px, 3vw, 48px);
+
+  --button-height: 51px;
+  --button-padding-x: 22px;
+  --button-radius: 999px;
+  --button-bg: var(--color-primary);
+  --button-color: var(--color-white);
+  --button-font-size: 17px;
+  --button-font-weight: 700;
+  --button-letter-spacing: 0.04em;
+}
+
+
+.jn-approach {
+  min-height: 240vh;
+  background: var(--section-dark-bg);
+  color: var(--color-white);
+  padding: 0 var(--section-padding-x);
+}
+
+.jn-approach .approach-grid {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.75fr);
+  gap: clamp(48px, 7vw, 110px);
+  align-items: center;
+  min-height: 100vh;
+  max-width: 1290px;
+  margin: 0 auto;
+  padding: 10vh 0;
+  box-sizing: border-box;
+}
+
+.jn-approach .gradient-wave-text {
+  max-width: 720px;
+  margin: 0;
+  color: rgb(255 255 255 / 34%);
+  font-family: var(--font-secondary);
+  font-size: clamp(36px, 3.6vw, 54px);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.12;
+}
+
+.jn-approach .gradient-wave-text .wave-char {
+  color: var(--wave-color, rgb(255 255 255 / 34%));
+  transition: color 140ms linear;
+  will-change: color;
+}
+
+.jn-approach .approach-window {
+  width: 100%;
+  aspect-ratio: 1.52;
+  border-radius: 36px;
+  background: #d9d9d9;
+}
+
+@media (max-width: 900px) {
+.jn-approach {
+    min-height: 230vh;
+    padding-right: var(--section-padding-x);
+    padding-left: var(--section-padding-x);
+  }
+
+.jn-approach .approach-grid {
+    grid-template-columns: 1fr;
+    gap: 42px;
+    align-content: center;
+    padding: 8vh 0;
+  }
+
+.jn-approach .gradient-wave-text {
+    max-width: 620px;
+    font-size: clamp(32px, 7.4vw, 46px);
+  }
+
+.jn-approach .approach-window {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 520px) {
+.jn-approach {
+    min-height: 220vh;
+    padding-right: var(--section-padding-x);
+    padding-left: var(--section-padding-x);
+  }
+
+.jn-approach .gradient-wave-text {
+    font-size: 30px;
+    line-height: 1.13;
+  }
+
+.jn-approach .approach-window {
+    border-radius: 26px;
+  }
+}
+
+@media (max-width: 900px) {
+.jn-approach {
+    --section-padding-x: 24px;
+  }
+}
+
+@media (max-width: 520px) {
+.jn-approach {
+    --section-padding-x: 16px;
+  }
+}

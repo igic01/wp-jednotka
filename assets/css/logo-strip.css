@@ -1,0 +1,11 @@
+/* Elementor/media integration; reference-logo-strip.css contains the copied design. */
+.jn-logo-strip, .jn-logo-strip * { box-sizing: border-box; }
+.jn-logo-strip .logo-strip-group video { display: block; width: auto; max-width: none; height: 51px; opacity: .9; object-fit: contain; }
+.jn-logo-strip .logo-strip-group .jn-logo-strip__media--second { height: 45px; }
+.jn-logo-strip[data-edge-fade=""]::before, .jn-logo-strip[data-edge-fade=""]::after { display: none; }
+.jn-logo-strip.is-paused .logo-strip-track, .jn-logo-strip[data-animate=""] .logo-strip-track { animation-play-state: paused; }
+.jn-logo-strip[data-pause-hover="yes"]:hover .logo-strip-track { animation-play-state: paused; }
+.jn-logo-strip .jn-logo-strip__motion { position: absolute; right: 12px; bottom: 8px; z-index: 3; width: 24px; height: 24px; padding: 0; border: 1px solid #ffffff99; border-radius: 50%; background: var(--logo-strip-bg); color: #fff; font: 10px Arial, sans-serif; cursor: pointer; opacity: 0; }
+.jn-logo-strip:hover .jn-logo-strip__motion, .jn-logo-strip .jn-logo-strip__motion:focus-visible { opacity: 1; }
+.jn-logo-strip .jn-logo-strip__motion[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .jn-logo-strip .logo-strip-track { animation-play-state: paused; } }
