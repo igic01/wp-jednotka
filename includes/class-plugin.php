@@ -9,6 +9,23 @@ defined( 'ABSPATH' ) || exit;
 
 final class Plugin {
 
+	/** Resolve bundled asset URLs saved before the plugin folder was renamed. */
+	public static function normalize_asset_urls( $settings ) {
+		foreach ( $settings as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$settings[ $key ] = self::normalize_asset_urls( $value );
+			} elseif ( 'url' === $key && is_string( $value ) && preg_match( '~/jednotka-elementor/(assets/[^?#]+)([?#].*)?$~', $value, $matches ) ) {
+				$asset_path = realpath( JEDNOTKA_ELEMENTOR_PATH . $matches[1] );
+				$assets_root = realpath( JEDNOTKA_ELEMENTOR_PATH . 'assets' );
+				if ( false !== $asset_path && false !== $assets_root && is_file( $asset_path ) && 0 === strpos( $asset_path, $assets_root . DIRECTORY_SEPARATOR ) ) {
+					$settings[ $key ] = JEDNOTKA_ELEMENTOR_URL . $matches[1] . ( $matches[2] ?? '' );
+				}
+			}
+		}
+
+		return $settings;
+	}
+
 	public static function init() {
 		if ( ! did_action( 'elementor/loaded' ) ) {
 			add_action( 'admin_notices', array( __CLASS__, 'missing_elementor_notice' ) );
