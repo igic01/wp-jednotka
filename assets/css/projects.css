@@ -1,0 +1,159 @@
+@font-face { font-family: 'Urbanist'; src: url('../fonts/Urbanist-800.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Aspekta Variable'; src: url('../fonts/AspektaVariable.woff2') format('woff2-variations'); font-weight: 50 1000; font-style: normal; font-display: swap; }
+.jn-projects, .jn-projects * { box-sizing: border-box; }
+.jn-projects { font-family: "Aspekta Variable", Arial, sans-serif; }
+.jn-projects {
+  padding: clamp(72px, 10vw, 140px) 0 0;
+  color: #ffffff;
+  background: #0f0f0f;
+}
+
+.jn-projects .projects__title {
+  width: min(100%, var(--page-max-width, 1440px));
+  margin: 0 auto clamp(32px, 5vw, 72px);
+  padding: 0 var(--page-gutter, 40px);
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(48px, 6.4vw, 112px);
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+/* Full-width window onto a tilted board of photo strips that all drift up and down in turn */
+.jn-projects .projects__gallery {
+  position: relative;
+  height: var(--gallery-height, min(100vh, 900px));
+  overflow: hidden;
+}
+
+/* Larger than the window and rotated, so the corners stay filled */
+.jn-projects .projects__tilt {
+  position: absolute;
+  inset: -22% -12%;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--project-gap, clamp(10px, 1.4vw, 24px));
+  transform: rotate(-9deg);
+}
+
+.jn-projects .projects__column {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.jn-projects .projects__track {
+  display: flex;
+  flex-direction: column;
+  animation: jn-projects-scroll var(--duration, 60s) linear infinite;
+  will-change: transform;
+}
+
+.jn-projects .projects__column--1 { --duration: 62s; }
+.jn-projects .projects__column--2 { --duration: 48s; }
+.jn-projects .projects__column--3 { --duration: 70s; }
+.jn-projects .projects__column--4 { --duration: 54s; }
+.jn-projects .projects__column--5 { --duration: 66s; }
+.jn-projects .projects__column--6 { --duration: 52s; }
+
+/* Even columns run the other way */
+.jn-projects .projects__column:nth-child(even) .projects__track {
+  animation-direction: reverse;
+}
+
+.jn-projects .projects__item {
+  position: relative;
+  display: block;
+  flex: none;
+  aspect-ratio: var(--ratio, 4 / 5);
+  margin-bottom: var(--project-gap, clamp(10px, 1.4vw, 24px));
+  overflow: hidden;
+  border-radius: 20px;
+  color: inherit;
+  text-decoration: none;
+  background: #1a1a1a;
+}
+
+.jn-projects .projects__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1), filter 300ms ease;
+}
+
+.jn-projects .projects__item:hover .projects__image,
+.jn-projects .projects__item:focus-visible .projects__image {
+  filter: none;
+  transform: scale(1.05);
+}
+
+.jn-projects .projects__caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  gap: 4px;
+  padding: 48px 20px 18px;
+  background: linear-gradient(transparent, rgb(0 0 0 / 70%));
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.jn-projects .projects__caption strong {
+  font-size: clamp(16px, 1.4vw, 22px);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.jn-projects .projects__caption span {
+  color: rgb(255 255 255 / 72%);
+  font-size: clamp(13px, 1vw, 15px);
+}
+
+.jn-projects .projects__item:hover .projects__caption,
+.jn-projects .projects__item:focus-visible .projects__caption {
+  opacity: 1;
+  transform: none;
+}
+
+/* The track holds two identical sets, so moving by half of it loops without a jump */
+@keyframes jn-projects-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -50%, 0); }
+}
+
+
+.jn-projects .projects__gallery { max-width: 1920px; margin-inline: auto; }
+.jn-projects .projects__track { animation-play-state: paused; }
+.jn-projects[data-running="yes"] .projects__track { animation-play-state: running; }
+.jn-projects .projects__item:focus-visible { outline: 3px solid #fff; outline-offset: -4px; }
+.jn-projects .projects__group { flex: none; display: flow-root; }
+.jn-projects .projects__tilt--mobile { display: none; }
+/* A complete readable gallery for the editor and reduced motion. */
+.jn-projects[data-static="yes"] .projects__gallery { height: auto; padding: 0 40px; }
+.jn-projects[data-static="yes"] .projects__tilt { position: relative; inset: auto; transform: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.jn-projects[data-static="yes"] .projects__column,
+.jn-projects[data-static="yes"] .projects__track,
+.jn-projects[data-static="yes"] .projects__group { display: contents; }
+.jn-projects[data-static="yes"] .projects__track { animation: none; }
+.jn-projects[data-static="yes"] .projects__clone { display: none; }
+.jn-projects[data-static="yes"] .projects__tilt--mobile { display: none; }
+.jn-projects[data-static="yes"] .projects__caption { opacity: 1; transform: none; }
+@media (max-width: 800px) {
+  .jn-projects .projects__tilt--desktop, .jn-projects[data-static="yes"] .projects__tilt--desktop { display: none; }
+  .jn-projects .projects__tilt--mobile { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); transform: rotate(-7deg); }
+  .jn-projects[data-static="yes"] .projects__tilt--mobile { display: grid; transform: none; }
+  .jn-projects .projects__gallery { height: var(--gallery-height, min(85vh, 720px)); }
+  .jn-projects[data-static="yes"] .projects__gallery { height: auto; }
+  .jn-projects .projects__title { padding-inline: 20px; }
+  .jn-projects[data-static="yes"] .projects__gallery { padding-inline: 20px; }
+  .jn-projects[data-static="yes"] .projects__tilt { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .jn-projects .projects__item { border-radius: 14px; }
+  .jn-projects .projects__caption { padding: 40px 12px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jn-projects .projects__track { animation: none; }
+  .jn-projects .projects__image, .jn-projects .projects__caption { transition: none; }
+}

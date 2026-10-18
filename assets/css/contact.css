@@ -1,0 +1,272 @@
+@font-face { font-family: 'Urbanist'; src: url('../fonts/Urbanist-800.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Aspekta Variable'; src: url('../fonts/AspektaVariable.woff2') format('woff2-variations'); font-weight: 50 1000; font-style: normal; font-display: swap; }
+.jn-contact, .jn-contact * { box-sizing: border-box; }
+.jn-contact {
+  --button-height: 56px;
+  --button-padding-x: 24px;
+  --button-radius: 100px;
+  --button-color: #fff;
+  --font-primary: 'Aspekta Variable', Arial, sans-serif;
+  --button-font-size: 13px;
+  --button-font-weight: 700;
+  --button-letter-spacing: .04em;
+  --button-bg: #5f2df5;
+  padding: 128px 40px;
+  color: #fff;
+  background: radial-gradient(ellipse at 56% 8%, rgb(93 49 221 / 38%) 0%, transparent 46%) #0f0f0f;
+  font-family: 'Aspekta Variable', Arial, sans-serif;
+}
+.jn-contact .jn-contact__layout { width: 100%; max-width: 1290px; margin-inline: auto; }
+.jn-contact .services-contact-copy h2 {
+  margin: 0;
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(42px, 5.2vw, 76px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.98;
+}
+
+.jn-contact .jn-contact__layout {
+  position: relative;
+  color: #fff;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(420px, 1fr);
+  gap: clamp(42px, 7vw, 90px);
+  align-items: start;
+  background:
+    transparent;
+}
+
+.jn-contact .services-contact-copy h2 {
+  max-width: 600px;
+  margin-bottom: 24px;
+}
+
+.jn-contact .services-contact-copy p {
+  max-width: 470px;
+  margin: 0;
+  color: rgb(255 255 255 / 66%);
+  font-family: "Aspekta Variable", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.42;
+}
+
+.jn-contact .services-contact-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 28px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 24px;
+  background: #1a1a1a;
+}
+
+.jn-contact .services-contact-form label {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+  color: rgb(255 255 255 / 70%);
+  font-family: "Aspekta Variable", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.jn-contact .services-contact-form input,
+.jn-contact .services-contact-form select,
+.jn-contact .services-contact-form textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 14px;
+  color: #fff;
+  font: 400 16px/1.2 "Aspekta Variable", Arial, sans-serif;
+  background: #1a1a1a;
+  outline: 0;
+}
+
+.jn-contact .services-contact-form input,
+.jn-contact .services-contact-form select {
+  height: 52px;
+  padding: 0 16px;
+}
+
+.jn-contact .services-contact-form textarea {
+  min-height: 132px;
+  padding: 16px;
+  resize: vertical;
+}
+
+.jn-contact .services-contact-form input::placeholder,
+.jn-contact .services-contact-form textarea::placeholder {
+  color: rgb(255 255 255 / 34%);
+}
+
+.jn-contact .services-contact-form select {
+  color: rgb(255 255 255 / 82%);
+}
+
+.jn-contact .services-contact-message,
+.jn-contact .services-contact-form .button,
+.jn-contact .services-form-note {
+  grid-column: 1 / -1;
+}
+
+.jn-contact .services-contact-form .button {
+  justify-self: start;
+  margin-top: 8px;
+  border: 0;
+  cursor: pointer;
+}
+
+.jn-contact .services-form-note {
+  margin: 0;
+  color: rgb(255 255 255 / 66%);
+  font-family: "Aspekta Variable", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .jn-contact .jn-contact__layout {
+    grid-template-columns: 1fr;
+
+  }
+}
+
+@media (max-width: 520px) {
+  .jn-contact .jn-contact__layout {
+
+  }
+
+  .jn-contact .services-contact-form {
+    grid-template-columns: 1fr;
+    padding: 22px;
+    border-radius: 20px;
+  }
+
+  .jn-contact .services-contact-form .button {
+    width: 100%;
+  }
+}
+
+.jn-contact .button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: var(--button-height);
+  padding: 0 var(--button-padding-x);
+  border-radius: var(--button-radius);
+  color: var(--button-color);
+  font-family: var(--font-primary);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  letter-spacing: var(--button-letter-spacing);
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.jn-contact .button--primary {
+  background: var(--button-bg);
+}
+
+.jn-contact .button:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 76%);
+  outline-offset: 4px;
+}
+
+.jn-contact .button-label {
+  --button-label-height: 1.22em;
+  --button-label-gap: 0.32em;
+  display: block;
+  height: var(--button-label-height);
+  overflow: hidden;
+  line-height: var(--button-label-height);
+}
+
+.jn-contact .button-label-track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--button-label-gap);
+  transform: translateY(0);
+  transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jn-contact .button-label-line {
+  display: flex;
+  align-items: center;
+  height: var(--button-label-height);
+  line-height: var(--button-label-height);
+}
+
+.jn-contact .button:hover .button-label-track,
+.jn-contact .button:focus-visible .button-label-track {
+  transform: translateY(calc(-100% - var(--button-label-gap)));
+}
+
+.jn-contact .button-arrow {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  color: var(--color-white);
+}
+
+.jn-contact .button-arrow svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+  transform: rotate(45deg);
+  transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jn-contact .button:hover .button-arrow svg,
+.jn-contact .button:focus-visible .button-arrow svg {
+  transform: rotate(0deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.jn-contact .button,
+.jn-contact .button-label-track,
+.jn-contact .button-arrow svg,
+.jn-contact .site-nav-toggle-line {
+    transition: none;
+  }
+
+.jn-contact .button:hover .button-label-track,
+.jn-contact .button:focus-visible .button-label-track {
+    transform: none;
+  }
+}
+
+
+.jn-contact .services-contact-form { margin: 0; backdrop-filter: blur(20px); }
+.jn-contact .services-contact-form select option { background: #1a1a1a; color: #fff; }
+.jn-contact .services-contact-form input:focus-visible,
+.jn-contact .services-contact-form select:focus-visible,
+.jn-contact .services-contact-form textarea:focus-visible { border-color: #a48aff; outline: 2px solid #a48aff; outline-offset: 2px; }
+.jn-contact .services-contact-form button { white-space: normal; max-width: 100%; padding-block: 16px; }
+.jn-contact .button-label { height: auto; }
+.jn-contact .button-label-track { display: grid; gap: 0; }
+.jn-contact .button-label-line { height: auto; min-height: var(--button-label-height); grid-area: 1 / 1; }
+.jn-contact .button-label-line[aria-hidden] { transform: translateY(calc(100% + var(--button-label-gap))); }
+.jn-contact .button-arrow { color: inherit; }
+.jn-contact .button:disabled { opacity: .65; cursor: wait; }
+.jn-contact .jn-contact__status { grid-column: 1 / -1; margin: 0; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; color: #d6caff; }
+.jn-contact .jn-contact__status[data-error="yes"] { color: #ffb3c0; }
+.jn-contact .jn-contact__trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.jn-contact [hidden] { display: none; }
+@media (max-width: 900px) { .jn-contact { padding-block: 92px; } }
+@media (max-width: 520px) { .jn-contact { padding-inline: 16px; } }

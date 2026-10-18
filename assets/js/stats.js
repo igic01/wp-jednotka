@@ -198,27 +198,21 @@
           }, { threshold: .5 });
           counters.forEach(counter => this.counterObserver.observe(counter));
         }
-        const control = statsSection.querySelector('.jn-stats__motion');
-        control.hidden = statsSection.dataset.drift !== 'yes' && statsSection.dataset.reveal !== 'yes' && !this.videos.length;
-        const setPlaying = (value, userInitiated = false) => {
+        const setPlaying = value => {
           playing = value;
           statsSection.classList.toggle('is-paused', !playing);
           statsSection.classList.toggle('is-static', editing || testimonialReduceMotion.matches || !playing || statsSection.dataset.reveal !== 'yes');
-          control.textContent = playing ? 'Ⅱ' : '▶';
-          control.setAttribute('aria-pressed', String(playing));
-          control.setAttribute('aria-label', playing ? control.dataset.pauseLabel : control.dataset.playLabel);
           this.videos.forEach(video => {
-            if (playing && (!editing || userInitiated)) video.play().catch(() => {});
+            if (playing && !editing) video.play().catch(() => {});
             else video.pause();
           });
           updateTestimonialsOnScroll();
         };
-        control.addEventListener('click', () => setPlaying(!playing, true), { signal });
         window.addEventListener('scroll', requestTestimonialsUpdate, { passive: true, signal });
         window.addEventListener('resize', requestTestimonialsUpdate, { signal });
         testimonialReduceMotion.addEventListener('change', () => {
-          if (testimonialReduceMotion.matches) { finishCounters(); setPlaying(false); }
-          else updateTestimonialsOnScroll();
+          if (testimonialReduceMotion.matches) finishCounters();
+          setPlaying(!testimonialReduceMotion.matches);
         }, { signal });
         testimonialStackedLayout.addEventListener('change', updateTestimonialsOnScroll, { signal });
         testimonialCompactLayout.addEventListener('change', updateTestimonialsOnScroll, { signal });

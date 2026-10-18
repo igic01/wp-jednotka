@@ -1,0 +1,174 @@
+@font-face { font-family: 'Urbanist'; src: url('../fonts/Urbanist-800.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Aspekta Variable'; src: url('../fonts/AspektaVariable.woff2') format('woff2-variations'); font-weight: 50 1000; font-style: normal; font-display: swap; }
+@font-face { font-family: "Momo Trust Sans"; src: url("../fonts/MomoTrustSans-700.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+.jn-work, .jn-work * { box-sizing: border-box; }
+.jn-work .jn-work__layout { width: 100%; max-width: 1290px; margin-inline: auto; }
+.jn-work {
+  position: relative;
+  color: #fff;
+  background: #0f0f0f;
+  padding: 128px 40px;
+}
+
+.jn-work h2 {
+  margin: 0;
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(42px, 5.2vw, 76px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.98;
+  max-width: 780px;
+  margin-bottom: 88px;
+}
+
+.jn-work .services-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--step-count, 4), minmax(0, 1fr));
+  gap: 32px;
+}
+
+.jn-work .services-timeline-line {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  left: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--work-accent, #5f2df5) 0%, var(--work-line-end, #a78bfa) 100%);
+  border-radius: 999px;
+}
+
+.jn-work .services-timeline-step {
+  position: relative;
+  display: grid;
+  gap: 16px;
+}
+
+.jn-work .services-timeline-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--work-accent, #5f2df5);
+  color: #fff;
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 0 0 7px rgb(95 45 245 / 16%);
+}
+
+.jn-work .services-timeline-step h3 {
+  margin: 0;
+  font-family: "Momo Trust Sans", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+.jn-work .services-timeline-step p {
+  max-width: 260px;
+  margin: 0;
+  color: rgb(255 255 255 / 60%);
+  font-family: "Aspekta Variable", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* Intro animation: the line draws, then nodes pop in and the text follows, one step at a time */
+.jn-work .services-timeline-line {
+  transition: transform 1050ms cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.jn-work .services-timeline-node {
+  transform: scale(0);
+  transition: transform 450ms cubic-bezier(0.3, 1.8, 0.5, 1);
+  transition-delay: calc(20ms + var(--i, 0) * 260ms);
+}
+
+.jn-work .services-timeline-step h3,
+.jn-work .services-timeline-step p {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 500ms ease-out,
+    transform 500ms ease-out;
+  transition-delay: calc(160ms + var(--i, 0) * 260ms);
+}
+
+.jn-work .services-timeline.is-active .services-timeline-line {
+  transform: scaleX(1);
+}
+
+.jn-work .services-timeline.is-active .services-timeline-node {
+  transform: scale(1);
+}
+
+.jn-work .services-timeline.is-active .services-timeline-step h3,
+.jn-work .services-timeline.is-active .services-timeline-step p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reversing (scrolling back up) shouldn't wait on the stagger */
+.jn-work .services-timeline:not(.is-active) .services-timeline-node,
+.jn-work .services-timeline:not(.is-active) .services-timeline-step h3,
+.jn-work .services-timeline:not(.is-active) .services-timeline-step p {
+  transition-delay: 0ms;
+}
+
+@media (max-width: 900px) {
+  .jn-work {
+    padding-top: 92px;
+    padding-bottom: 92px;
+  }
+
+  .jn-work h2 {
+    margin-bottom: 56px;
+  }
+
+  .jn-work .services-timeline {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .jn-work .services-timeline-line {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .jn-work {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jn-work .services-timeline-line,
+  .jn-work .services-timeline-node,
+  .jn-work .services-timeline-step h3,
+  .jn-work .services-timeline-step p {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+
+  .jn-work .services-timeline-line {
+    transform: scaleX(1);
+  }
+}
+
+.jn-work .services-timeline-step { align-content: start; min-width: 0; }
+.jn-work .services-timeline-step h3, .jn-work .services-timeline-step p { overflow-wrap: anywhere; }
+/* Keep the fallback, editor, and animation-disabled view fully visible and still. */
+.jn-work .services-timeline:not([data-animated="yes"]) .services-timeline-line,
+.jn-work .services-timeline:not([data-animated="yes"]) .services-timeline-node,
+.jn-work .services-timeline:not([data-animated="yes"]) .services-timeline-step h3,
+.jn-work .services-timeline:not([data-animated="yes"]) .services-timeline-step p { opacity: 1; transform: none; transition: none; }

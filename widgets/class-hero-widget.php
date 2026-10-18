@@ -105,6 +105,8 @@ class Hero_Widget extends Header_Widget {
 		foreach ( array( 'top_text', 'bottom_text', 'description', 'button_text' ) as $key ) {
 			$this->add_inline_editing_attributes( $key, 'none' );
 		}
+		$this->add_render_attribute( 'description', 'class', 'jn-hero__description' );
+		$this->add_render_attribute( 'button_text', 'class', 'button-label-line' );
 		$this->add_link_attributes( 'button_link', $s['button_link'] );
 		$this->add_render_attribute( 'button_link', 'class', 'jn-hero__button button button--primary' );
 		?>
@@ -134,12 +136,11 @@ class Hero_Widget extends Header_Widget {
 						<?php endforeach; ?>
 					</h1>
 					<div class="hero-copy">
-					<p class="jn-hero__description" <?php $this->print_render_attribute_string( 'description' ); ?>><?php echo esc_html( $s['description'] ); ?></p>
+					<p <?php $this->print_render_attribute_string( 'description' ); ?>><?php echo esc_html( $s['description'] ); ?></p>
 					<?php if ( 'yes' === $s['show_button'] ) : ?>
-						<a <?php $this->print_render_attribute_string( 'button_link' ); ?>><span class="button-label"><span class="button-label-track"><span class="button-label-line" <?php $this->print_render_attribute_string( 'button_text' ); ?>><?php echo esc_html( $s['button_text'] ); ?></span><span class="button-label-line" aria-hidden="true"><?php echo esc_html( $s['button_text'] ); ?></span></span></span><span class="button-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg></span></a>
+						<a <?php $this->print_render_attribute_string( 'button_link' ); ?>><span class="button-label"><span class="button-label-track"><span <?php $this->print_render_attribute_string( 'button_text' ); ?>><?php echo esc_html( $s['button_text'] ); ?></span><span class="button-label-line" aria-hidden="true"><?php echo esc_html( $s['button_text'] ); ?></span></span></span><span class="button-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg></span></a>
 					<?php endif; ?>
 				</div>
-				<button class="jn-hero__motion" type="button" aria-pressed="false" aria-label="<?php echo esc_attr__( 'Play animations', 'jednotka-elementor' ); ?>" data-play-label="<?php echo esc_attr__( 'Play animations', 'jednotka-elementor' ); ?>" data-pause-label="<?php echo esc_attr__( 'Pause animations', 'jednotka-elementor' ); ?>">▶</button>
 			</div>
 		</section>
 		<?php

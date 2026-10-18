@@ -8,8 +8,23 @@ Elementor Free; Elementor Pro is not required.
 1. Paste your reference folder into `examples/`.
 2. Activate **Jednotka Elementor** in WordPress under **Plugins** when ready.
 3. In the Elementor editor, find **Jednotka Header** under **Jednotka** and drag it
-   into a full-width container at the top of your page. Set the container padding
-   and gap to zero so the widget controls its own spacing.
+   into a container at the top of your page. Containers default to **Full Width**
+   with **0px padding** while this plugin is active. Set the gap to zero so the
+   widget controls its own spacing.
+
+These container defaults apply sitewide and remain editable in Elementor.
+Explicitly saved width and padding values take precedence; existing containers
+that inherit Elementor's defaults can also pick up the new values. Padding on
+smaller screens inherits the desktop value unless a responsive value is set.
+
+Standard section backgrounds use **`#0F0F0F`**; neutral cards and input surfaces
+use **`#1A1A1A`**. Purple gradients, colored accent cards, and glass effects are
+preserved. Explicitly saved Elementor colors continue to override the defaults.
+
+Purple CTA buttons keep their labels stationary in the Elementor editor,
+including on hover and focus. The duplicate animated label is hidden so the
+original remains available for inline editing. These shared overrides load
+only in Elementor's preview canvas; public button animations are preserved.
 
 ## Header widget
 
@@ -69,11 +84,10 @@ service badges, description, and action button. All assets are bundled in
   height, spacing, and corners. Default positioning and sizing come directly
   from the reference, including its viewport-height layout. If you add much
   longer content, adjust the spacing/height and check the mobile layout.
-- Set a poster when using videos. Videos loop muted; the corner play/pause
-  button controls hero videos and badge motion together. Badges float as whole
+- Set a poster when using videos. Videos loop muted automatically; the hero has no corner animation button. Badges float as whole
   pills and respond to pointer movement on desktop, as in the reference. Floating
   is visible in the editor and pauses while typing. Videos start paused in the
-  editor; all motion starts paused for visitors who prefer reduced motion.
+  editor; motion pauses for visitors who prefer reduced motion and while the tab is hidden.
 
 ### Copying the reference design
 
@@ -139,7 +153,7 @@ The reference animation is CSS; no carousel library is needed.
 - **Content → Scrolling**: change duration/direction, turn scrolling off, or
   enable pause on hover. Lower duration means faster scrolling.
 - **Style → Strip layout**: change background, strip height, spacing, and fades.
-- The pause control appears on hover or keyboard focus. Reduced-motion visitors
+- There is no animation control button. Reduced-motion visitors
   get a paused strip. Videos start paused in the editor.
 - When replacement logos form a row shorter than the available width, the widget
   adds hidden repeats within both equal loop groups to prevent empty gaps.
@@ -165,9 +179,8 @@ count-up, scroll reveal, and floating card animations are retained.
   or uploaded video, and change individual card backgrounds, padding, and avatar
   sizes. More than five cards use a grid to avoid overlapping.
 - Scroll reveal and floating motion have independent switches. Cards stay fully
-  visible in the editor, with floating motion pausing while typing. The corner
-  pause button appears on hover or keyboard focus and controls reveal, drift,
-  and videos. Videos start paused in the editor; reduced-motion visitors start
+  visible in the editor, with floating motion pausing while typing. There is no
+  animation control button. Videos start paused in the editor; reduced-motion visitors start
   with static content.
 - **Style → Section layout**: background, responsive padding, and statistics gap.
 
@@ -232,28 +245,456 @@ and cleanup. Images and fonts are bundled independently of `examples/`.
 
 ## Services widget
 
-Place **Jednotka Services** after Results in a full-width container with zero
-padding and gap. It copies the reference heading, introduction, six service rows,
-icon badges, responsive layout, blur/scale scroll reveal, and moving arrows.
+**Jednotka Services** now includes the `temp/services` detail upgrade while
+retaining its widget name, service repeater, existing text, icons/videos,
+arrow media, colors, and typography controls. The list keeps the reference
+blur/scale reveal. Its arrow opens a sliding detail pane with a heading,
+benefit points, a continuously scrolling three-column image wall, and the
+hero-style CTA. On mobile the wall sits below the copy.
 
-- Click the heading, introduction, service names, or descriptions to edit them.
-  Each text has its own color, font, and responsive size controls.
-- **Content → Services**: add/remove/reorder rows, update their links, replace
-  service icons or arrows with images/videos, and adjust icon size, badge
-  backgrounds, and arrow colors. Videos support posters and loop muted.
-- The video button appears on hover or keyboard focus and controls both videos
-  in its service row. It sits outside the service link. Videos start paused in
-  the editor and for visitors who prefer reduced motion.
-- **Content → Heading and introduction**: toggle the scroll reveal and set the
-  section anchor. The default `sluzby` supports the navigation's `#sluzby` link.
-  Set each service's destination URL to its intended WordPress page.
-- **Style → Section layout** controls background, padding, space between rows,
-  and space below the introduction. Rows remain visible and links do not
-  navigate while editing; use **Preview Changes** to see the scroll animation.
+- **Content → Services**: add/remove/reorder services; edit the original names,
+  descriptions, links, icon/arrow media, colors, and sizing. Each service now
+  has an arrow action, optional detail slug, detail heading, benefit lines,
+  image gallery, and CTA text/link. Existing plugin gallery images fill empty
+  galleries; replace them with your own service/project photos.
+- **Arrow action → Auto** preserves existing custom destination URLs. Empty
+  links and the original default `/sluzby/` destination open a detail. Choose
+  **Open service detail** or **Follow service link** to override that behavior.
+- **Content → Heading and introduction** retains the heading, intro, scroll
+  reveal, and section anchor (`sluzby`). It also includes the back label and
+  an editor detail-preview toggle with a service number. Click any service arrow in Elementor to preview its detail, then edit the
+  heading, benefits (one per line), and button text directly on the canvas.
+  The selected service stays open through widget refreshes; Back returns to
+  the editable list. Service arrows with custom URLs preview their detail in
+  the editor while retaining their normal destination on the published page.
+  Use the editor-only **Edit bullet points** and **Edit images** buttons to
+  open the matching service row in the sidebar. Clicking the image wall also
+  opens its WordPress gallery picker. The sidebar fields are labeled
+  **Detail — Bullet points (one per line)** and **Detail — Images**. Uploaded
+  images resolve from their media-library attachment IDs as well as URLs.
+  Link controls change the detail CTA destination.
+- **Style → Section layout** retains the background, responsive padding,
+  row spacing, and introduction spacing. Detail heading color/typography is
+  editable per service. Video controls still support both row media videos;
+  opening a detail pauses them and closing resumes only videos previously
+  playing. Editor and reduced-motion views do not autoplay videos.
 
-The CSS copy command regenerates `reference-services.css`; `services.js` uses
-the reference `examples/js/services-reveal.js` calculations with Elementor
-initialization and cleanup. Fonts and all six default icons are bundled locally.
+Details use widget-specific hashes such as `#jn-services-<widget-id>-weby`;
+copy the URL after opening a service to link directly to it. The first Services
+widget also accepts reference aliases (`#weby`, `#eshopy`, `#emaily`, `#reklamy`,
+`#grafika`, `#branding`). Explicit slugs survive title edits. Back/Forward, the
+back button, and Escape switch views; focus returns to the service arrow. Only
+the active pane is interactive, and the viewport height follows its content.
+The default CTA target is `#kontakt`; set the contact section's Advanced CSS ID
+to `kontakt` or replace the CTA destination.
+
+The existing reference stylesheet still supplies shared variables and list
+compatibility. The updated styles and script are bundled in `assets`, with no
+runtime dependency on `temp`. Reduced motion disables transitions and wall
+scrolling; Elementor teardown restores the readable list and removes observers.
+
+## Clients & Footer widget
+
+**Jednotka Clients & Footer** combines a contact CTA with a responsive footer.
+The purple gradient, display type, hero-style button, and floating project media
+match the other Jednotka widgets. The footer stays in document flow as its
+content grows; navigation columns stack on smaller screens.
+
+- **Content → Call to action**: edit the heading, description, button
+  label/link, and phone introduction/number/link. The button defaults to the
+  contact page. Replace the demo phone number and its `tel:` link before use.
+- **Content → Floating projects**: up to six images or uploaded videos with
+  names, categories, optional project links, and responsive widths/corners.
+  Replace the bundled demo image with your projects. Cards float continuously;
+  idle sway and gentle image pan/zoom continue without hovering. Hover and
+  keyboard focus lift the card surface without stopping that motion.
+  **Project entrance animation** reveals the larger cards with a staggered spring
+  and blur as they enter the viewport. **Mouse glow** controls a soft light following the mouse, without ripple trails.
+  **Snap CTA to viewport** smoothly aligns the CTA after scrolling settles near
+  its top, respecting reduced motion and editor mode.
+  Four cards remain visible on phones to keep the CTA clear.
+- Footer brand, navigation, contact, social links, and copyright remain editable.
+  The optional newsletter is still unconnected and displays its configured
+  notice rather than submitting email addresses.
+- **Style → Section and footer layout**: gradient colors, CTA padding, section
+  minimum height, and footer background/padding/corners. Existing saved content
+  and links are retained when updating the plugin.
+
+Reduced-motion preferences disable motion, and editor typing pauses drift.
+Run `node tests/clients-footer-motion.test.cjs` for motion, reduced motion, editor,
+newsletter, and cleanup checks. Redesign styles live in `clients-footer.css`,
+so regenerating reference CSS does not overwrite them.
+
+## Footer widget
+
+**Jednotka Footer** is a separate footer-only widget in **Jednotka**, sharing
+its footer markup and controls with **Jednotka Clients & Footer**. It includes
+the logo (image or uploaded video), brand description, menu/contact/social
+repeaters, copyright, and optional newsletter placeholder. It has no CTA,
+floating projects, pointer effects, snapping, or reserved CTA height.
+
+The responsive card keeps the existing footer design with a 1360px default
+maximum width. Outer background defaults to `#0F0F0F`. Layout controls cover outer
+and inner padding, card background, corners, and maximum width. Text supports
+inline editing. The newsletter remains unconnected: clicking its arrow or
+pressing Enter shows the editable notice without submitting or storing email.
+Logo videos respect reduced motion and pause while editing or in hidden tabs.
+The original Clients & Footer widget retains its CTA and footer.
+
+## Showcase & Comparison widget
+
+Each entry under **Content → Gallery items** has an **Image / Text** content
+type. Text entries support inline editing, color, and typography and grow with
+their content without a fixed height or image aspect ratio. Existing image
+entries retain their images.
+
+Turn off **Content → Before / after comparison → Show before / after section**
+to display only the gallery and introduction. Existing widgets show both sections
+by default.
+
+**Jednotka Showcase & Comparison** recreates the sticky 40/60 introduction and
+image gallery, then the before/after comparison from `temp/`. It uses the hero's
+Urbanist display font, Aspekta body font, white text, and a near-black (`#0F0F0F`) background. The
+reference's final CTA is omitted; place **Jednotka Clients & Footer** below it.
+Gallery and comparison sections are centered with a maximum width of 1440px,
+while the black widget background spans the available width.
+
+- **Content → Gallery introduction**: heading, heading tag, description, and
+  desktop sticky behavior. Keep the parent container overflow visible. On
+  tablets and phones the introduction and gallery stack without sticky behavior.
+- **Content → Gallery images**: add, remove, reorder, or replace images; set
+  alternative text and image fit. The four reference images are bundled locally.
+- **Content → Before / after comparison**: both images and their alternative
+  text, heading/description, before/after labels, accessible slider name, resting
+  position and intro sweep. Replace the demo images with your
+  matching before/after work. Drag with a mouse or touch, or use arrow keys,
+  Home, and End after focusing the slider. Before appears on the left and After
+  on the right; the full arrow handle straddles the image edge at either extreme.
+  The comparison fills the viewport height. **Snap comparison to viewport**
+  smoothly aligns the section after scrolling settles near its top; it respects
+  reduced-motion preferences and stays disabled in the editor.
+- **Style → Theme and layout**: gallery background, comparison background/accent, image
+  gap/corners, section padding, and comparison maximum width. Text controls also
+  provide colors and typography settings.
+
+The comparison slides over the pinned gallery and eases out its upper corners
+as it reaches the viewport top. Its intro sweeps from 100% to the configured
+position once visible, unless reduced motion, editor mode, or user interaction
+disables it. No pagewide scroll-snap settings are applied. Assets do not depend
+on `temp/`, and multiple widget instances operate independently.
+
+Run `node tests/showcase-interaction.test.cjs` for drag, keyboard, intro,
+resize/sticky geometry, reduced motion, multiple instances, and cleanup checks.
+
+## About Hero widget
+
+**Jednotka About Hero** recreates the simple `temp/about-hero` example: “Toto je,”
+the Jednotka logo, and two glass badges (“Rôzne skilly” / “Spoločný cieľ”). Find it
+under **Jednotka**. Heading/tag, logo/alternative text, badge labels, colors,
+typography, logo width, background, and padding are editable. Badges float gently
+by default; disable **Floating animation** for a static version. Reduced motion
+disables floating, and editing text pauses it. It uses bundled fonts and logo,
+with no runtime dependency on `temp/`.
+
+## Team widget
+
+**Jednotka Team** recreates `temp/team`: an introduction on the left and a
+looping, draggable row of portrait cards on the right. Find it under **Jednotka**.
+It uses local Urbanist/Aspekta fonts, a black background, and a centered 1440px
+layout. On smaller screens, the introduction appears above the cards.
+
+- **Introduction**: heading and description, with text colors and typography.
+- **Team members**: add/remove/reorder members, replace photos, and edit names,
+  roles, alternative text, image fit, colors, and typography. Demo portraits are
+  bundled locally; replace them with your team photos.
+- **Scrolling**: automatic scrolling, speed (default 45px/second), and accessible
+  carousel name. Drag with mouse/touch, or focus the track and use arrow keys,
+  Home, and End. Keyboard focus pauses automatic movement.
+- **Section and cards**: background, padding, card height, gap, and corners.
+
+Repeated cards are hidden from assistive technology. Extra copies cover the
+track even with one member. Automatic movement stops offscreen, in hidden tabs,
+in the editor, and for reduced-motion users; manual dragging remains available.
+Run `node tests/team-motion.test.cjs` for motion, looping, drag, keyboard,
+reduced-motion, and cleanup checks. Assets do not depend on `temp/`.
+
+## Our Story widget
+
+**Jednotka Our Story** recreates the scroll-driven statement and sequential
+photos from `temp/approach`, separately from the existing Approach widget.
+Find it under **Jednotka**. The statement stays centered in a sticky screen;
+letters light up with a purple wave while four decorative photos fade and scale
+in/out during consecutive scroll windows. Hover restores a photo's colors.
+
+- **Our story**: statement, accessible section name, and scroll animation.
+- **Story photos**: add/remove/reorder photos, replace the bundled demo images,
+  and adjust their aspect ratios, positions, widths, and appearance windows.
+  Reference photo files were not supplied; existing plugin demo images are used.
+- **Statement and layout**: typography, wave/revealed/unrevealed colors, black
+  background, responsive scroll height, sticky frame padding, and photo corners.
+
+Keep the parent Elementor container overflow visible. The editor, disabled
+animation, and reduced-motion views show a static readable statement without
+the long scroll space. Photo positions are bounded by a centered 1440px frame;
+all text is exposed once to screen readers. Assets do not depend on `temp/`.
+Run `node tests/our-story-scroll.test.cjs` for scroll windows, text accessibility,
+custom colors, static modes, batching, and lifecycle cleanup checks.
+
+## Values widget
+
+**Jednotka Values** recreates `temp/values`: a pinned introduction beside a stack
+of purple cards, with scroll-driven entry/settling and mouse tilt/glow. Find it
+under **Jednotka**. It uses bundled Urbanist/Aspekta fonts, a black background,
+and a centered 1440px layout. The five supplied values are included as defaults.
+
+- **Introduction**: heading/description, colors, and typography.
+- **Values**: add/remove/reorder cards and edit titles, descriptions, typography,
+  and individual backgrounds. Card numbers follow the item order.
+- **Animation**: scroll animation, building/falling stack modes, and mouse tilt.
+- **Section and card layout**: background, default card/glow colors, scroll
+  distance per card, layout/card padding, and corners.
+
+Keep parent container overflow visible. The editor, reduced motion, disabled
+animation, and lists with fewer than two values show a static readable layout.
+Animations stop offscreen or in hidden tabs, and mouse interpolation stops once
+settled. No runtime dependency on `temp/` remains. Run
+`node tests/values-scroll.test.cjs` for stack/fall progression, pointer easing,
+static modes, batching, and cleanup checks.
+
+## Projects widget
+
+**Jednotka Projects** adapts `temp/projects` into an editable project gallery in
+the **Jednotka** category. Six tilted columns loop in alternating directions,
+with varied speeds and image zoom/caption effects on hover. The section uses a
+near-black (`#0F0F0F`) background and the existing Urbanist and Aspekta fonts.
+
+Edit each project's name, type, image, alternative text, link, aspect ratio,
+and column in the Projects repeater. The original thirty sample entries use
+existing plugin gallery photos and placeholders; replace them with project
+images in Elementor. Section colors, typography, padding, gallery height,
+card spacing, and corners are configurable, alongside automatic scrolling
+and loop duration.
+
+Columns scroll continuously, including during hover, focus, and page scrolling.
+Mobile combines the same projects into three looping columns. Editor,
+reduced-motion, and scrolling-disabled views show every original project in a
+static grid. Duplicate strips are hidden from assistive technology and cannot
+receive keyboard focus. Runtime assets do not depend on the `temp` folder.
+
+## Contact widget
+
+**Jednotka Contact** adapts `temp/contact` into a two-column contact section with
+a glass form, purple glow on black, the site's fonts, and the hero's animated
+button. Find it in the **Jednotka** Elementor category. Edit the introduction,
+field labels and placeholders, service options (one per line), button, and note;
+colors, typography, padding, and column spacing are configurable. The layout
+stacks on smaller screens and the form becomes a single column on phones.
+
+Submissions use WordPress AJAX and `wp_mail` to the administration email in
+**Settings → General**. The visitor's email is used only as Reply-To. Configure
+and verify your site's email delivery before launch; successful `wp_mail`
+acceptance does not guarantee inbox delivery. No email is sent from the editor.
+The form validates names/emails, verifies a nonce, includes a honeypot, and
+limits submissions to one per minute per IP. Expired cached nonces produce a
+refresh message. Errors retain the entered text; successful submissions reset
+the form. The button locks while sending and a live status announces results.
+Runtime assets do not depend on `temp`.
+
+## Services Hero widget
+
+**Jednotka Services Hero** adapts `temp/hero`, `hero-badges`, and `drag-scroll`
+into a services-page introduction in the **Jednotka** category. It includes a
+shared editable navbar, multiline heading, five glass badges with
+floating/pointer movement, and a row of service cards extending below the
+reference purple-to-white gradient onto a white background. It uses the
+reference Urbanist, Aspekta, and Momo fonts, bundled service icons, and project
+placeholder. The navbar includes editable logo/media, links, action button,
+and a mobile menu; it can be hidden using Show navigation.
+
+Click the heading, badge labels, and service card titles/descriptions to edit
+text directly on the Elementor canvas. The navbar text also supports inline
+editing. Edit the heading/tag, badge labels/icons/positions, and service card titles,
+descriptions, images, alternative text, and links. Automatic scrolling and
+speed, badge motion, colors, typography, card size, and corners are configurable.
+Cards default to the reference placeholder link and arrow; replace their links
+with real destinations. Removing a link removes the arrow and navigation.
+
+The card row drags with mouse/touch, supports native horizontal scrolling and
+ArrowLeft/ArrowRight/Home/End, and automatically bounces at its ends. Fractional
+scroll progress avoids stalls at low speeds. Manual interaction briefly pauses
+automatic scrolling; keyboard focus pauses it until focus leaves. Links remain
+clickable after a normal click, while a drag suppresses its click. Editor and
+reduced-motion modes disable automatic movement. Motion also stops offscreen
+and in hidden tabs; Elementor teardown removes listeners and observers.
+Runtime assets do not depend on `temp`.
+
+## FAQ widget
+
+**Jednotka FAQ** recreates `temp/faq` in the **Jednotka** category: a heading,
+description and glass-arrow contact link beside four editable questions.
+It uses the reference dark background, Urbanist/Aspekta/Momo typography, thin
+dividers, and orange expand/collapse symbols. The content has a 1290px maximum
+width and stacks into one column below 900px.
+
+Add, remove, reorder, or edit questions and answers in the repeater, including
+which answers initially open. Text supports Elementor inline editing; all
+answers initially open in the editor. Colors, typography, padding, column gap,
+and the contact label/link are editable. The default contact target is
+`#kontakt`; set the contact section's **Advanced → CSS ID** to `kontakt`, or
+change the link to your contact page.
+
+Accordions use native `details`/`summary` with mouse and keyboard support and
+open one answer at a time, closing the previous answer smoothly. Answers
+animate open/closed, moving the following rows smoothly. **Keep section height
+stable** reserves room for the tallest single answer, so the section does not
+grow as answers open; disable it
+for a compact section that grows naturally. Reduced motion uses instant
+toggles, and the editor retains native controls for inline editing. Without
+JavaScript the native accordions still work. Runtime assets do not depend on
+the `temp` folder.
+
+## How We Work widget
+
+**Jednotka How We Work** adapts `temp/work` and `work-scroll` into an editable
+process timeline in the **Jednotka** category. The four reference steps include
+numbered purple nodes, a gradient connecting line, Momo step titles, and the
+site's Urbanist/Aspekta typography on a dark background. Content is capped at
+1290px and the timeline becomes a vertical stack below 900px.
+
+Edit the heading and add/remove/reorder steps using the repeater; heading,
+titles, and descriptions also support Elementor inline editing. Numbering
+updates automatically. Colors, typography, section padding, and step spacing
+are configurable. The line draws, nodes pop in, and text reveals with the
+reference stagger when the timeline reaches 78% of the viewport. Scrolling
+back above that threshold resets it for replay.
+
+The animation switch, editor mode, reduced-motion preference, and JavaScript
+fallback keep all content visible. Scroll updates use one queued animation
+frame; teardown removes listeners and restores the static view. Runtime assets
+do not depend on `temp`.
+
+## Blog Featured widget
+
+**Jednotka Blog Featured** recreates `temp/featured`: a Blog heading and
+large lead-article card with a glass category badge, excerpt,
+publication date, and a white arrow. Find it in **Jednotka**. The
+near-black background is scoped to this widget; it does not change the page body.
+Content defaults to 1240px wide and stacks below 980px.
+
+**Editable article** is the default source. Edit the heading, article
+text, category, date, image, icon, and destination. Text supports
+Elementor inline editing; the card does not navigate in the editor. Colors,
+typography, content width, heading section padding, image corners, and column
+gap are configurable.
+
+Choose **Choose a WordPress post** to select a specific published post using
+a searchable title dropdown, or **Latest published WordPress post** to follow
+the newest post automatically. Both use the post title, short description
+(falling back to the excerpt/content), category, date, thumbnail, and permalink.
+Edit those fields in WordPress Posts. Private, draft, password-protected,
+deleted, and non-post selections are not displayed. The dropdown loads only
+in the editor/admin and includes every published, unprotected post. The image control supplies a fallback if the post has no
+thumbnail; an empty blog shows a clear empty state. Runtime assets do not
+depend on `temp` and no widget JavaScript is needed.
+
+## Posts widget
+
+**Jednotka Posts** adapts `temp/posts` into a live WordPress post archive in the
+**Jednotka** category. It shows published, non-password-protected posts, newest
+first, with a sticky search toolbar, category filters, image cards, dates, and
+numbered pagination. The layout has two columns on desktop and one on mobile.
+
+Create articles under **WordPress → Posts**. The plugin provisions six service
+categories: Web, E-shopy, Email, PPC, Grafika, and Branding. Existing matching
+categories (including aliases such as Reklamy) keep their IDs and assignments.
+The post editor's **Kategórie služieb** sidebar box offers these six choices,
+with images from `assets/images/services/`; both block and classic editors use
+this picker. Native category creation, renaming, and deletion are disabled,
+new category insertion is rejected, and REST post updates accept only the six
+service category IDs. Tags are unaffected. Existing unrelated categories are
+preserved but are not offered by the picker or the widget. Uncategorized stays
+hidden. All six filters remain visible, including categories with no posts.
+
+Use the sidebar **Krátky popis** textarea for the text below each title in the
+Posts widget. Its plain text is displayed in full and saved as the protected
+`_jednotka_short_description` post meta field. Leaving it empty falls back to
+the existing excerpt or the first 25 words of the article. Saves check the
+nonce and editing permission and skip autosaves and revisions. The field is
+also registered for authenticated REST editing. Add featured images through
+the normal WordPress image control. Without posts, the widget shows its
+editable empty-state message.
+
+The default is **6 posts per page** (configurable from 1 to 24). For 100 posts,
+that produces 17 pages; only the current page's cards are rendered. Search and
+category filters run together on the server across the full archive, reset to
+page one, and keep pagination compact. Images load lazily. Search waits 400ms
+after typing, cancels outdated requests, and updates results without a full page
+reload. Numbered links and the search form also work without JavaScript. URLs
+retain the search, category, and page; browser back/forward restores the archive.
+
+Elementor controls include page size, search/filter/empty-state labels, fallback
+image, background, typography, content width, bottom padding, and sticky offset
+(for a fixed header). Post text is managed in WordPress Posts. The featured
+widget remains separate and is not filtered by this archive. Assets are scoped
+to the widget and do not depend on `temp`.
+
+## Gallery widget
+
+**Jednotka Gallery** recreates the one-to-nine-image mosaics in `temp/gallery`.
+Find it in **Jednotka**, edit the inline heading, and choose/reorder images in
+the Elementor gallery control. Only the first nine valid images are displayed.
+Image counts use the reference 12-column layouts; phones use two columns with
+an odd first image spanning the full width. No captions or filenames are shown.
+
+The lightbox opens full-size Media Library images with their alternative text;
+the grid loads large thumbnails lazily. It supports previous/next buttons,
+arrow keys, Escape, backdrop closing, and animated transitions to/from the
+thumbnail. A native modal dialog contains keyboard focus; closing restores the
+clicked link and the previous scroll setting. Reduced motion skips animation.
+Opening a different gallery closes the current one; Elementor re-rendering
+cleans up its dialog and event handlers. In the editor, image clicks stay in
+the editor. Disable the lightbox to use normal image links; links also work
+without JavaScript. The single-image gallery hides navigation buttons.
+
+Style controls cover background, heading color/typography, section padding,
+content width, grid row height/gap, heading spacing, and image corners.
+Local showcase images provide initial placeholders. Runtime assets do not
+depend on `temp`.
+
+## Career Hero widget
+
+**Jednotka Career Hero** adapts the career-page reference in `temp/hero`: a
+rounded photograph card, bottom dark gradient, and large **Kariéra** title.
+Find it in **Jednotka**. The default maximum width is 1290px; smaller screens
+use the reference's 320px minimum height and 22px corners. Long headings can
+wrap and increase the card height.
+
+Edit the title inline or in the panel, choose an H1/H2/H3 tag and image, and
+set alternative text. Responsive controls cover width, minimum height, corners,
+image crop position, outer spacing, and title padding. Typography, title color,
+section background, and bottom shade opacity are editable. The supplied
+reference does not include its `assets/career/hero.jpg` photo, so the initial
+image uses the existing local team placeholder; replace it in the image control.
+This widget needs no JavaScript and has no runtime dependency on `temp`.
+
+## Career Jobs widget
+
+**Jednotka Career Jobs** adapts `temp/jobs`: an **Otvorené pozície** heading,
+rounded search input, and an honest empty state. It starts with no positions.
+Find it in **Jednotka**, then add positions using the **Open positions** repeater.
+Each position has a title, short description, location, work type, and optional
+application/details link. Text supports inline editing. The list has a 1290px
+default maximum width and stacks its heading, search, and position actions on
+small screens. Colors, typography, width, and section padding are editable.
+
+Search matches titles, descriptions, locations, and work types, ignoring case
+and accents. The empty-archive and no-search-results messages are distinct and
+editable. Each widget filters only its own list; removing a widget cleans up
+its listeners. Search filtering is disabled in the Elementor editor so all
+positions remain available for inline editing; links do not navigate there.
+Without JavaScript, all positions remain visible. This is a manually managed
+list, not a jobs post type or application submission system. Assets are bundled
+locally and do not depend on `temp`.
 
 ## Adding widgets
 

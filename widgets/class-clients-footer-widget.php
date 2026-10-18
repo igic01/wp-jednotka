@@ -1,5 +1,5 @@
 <?php
-/** Reference floating client CTA and its integrated footer. */
+/** Contact CTA with floating projects and a responsive integrated footer. */
 namespace Jednotka\Elementor\Widgets;
 
 use Elementor\Controls_Manager;
@@ -40,26 +40,55 @@ class Clients_Footer_Widget extends Widget_Base {
 		$this->add_control( $key, array( 'label' => $label, 'type' => Controls_Manager::REPEATER, 'fields' => $item->get_controls(), 'title_field' => '{{{ label }}}', 'default' => $defaults, 'prevent_empty' => false ) );
 	}
 	protected function register_controls() {
-		$this->start_controls_section( 'cta_section', array( 'label' => 'Client heading and button' ) );
-		$this->text_controls( $this, 'heading', 'Heading', '{{WRAPPER}} .clients-cta-content h2', "Pridajte sa\nk spokojným klientom", true );
-		$this->text_controls( $this, 'button_text', 'Button label', '{{WRAPPER}} .clients-cta-content .button', 'Tu je miesto pre váš biznis' );
-		$this->add_control( 'button_link', array( 'label' => 'Button link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => home_url( '/sluzby/' ) ) ) );
+		$this->start_controls_section( 'cta_section', array( 'label' => 'Call to action' ) );
+		$this->text_controls( $this, 'heading', 'Heading', '{{WRAPPER}} .clients-cta-content h2', "Dobrý nápad?\nDajme mu život.", true );
+		$this->text_controls( $this, 'description', 'Description', '{{WRAPPER}} .jn-cta-description', 'Web, značka alebo marketing. Povedzte nám, čo máte v hlave — spolu z toho spravíme niečo, čo funguje.', true );
+		$this->text_controls( $this, 'button_text', 'Button label', '{{WRAPPER}} .clients-cta-content .button', 'Poďme sa porozprávať' );
+		$this->add_control( 'button_link', array( 'label' => 'Button link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => home_url( '/kontakt/' ) ) ) );
 		$this->add_control( 'button_background', array( 'label' => 'Button background', 'type' => Controls_Manager::COLOR, 'selectors' => array( '{{WRAPPER}} .clients-cta-content .button' => '--button-bg: {{VALUE}};' ) ) );
+		$this->add_control( 'phone_show', array( 'label' => 'Show phone contact', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
+		$this->text_controls( $this, 'phone_label', 'Phone introduction', '{{WRAPPER}} .jn-cta-phone-label', 'Radšej zavoláte?' );
+		$this->text_controls( $this, 'phone_number', 'Phone number', '{{WRAPPER}} .jn-cta-phone-number', '+421 000 000 000' );
+		$this->add_control( 'phone_link', array( 'label' => 'Phone link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => 'tel:+421000000000' ), 'description' => 'Use tel: followed by your phone number, including the country code.' ) );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'cards_section', array( 'label' => 'Floating projects' ) );
 		$card = new Repeater();
 		$card->add_control( 'name', array( 'label' => 'Item name / alternative text', 'type' => Controls_Manager::TEXT, 'default' => '' ) );
+		$card->add_control( 'category', array( 'label' => 'Project category', 'type' => Controls_Manager::TEXT ) );
+		$card->add_control( 'link', array( 'label' => 'Project link (optional)', 'type' => Controls_Manager::URL ) );
 		$this->media_controls( $card, 'media', 'assets/images/projects/placeholder.jpg' );
 		$card->add_responsive_control( 'width', array( 'label' => 'Card width', 'type' => Controls_Manager::SLIDER, 'range' => array( 'px' => array( 'min' => 40, 'max' => 500 ) ), 'selectors' => array( '{{WRAPPER}} {{CURRENT_ITEM}}' => '--card-width: {{SIZE}}{{UNIT}};' ) ) );
 		$card->add_responsive_control( 'radius', array( 'label' => 'Card corners', 'type' => Controls_Manager::SLIDER, 'range' => array( 'px' => array( 'min' => 0, 'max' => 100 ) ), 'selectors' => array( '{{WRAPPER}} {{CURRENT_ITEM}}' => '--card-radius: {{SIZE}}{{UNIT}};' ) ) );
-		$card->add_control( 'fit', array( 'label' => 'Media fit', 'type' => Controls_Manager::SELECT, 'default' => 'cover', 'options' => array( 'cover' => 'Fill card', 'contain' => 'Show complete media' ), 'selectors' => array( '{{WRAPPER}} {{CURRENT_ITEM}} > img, {{WRAPPER}} {{CURRENT_ITEM}} > video' => 'object-fit: {{VALUE}};' ) ) );
-		$this->add_control( 'cards', array( 'label' => 'Project media', 'type' => Controls_Manager::REPEATER, 'fields' => $card->get_controls(), 'default' => array_fill( 0, 6, array( 'name' => '' ) ), 'title_field' => '{{{ name || "Project media" }}}', 'max_items' => 6, 'prevent_empty' => false, 'description' => 'Six reference positions. Cards 5 and 6 are hidden on desktop; cards 2 and 6 are hidden on phones, exactly as in the reference. Reorder items to change their positions.' ) );
-		foreach ( array( 'drift' => 'Floating motion', 'parallax' => 'Pointer movement', 'trail' => 'Cursor trail' ) as $key => $label ) {
+		$card->add_control( 'fit', array( 'label' => 'Media fit', 'type' => Controls_Manager::SELECT, 'default' => 'cover', 'options' => array( 'cover' => 'Fill card', 'contain' => 'Show complete media' ), 'selectors' => array( '{{WRAPPER}} {{CURRENT_ITEM}} .jn-project-surface > img, {{WRAPPER}} {{CURRENT_ITEM}} .jn-project-surface > video' => 'object-fit: {{VALUE}};' ) ) );
+		$this->add_control( 'cards', array( 'label' => 'Project media', 'type' => Controls_Manager::REPEATER, 'fields' => $card->get_controls(), 'default' => array(
+			array( 'name' => 'Webové stránky', 'category' => 'Web & dizajn' ),
+			array( 'name' => 'Vizuálna identita', 'category' => 'Branding' ),
+			array( 'name' => 'Digitálne zážitky', 'category' => 'Web & dizajn' ),
+			array( 'name' => 'E-shopy', 'category' => 'E-commerce' ),
+			array( 'name' => 'Kampane', 'category' => 'Marketing' ),
+			array( 'name' => 'Nové nápady', 'category' => 'Kreatíva' ),
+		), 'title_field' => '{{{ name || "Project media" }}}', 'max_items' => 6, 'prevent_empty' => false, 'description' => 'Up to six floating projects. Replace the demo media with your work. Cards 2 and 6 are hidden on phones to leave room for the CTA. Reorder items to change their positions.' ) );
+		foreach ( array( 'reveal' => 'Project entrance animation', 'drift' => 'Floating motion', 'parallax' => 'Pointer movement', 'trail' => 'Mouse glow', 'snap' => 'Snap CTA to viewport' ) as $key => $label ) {
 			$this->add_control( $key, array( 'label' => $label, 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
 		}
 		$this->end_controls_section();
 
+		$this->register_footer_controls();
+
+		$this->start_controls_section( 'layout_section', array( 'label' => 'Section and footer layout', 'tab' => Controls_Manager::TAB_STYLE ) );
+		foreach ( array( 'top' => 'Gradient top', 'middle' => 'Gradient middle', 'bottom' => 'Gradient bottom' ) as $key => $label ) {
+			$this->add_control( 'gradient_' . $key, array( 'label' => $label, 'type' => Controls_Manager::COLOR, 'selectors' => array( '{{WRAPPER}} .jn-clients-footer' => '--jn-cta-' . $key . ': {{VALUE}};' ) ) );
+		}
+		$this->add_responsive_control( 'height', array( 'label' => 'Section minimum height', 'type' => Controls_Manager::SLIDER, 'range' => array( 'px' => array( 'min' => 600, 'max' => 2600 ) ), 'selectors' => array( '{{WRAPPER}} .jn-clients-footer' => 'min-height: {{SIZE}}{{UNIT}};' ) ) );
+		$this->add_responsive_control( 'cta_padding', array( 'label' => 'CTA padding', 'type' => Controls_Manager::DIMENSIONS, 'size_units' => array( 'px', '%' ), 'selectors' => array( '{{WRAPPER}} .jn-cta-stage' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ) ) );
+		$this->add_control( 'footer_background', array( 'label' => 'Footer background', 'type' => Controls_Manager::COLOR, 'selectors' => array( '{{WRAPPER}} .site-footer-card' => 'background: {{VALUE}};' ) ) );
+		$this->add_responsive_control( 'footer_padding', array( 'label' => 'Footer padding', 'type' => Controls_Manager::DIMENSIONS, 'size_units' => array( 'px', '%' ), 'selectors' => array( '{{WRAPPER}} .site-footer-card' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ) ) );
+		$this->add_responsive_control( 'footer_radius', array( 'label' => 'Footer corners', 'type' => Controls_Manager::SLIDER, 'range' => array( 'px' => array( 'min' => 0, 'max' => 100 ) ), 'selectors' => array( '{{WRAPPER}} .site-footer-card' => 'border-radius: {{SIZE}}{{UNIT}};' ) ) );
+		$this->end_controls_section();
+	}
+
+	protected function register_footer_controls() {
 		$this->start_controls_section( 'brand_section', array( 'label' => 'Footer brand' ) );
 		$this->media_controls( $this, 'logo', 'assets/images/jednotka-logo.svg' );
 		$this->add_control( 'logo_name', array( 'label' => 'Logo accessible name', 'type' => Controls_Manager::TEXT, 'default' => 'Jednotka' ) );
@@ -102,15 +131,35 @@ class Clients_Footer_Widget extends Widget_Base {
 		$this->text_controls( $this, 'copyright', 'Copyright', '{{WRAPPER}} .footer-side > p', '© 2026 Jednotka' );
 		$this->end_controls_section();
 
-		$this->start_controls_section( 'layout_section', array( 'label' => 'Section and footer layout', 'tab' => Controls_Manager::TAB_STYLE ) );
-		foreach ( array( 'top' => 'Gradient top', 'middle' => 'Gradient middle', 'bottom' => 'Gradient bottom' ) as $key => $label ) {
-			$this->add_control( 'gradient_' . $key, array( 'label' => $label, 'type' => Controls_Manager::COLOR, 'selectors' => array( '{{WRAPPER}} .jn-clients-footer' => '--jn-cta-' . $key . ': {{VALUE}};' ) ) );
-		}
-		$this->add_responsive_control( 'height', array( 'label' => 'Section minimum height', 'type' => Controls_Manager::SLIDER, 'range' => array( 'px' => array( 'min' => 600, 'max' => 2600 ) ), 'selectors' => array( '{{WRAPPER}} .jn-clients-footer' => 'min-height: {{SIZE}}{{UNIT}};' ) ) );
-		$this->add_control( 'footer_background', array( 'label' => 'Footer background', 'type' => Controls_Manager::COLOR, 'selectors' => array( '{{WRAPPER}} .site-footer-card' => 'background: {{VALUE}};' ) ) );
-		$this->add_responsive_control( 'footer_padding', array( 'label' => 'Footer padding', 'type' => Controls_Manager::DIMENSIONS, 'size_units' => array( 'px', '%' ), 'selectors' => array( '{{WRAPPER}} .site-footer-card' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ) ) );
-		$this->add_responsive_control( 'footer_radius', array( 'label' => 'Footer corners', 'type' => Controls_Manager::SLIDER, 'range' => array( 'px' => array( 'min' => 0, 'max' => 100 ) ), 'selectors' => array( '{{WRAPPER}} .site-footer-card' => 'border-radius: {{SIZE}}{{UNIT}};' ) ) );
-		$this->end_controls_section();
+	}
+
+	protected function render_footer( $s, $id ) {
+		?>
+			<footer class="site-footer-card" aria-label="Päta stránky">
+				<div class="footer-brand">
+					<a <?php $this->print_render_attribute_string( 'logo_link' ); ?>><?php $this->render_media( $s, 'logo' ); ?></a>
+					<p <?php $this->inline_text( 'brand_text' ); ?>><?php echo esc_html( $s['brand_text'] ); ?></p>
+					<?php if ( 'yes' === $s['newsletter_show'] ) : ?>
+						<form class="footer-newsletter" data-unconnected="yes">
+							<label for="footer-email-<?php echo esc_attr( $id ); ?>" <?php $this->inline_text( 'newsletter_label' ); ?>><?php echo esc_html( $s['newsletter_label'] ); ?></label>
+							<div class="footer-newsletter-field">
+								<input id="footer-email-<?php echo esc_attr( $id ); ?>" type="email" placeholder="<?php echo esc_attr( $s['newsletter_placeholder'] ); ?>" autocomplete="email" />
+								<button type="button" aria-label="<?php echo esc_attr( $s['newsletter_submit'] ); ?>"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg></button>
+							</div>
+							<div class="jn-newsletter-notice" role="status" hidden><?php echo esc_html( $s['newsletter_notice'] ); ?></div>
+						</form>
+					<?php endif; ?>
+				</div>
+				<div class="footer-nav-wrap"><nav class="footer-nav" aria-label="Päta navigácia">
+					<div class="footer-nav-group"><span <?php $this->inline_text( 'menu_heading', 'jn-footer-menu-heading' ); ?>><?php echo esc_html( $s['menu_heading'] ); ?></span><?php $this->render_links( $s, 'menu_links' ); ?></div>
+					<div class="footer-nav-group"><span <?php $this->inline_text( 'contact_heading', 'jn-footer-contact-heading' ); ?>><?php echo esc_html( $s['contact_heading'] ); ?></span><?php $this->render_links( $s, 'contact_links' ); ?></div>
+				</nav></div>
+				<div class="footer-side">
+					<div class="footer-socials" aria-label="Sociálne siete"><?php $this->render_links( $s, 'social_links' ); ?></div>
+					<p <?php $this->inline_text( 'copyright' ); ?>><?php echo esc_html( $s['copyright'] ); ?></p>
+				</div>
+			</footer>
+		<?php
 	}
 
 	private function inline_text( $key, $class = '' ) {
@@ -140,45 +189,48 @@ class Clients_Footer_Widget extends Widget_Base {
 		$this->add_render_attribute( 'button_link', 'class', 'button button--primary' );
 		$this->add_link_attributes( 'logo_link', $s['logo_link'] );
 		$this->add_render_attribute( 'logo_link', array( 'class' => 'footer-logo', 'aria-label' => $s['logo_name'] ) );
+		$this->add_link_attributes( 'phone_link', $s['phone_link'] );
+		$this->add_render_attribute( 'phone_link', 'class', 'jn-cta-phone-number' );
 		$variants = array( 'one', 'two', 'three', 'four', 'five', 'six' );
 		?>
-		<section class="clients-cta-section jn-clients-footer" aria-labelledby="clients-cta-title-<?php echo esc_attr( $id ); ?>" data-drift="<?php echo esc_attr( $s['drift'] ); ?>" data-parallax="<?php echo esc_attr( $s['parallax'] ); ?>" data-trail="<?php echo esc_attr( $s['trail'] ); ?>" data-editor="<?php echo \Elementor\Plugin::$instance->editor->is_edit_mode() ? 'yes' : 'no'; ?>">
+		<section class="clients-cta-section jn-clients-footer" aria-labelledby="clients-cta-title-<?php echo esc_attr( $id ); ?>" data-reveal="<?php echo esc_attr( $s['reveal'] ); ?>" data-drift="<?php echo esc_attr( $s['drift'] ); ?>" data-parallax="<?php echo esc_attr( $s['parallax'] ); ?>" data-trail="<?php echo esc_attr( $s['trail'] ); ?>" data-snap="<?php echo esc_attr( $s['snap'] ); ?>" data-editor="<?php echo \Elementor\Plugin::$instance->editor->is_edit_mode() ? 'yes' : 'no'; ?>">
 			<div class="cursor-trail-layer" aria-hidden="true"></div>
+			<div class="jn-cta-stage">
 			<?php foreach ( array_slice( $s['cards'], 0, 6 ) as $index => $card ) : ?>
-				<div class="floating-project-card floating-project-card--<?php echo esc_attr( $variants[ $index ] ); ?> elementor-repeater-item-<?php echo esc_attr( $card['_id'] ); ?>"><?php $this->render_media( $card, 'media', $card['name'] ); ?></div>
+				<?php
+				$project_key = 'project_link_' . $index;
+				$linked = ! empty( $card['link']['url'] );
+				$tag = $linked ? 'a' : 'div';
+				$this->add_render_attribute( $project_key, 'class', 'jn-project-surface' );
+				if ( $linked ) {
+					$this->add_link_attributes( $project_key, $card['link'] );
+					$this->add_render_attribute( $project_key, 'aria-label', $card['name'] ?: 'Pozrieť projekt' );
+				}
+				?>
+				<div class="floating-project-card floating-project-card--<?php echo esc_attr( $variants[ $index ] ); ?> elementor-repeater-item-<?php echo esc_attr( $card['_id'] ); ?>">
+					<div class="jn-project-reveal">
+					<<?php echo $tag; ?> <?php $this->print_render_attribute_string( $project_key ); ?>>
+						<?php $this->render_media( $card, 'media', $linked ? '' : $card['name'] ); ?>
+						<?php if ( $card['name'] || ! empty( $card['category'] ) ) : ?>
+							<span class="jn-project-caption"><span><?php echo esc_html( $card['name'] ); ?></span><?php if ( ! empty( $card['category'] ) ) : ?><small><?php echo esc_html( $card['category'] ); ?></small><?php endif; ?></span>
+						<?php endif; ?>
+					</<?php echo $tag; ?>>
+					</div>
+				</div>
 			<?php endforeach; ?>
 			<div class="clients-cta-content">
 				<h2 id="clients-cta-title-<?php echo esc_attr( $id ); ?>" <?php $this->inline_text( 'heading' ); ?>><?php echo nl2br( wp_kses( $s['heading'], array( 'br' => array() ) ) ); ?></h2>
+				<?php if ( $s['description'] ) : ?><p <?php $this->inline_text( 'description', 'jn-cta-description' ); ?>><?php echo esc_html( $s['description'] ); ?></p><?php endif; ?>
 				<a <?php $this->print_render_attribute_string( 'button_link' ); ?>>
 					<span class="button-label"><span class="button-label-track"><span <?php $this->inline_text( 'button_text', 'button-label-line' ); ?>><?php echo esc_html( $s['button_text'] ); ?></span><span class="button-label-line" aria-hidden="true"><?php echo esc_html( $s['button_text'] ); ?></span></span></span>
 					<span class="button-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg></span>
 				</a>
+				<?php if ( 'yes' === $s['phone_show'] && $s['phone_number'] ) : ?>
+					<div class="jn-cta-phone"><span <?php $this->inline_text( 'phone_label', 'jn-cta-phone-label' ); ?>><?php echo esc_html( $s['phone_label'] ); ?></span><a <?php $this->print_render_attribute_string( 'phone_link' ); ?>><span <?php $this->inline_text( 'phone_number' ); ?>><?php echo esc_html( $s['phone_number'] ); ?></span></a></div>
+				<?php endif; ?>
 			</div>
-			<footer class="site-footer-card" aria-label="Päta stránky">
-				<div class="footer-brand">
-					<a <?php $this->print_render_attribute_string( 'logo_link' ); ?>><?php $this->render_media( $s, 'logo' ); ?></a>
-					<p <?php $this->inline_text( 'brand_text' ); ?>><?php echo esc_html( $s['brand_text'] ); ?></p>
-					<?php if ( 'yes' === $s['newsletter_show'] ) : ?>
-						<form class="footer-newsletter" data-unconnected="yes">
-							<label for="footer-email-<?php echo esc_attr( $id ); ?>" <?php $this->inline_text( 'newsletter_label' ); ?>><?php echo esc_html( $s['newsletter_label'] ); ?></label>
-							<div class="footer-newsletter-field">
-								<input id="footer-email-<?php echo esc_attr( $id ); ?>" type="email" placeholder="<?php echo esc_attr( $s['newsletter_placeholder'] ); ?>" autocomplete="email" />
-								<button type="button" aria-label="<?php echo esc_attr( $s['newsletter_submit'] ); ?>"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg></button>
-							</div>
-							<div class="jn-newsletter-notice" role="status" hidden><?php echo esc_html( $s['newsletter_notice'] ); ?></div>
-						</form>
-					<?php endif; ?>
-				</div>
-				<div class="footer-nav-wrap"><nav class="footer-nav" aria-label="Päta navigácia">
-					<div class="footer-nav-group"><span <?php $this->inline_text( 'menu_heading', 'jn-footer-menu-heading' ); ?>><?php echo esc_html( $s['menu_heading'] ); ?></span><?php $this->render_links( $s, 'menu_links' ); ?></div>
-					<div class="footer-nav-group"><span <?php $this->inline_text( 'contact_heading', 'jn-footer-contact-heading' ); ?>><?php echo esc_html( $s['contact_heading'] ); ?></span><?php $this->render_links( $s, 'contact_links' ); ?></div>
-				</nav></div>
-				<div class="footer-side">
-					<div class="footer-socials" aria-label="Sociálne siete"><?php $this->render_links( $s, 'social_links' ); ?></div>
-					<p <?php $this->inline_text( 'copyright' ); ?>><?php echo esc_html( $s['copyright'] ); ?></p>
-				</div>
-			</footer>
-			<button class="jn-clients-footer__motion" type="button" aria-label="Pause animations" aria-pressed="false" data-play-label="Play animations" data-pause-label="Pause animations">Ⅱ</button>
+			</div>
+			<?php $this->render_footer( $s, $id ); ?>
 		</section>
 		<?php
 	}

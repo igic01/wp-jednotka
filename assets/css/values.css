@@ -1,0 +1,163 @@
+/* Scoped adaptation of temp/values.css. */
+@font-face { font-family: 'Urbanist'; src: url('../fonts/Urbanist-800.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Aspekta Variable'; src: url('../fonts/AspektaVariable.woff2') format('woff2-variations'); font-weight: 50 1000; font-style: normal; font-display: swap; }
+.jn-values, .jn-values * { box-sizing: border-box; }
+.jn-values { --card-color: #5f2df5; --card-radius: clamp(20px, 2.2vw, 32px); font-family: 'Aspekta Variable', Arial, sans-serif; }
+.jn-values {
+  height: calc(var(--count, 5) * var(--card-scroll, 40vh) + 100vh);
+  color: #ffffff;
+  background: #0f0f0f;
+}
+
+.jn-values .values__sticky {
+  position: sticky;
+  top: 0;
+  display: grid;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.jn-values .values__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(24px, 5vw, 96px);
+  align-items: center;
+  width: min(100%, 1440px);
+  margin-inline: auto;
+  padding: 0 var(--page-gutter, 40px);
+}
+
+.jn-values .values__title {
+  margin: 0;
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(48px, 6.4vw, 112px);
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+.jn-values .values__lead {
+  max-width: 440px;
+  margin: clamp(20px, 2.4vw, 36px) 0 0;
+  color: rgb(255 255 255 / 62%);
+  font-size: clamp(16px, 1.4vw, 21px);
+  line-height: 1.6;
+}
+
+/* Cards are stacked in one cell; scripts slide each one up over the last */
+.jn-values .values__stage {
+  position: relative;
+  height: min(62vh, 560px);
+  perspective: 1400px;
+}
+
+/* The card only handles the scroll stacking; the face inside tilts toward the cursor */
+.jn-values .values__card {
+  position: absolute;
+  inset: 0;
+  /* Every card has its own position and rotation (set from script) from the moment it enters */
+  transform:
+    translate3d(calc(var(--pose-x, 0) * 1%), calc(var(--pose-y, 0) * 1%), 0)
+    translate3d(calc(var(--dir, 0) * var(--fall, 0) * 22%), calc(var(--fall, 0) * 135%), 0)
+    translate3d(0, calc(var(--enter, 0) * 105%), 0)
+    rotate(calc(var(--pose-rot, 0) * 1deg + var(--dir, 0) * var(--fall, 0) * 22deg));
+  filter: brightness(calc(1 - var(--settle, 0) * 0.16 - var(--behind, 0) * 0.07));
+  will-change: transform, filter;
+}
+
+.jn-values .values__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  padding: clamp(24px, 3vw, 48px);
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: var(--card-radius);
+  background: var(--card-color);
+  box-shadow:
+    calc(var(--ry, 0) * -2.2px) calc(var(--rx, 0) * 2.2px + 12px) calc(30px + var(--lift, 0) * 30px)
+      rgb(95 45 245 / calc(var(--lift, 0) * 45%)),
+    0 2px 0 rgb(255 255 255 / 4%) inset;
+  transform:
+    perspective(1100px)
+    rotateX(calc(var(--rx, 0) * 1deg))
+    rotateY(calc(var(--ry, 0) * 1deg))
+    scale(calc(1 + var(--lift, 0) * 0.025));
+  will-change: transform;
+}
+
+/* The colour glow: drifts with scroll, and chases the cursor while hovered */
+.jn-values .values__orb {
+  position: absolute;
+  left: var(--ox, 50%);
+  top: var(--oy, 50%);
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow-color, rgb(200 180 255 / 60%)) 0%, transparent 68%);
+  filter: blur(30px);
+  transform: translate3d(calc(-50% + var(--drift, 0) * -12%), calc(-50% + var(--drift, 0) * 8%), 0)
+    scale(calc(1 + var(--lift, 0) * 0.15));
+}
+
+.jn-values .values__number {
+  position: absolute;
+  top: clamp(16px, 2vw, 32px);
+  left: clamp(24px, 3vw, 48px);
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(80px, 10vw, 168px);
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(255 255 255 / 60%);
+  transform: translate3d(calc(var(--px, 0) * 14px), calc(var(--py, 0) * 14px), 0);
+}
+
+.jn-values .values__card-body {
+  position: relative;
+  transform: translate3d(calc(var(--px, 0) * -10px), calc(var(--py, 0) * -10px), 0);
+  max-width: 560px;
+}
+
+.jn-values .values__card-title {
+  margin: 0;
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(30px, 3.6vw, 56px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.jn-values .values__card-text {
+  margin: 14px 0 0;
+  color: rgb(255 255 255 / 72%);
+  font-size: clamp(15px, 1.3vw, 19px);
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .jn-values .values__layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .jn-values .values__lead {
+    display: none;
+  }
+
+  .jn-values .values__stage {
+    height: min(52vh, 460px);
+  }
+}
+
+.jn-values .values__title, .jn-values .values__card-title, .jn-values .values__card-text { overflow-wrap: anywhere; }
+.jn-values[data-static="yes"] { height: auto; }
+.jn-values[data-static="yes"] .values__sticky { position: relative; height: auto; overflow: visible; padding-block: 80px; }
+.jn-values[data-static="yes"] .values__layout { align-items: start; }
+.jn-values[data-static="yes"] .values__stage { display: grid; gap: 24px; height: auto; perspective: none; }
+.jn-values[data-static="yes"] .values__card { position: relative; transform: none; filter: none; will-change: auto; }
+.jn-values[data-static="yes"] .values__face { position: relative; min-height: 360px; transform: none; }
+.jn-values[data-static="yes"] .values__lead { display: block; }
+@media (prefers-reduced-motion: reduce) {
+  .jn-values .values__face { transform: none; }
+}

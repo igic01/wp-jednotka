@@ -20,7 +20,7 @@
         if (!header) return;
         const toggle = header.querySelector('.jn-header__toggle');
         const nav = header.querySelector('.jn-header__nav');
-        const breakpoint = header.closest('.jn-hero') ? 700 : 1024;
+        const breakpoint = header.closest('.jn-hero, .jn-services-hero') ? 700 : 1024;
         const mobile = window.matchMedia(`(max-width: ${breakpoint}px)`);
         const editing = elementorFrontend.isEditMode();
         const setOpen = (open, returnFocus = false) => {
@@ -81,6 +81,7 @@
     };
     elementorFrontend.hooks.addAction('frontend/element_ready/jednotka-header.default', attachHeader);
     elementorFrontend.hooks.addAction('frontend/element_ready/jednotka-hero.default', attachHeader);
+    elementorFrontend.hooks.addAction('frontend/element_ready/jednotka-services-hero.default', attachHeader);
   }
 
   jQuery(window).on('elementor/frontend/init', register);

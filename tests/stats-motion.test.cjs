@@ -16,10 +16,9 @@ function setup({ editing = false, reduced = false } = {}) {
   }
   const counter = new Element({ countTo: '100', countSuffix: '+' }); counter.textContent = '100+';
   const card = new Element(); card.top = 1000;
-  const control = new Element({ pauseLabel: 'Pause testimonials', playLabel: 'Play testimonials' });
   const section = new Element({ count: 'yes', reveal: 'yes', drift: 'yes' });
   section.querySelectorAll = selector => ({ '.testimonial-card': [card], '[data-count-to]': [counter], video: [] })[selector];
-  section.querySelector = () => control;
+  section.querySelector = () => null;
   const frames = new Map(); let sequence = 0, observer, handler, hook;
   const media = new Map();
   const window = new EventTarget();
@@ -38,7 +37,7 @@ function setup({ editing = false, reduced = false } = {}) {
     IntersectionObserver: class { constructor(callback) { observer = this; this.callback = callback; this.targets = new Set(); } observe(el) { this.targets.add(el); } unobserve(el) { this.targets.delete(el); } disconnect() { this.targets.clear(); } },
   });
   hook([{ querySelector: () => section }]);
-  return { handler, counter, card, section, control, window, media, frames, get observer() { return observer; }, tick(time) { const pending = [...frames.values()]; frames.clear(); pending.forEach(fn => fn(time)); } };
+  return { handler, counter, card, section, window, media, frames, get observer() { return observer; }, tick(time) { const pending = [...frames.values()]; frames.clear(); pending.forEach(fn => fn(time)); } };
 }
 
 test('counts once when visible, reveals on scroll, pauses, and cleans up', () => {
@@ -52,9 +51,11 @@ test('counts once when visible, reveals on scroll, pauses, and cleans up', () =>
   assert.equal(s.card.style.opacity, '0.120');
   s.card.top = 0; s.window.dispatchEvent(new Event('scroll')); s.tick(1300);
   assert.equal(s.card.style.opacity, '1.000');
-  s.control.dispatchEvent(new Event('click'));
+  const reduced = s.media.get('(prefers-reduced-motion: reduce)');
+  reduced.matches = true; reduced.dispatchEvent(new Event('change'));
   assert.ok(s.section.classes.has('is-paused') && s.section.classes.has('is-static'));
-  assert.equal(s.control.attributes['aria-label'], 'Play testimonials');
+  reduced.matches = false; reduced.dispatchEvent(new Event('change'));
+  assert.equal(s.section.classes.has('is-paused'), false);
   s.window.dispatchEvent(new Event('scroll'));
   s.handler.onDestroy(); assert.equal(s.frames.size, 0);
   s.window.dispatchEvent(new Event('scroll')); assert.equal(s.frames.size, 0);

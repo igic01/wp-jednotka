@@ -8,12 +8,14 @@ function environment() {
   const listeners = [];
   const actions = [];
   const context = {
-    window: {},
+    window: { addEventListener() {} },
+    document: { readyState: 'loading', addEventListener() {} },
     jQuery: () => ({ on: (event, callback) => {
       assert.equal(event, 'elementor/frontend/init');
       listeners.push(callback);
     } }),
   };
+  context.window.jQuery = context.jQuery;
   const ready = () => {
     context.elementorFrontend = context.window.elementorFrontend = {
       hooks: { addAction: (name, callback) => actions.push({ name, callback }) },
@@ -24,7 +26,7 @@ function environment() {
     };
   };
   const load = () => {
-    for (const filename of ['header.js', 'hero.js', 'logo-strip.js', 'stats.js', 'approach.js', 'results.js', 'services.js', 'clients-footer.js']) {
+    for (const filename of ['header.js', 'hero.js', 'logo-strip.js', 'stats.js', 'approach.js', 'results.js', 'services.js', 'clients-footer.js', 'showcase.js', 'team.js', 'our-story.js', 'values.js', 'projects.js', 'contact.js', 'services-hero.js', 'work.js', 'faq.js', 'posts.js', 'footer.js', 'gallery.js', 'career-jobs.js']) {
       const source = fs.readFileSync(path.join(__dirname, '../assets/js', filename), 'utf8');
       vm.runInNewContext(source, context, { filename });
     }
@@ -37,6 +39,7 @@ function assertRegistered(env) {
   assert.deepEqual(env.actions.map(action => action.name), [
     'frontend/element_ready/jednotka-header.default',
     'frontend/element_ready/jednotka-hero.default',
+    'frontend/element_ready/jednotka-services-hero.default',
     'frontend/element_ready/jednotka-hero.default',
     'frontend/element_ready/jednotka-logo-strip.default',
     'frontend/element_ready/jednotka-stats.default',
@@ -44,6 +47,19 @@ function assertRegistered(env) {
     'frontend/element_ready/jednotka-results.default',
     'frontend/element_ready/jednotka-services.default',
     'frontend/element_ready/jednotka-clients-footer.default',
+    'frontend/element_ready/jednotka-showcase.default',
+    'frontend/element_ready/jednotka-team.default',
+    'frontend/element_ready/jednotka-our-story.default',
+    'frontend/element_ready/jednotka-values.default',
+    'frontend/element_ready/jednotka-projects.default',
+    'frontend/element_ready/jednotka-contact.default',
+    'frontend/element_ready/jednotka-services-hero.default',
+    'frontend/element_ready/jednotka-work.default',
+    'frontend/element_ready/jednotka-faq.default',
+    'frontend/element_ready/jednotka-posts.default',
+    'frontend/element_ready/jednotka-footer.default',
+    'frontend/element_ready/jednotka-gallery.default',
+    'frontend/element_ready/jednotka-career-jobs.default',
   ]);
 }
 

@@ -1,0 +1,9 @@
+Demo media imported from the image URLs in temp/index.html.
+Replace these landscape/demo images through the widget's Elementor controls.
+
+gallery-1.jpg: https://picsum.photos/id/1015/1200/900
+gallery-2.jpg: https://picsum.photos/id/1043/1200/900
+gallery-3.jpg: https://picsum.photos/id/1018/1200/900
+gallery-4.jpg: https://picsum.photos/id/1039/1200/900
+after.jpg: https://picsum.photos/id/1025/1600/1000
+before.jpg: https://picsum.photos/id/1011/1600/1000

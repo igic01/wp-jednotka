@@ -14,3 +14,5 @@
 .jn-results .jn-results__video-toggle { position: absolute; top: 12px; right: 12px; z-index: 2; width: 30px; height: 30px; padding: 0; border: 1px solid #ffffff99; border-radius: 50%; background: #121212; color: #fff; font: 12px Arial,sans-serif; cursor: pointer; opacity: 0; }
 .jn-results .project-card:hover .jn-results__video-toggle, .jn-results .jn-results__video-toggle:focus-visible { opacity: 1; }
 .jn-results .project-card-link:focus-visible { outline: 2px solid currentColor; outline-offset: 6px; border-radius: 4px; }
+
+.jn-results .project-media { background: #1a1a1a; }

@@ -14,9 +14,6 @@
 .jn-hero .hero-title-line { color: #fff; font: 650 clamp(32px, 8vw, 130px)/1 "Aspekta Variable", Arial, sans-serif; letter-spacing: -.055em; text-align: center; }
 .jn-hero .jn-hero__icon { display: contents; }
 .jn-hero .jn-hero__badge-text { font: inherit; line-height: inherit; }
-.jn-hero .jn-hero__motion { position: absolute; bottom: 20px; right: 20px; z-index: 3; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 1px solid #ffffff99; border-radius: 50%; color: #fff; background: #190638; font: 12px Arial, sans-serif; cursor: pointer; opacity: 0; }
-.jn-hero:hover .jn-hero__motion, .jn-hero .jn-hero__motion:focus-visible { opacity: 1; }
-.jn-hero .jn-hero__motion[hidden] { display: none; }
 .jn-hero :is(a, button):focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 .jn-hero.is-text-editing .button-label, .elementor-editor-active .jn-hero .button-label { height: auto; overflow: visible; }
 .jn-hero.is-text-editing .button-label-track, .elementor-editor-active .jn-hero .button-label-track { transform: none; }

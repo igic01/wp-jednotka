@@ -109,7 +109,6 @@ class Stats_Widget extends Widget_Base {
 					<?php endforeach; ?>
 				</div>
 			</div>
-			<button class="jn-stats__motion" type="button" aria-pressed="false" aria-label="Pause testimonials" data-play-label="Play testimonials" data-pause-label="Pause testimonials">Ⅱ</button>
 		</section>
 		<?php
 	}

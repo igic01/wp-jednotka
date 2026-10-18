@@ -1,0 +1,460 @@
+@font-face { font-family: 'Urbanist'; src: url('../fonts/Urbanist-800.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Aspekta Variable'; src: url('../fonts/AspektaVariable.woff2') format('woff2-variations'); font-weight: 50 1000; font-style: normal; font-display: swap; }
+.jn-posts, .jn-posts * { box-sizing: border-box; }
+.jn-posts { --posts-background: #0f0f0f; background: var(--posts-background); color: #fff; font-family: "Aspekta Variable", Arial, sans-serif; padding-bottom: 76px; display: flow-root; scroll-margin-top: var(--posts-sticky-offset, 0px); }
+/* Category badge and date / read-time line */
+.jn-posts .blog-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 45px;
+  padding: 0 18px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  color: #fff;
+  font-family: "Aspekta Variable", Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1;
+  background: rgb(26 26 26 / 48%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 16%);
+  backdrop-filter: blur(14px);
+}
+
+.jn-posts .blog-badge img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.jn-posts .blog-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: rgb(255 255 255 / 42%);
+  font-family: "Aspekta Variable", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .jn-posts .blog-badge {
+    min-height: 37px;
+    padding: 0 14px;
+    font-size: 17px;
+  }
+
+  .jn-posts .blog-badge img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .jn-posts .blog-meta {
+    font-size: 13px;
+  }
+}
+
+/* Arrow button is the solid white circle used on the services list */
+.jn-posts .blog-card-arrow {
+  color: #090909;
+  background: #fff;
+  backdrop-filter: none;
+  transition:
+    background-color 180ms ease,
+    transform 220ms ease;
+}
+
+.jn-posts .blog-card-arrow::before {
+  display: none;
+}
+
+.jn-posts .blog-card-link:hover .blog-card-arrow {
+  background: #fff;
+  transform: translate(3px, -3px);
+}
+
+.jn-posts .blog-card-arrow svg {
+  stroke-width: 2.8;
+}
+
+/* Pinned to the top while the posts scroll underneath */
+.jn-posts .blog-toolbar {
+  position: sticky;
+  top: var(--posts-sticky-offset, 0px);
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 20px;
+  padding: 14px max(32px, calc((100% - var(--posts-max-width, 1240px)) / 2));
+  background: var(--posts-background, #0f0f0f);
+}
+
+/* 1px white line under the bar, only while it is stuck to the top (class set in posts-motion.js) */
+.jn-posts .blog-toolbar::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: #fff;
+  content: "";
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+
+.jn-posts .blog-toolbar.is-stuck::after {
+  opacity: 1;
+}
+
+.jn-posts .blog-search {
+  position: relative;
+  flex: 0 1 380px;
+  min-width: 240px;
+}
+
+.jn-posts .blog-search svg {
+  position: static;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: rgb(255 255 255 / 50%);
+  stroke-linecap: round;
+  stroke-width: 2.2;
+  pointer-events: none;
+}
+
+.jn-posts .blog-search-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.jn-posts .blog-search input {
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  padding: 0 20px 0 52px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  color: #fff;
+  font: 400 17px/1 "Aspekta Variable", Arial, sans-serif;
+  background: #1a1a1a;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
+  outline: 0;
+  transition: border-color 250ms ease;
+}
+
+.jn-posts .blog-search input::placeholder {
+  color: rgb(255 255 255 / 42%);
+}
+
+.jn-posts .blog-search input:focus {
+  border-color: rgb(255 255 255 / 50%);
+}
+
+.jn-posts .blog-search input::-webkit-search-cancel-button {
+  filter: invert(1);
+  opacity: 0.5;
+}
+
+.jn-posts .blog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Round icon buttons, one per service */
+.jn-posts .blog-filter {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 50%;
+  color: rgb(255 255 255 / 72%);
+  background: rgb(26 26 26 / 48%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
+  cursor: pointer;
+  transition:
+    border-color 300ms ease,
+    background-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.jn-posts .blog-filter img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.jn-posts .blog-filter svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.jn-posts .blog-filter:hover {
+  border-color: rgb(255 255 255 / 45%);
+}
+
+.jn-posts .blog-filter[aria-pressed="true"] {
+  border-color: #fff;
+  background: rgb(255 255 255 / 20%);
+  box-shadow: 0 0 0 3px rgb(255 255 255 / 12%);
+}
+
+.jn-posts .blog-filter:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 76%);
+  outline-offset: 3px;
+}
+
+/* Name of the service on hover / focus */
+.jn-posts .blog-filter::after {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #090909;
+  font: 400 14px/1 "Aspekta Variable", Arial, sans-serif;
+  white-space: nowrap;
+  background: #fff;
+  content: attr(aria-label);
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity 250ms ease;
+  pointer-events: none;
+}
+
+.jn-posts .blog-filter:hover::after,
+.jn-posts .blog-filter:focus-visible::after {
+  opacity: 1;
+}
+
+/* Shown when nothing matches */
+.jn-posts .blog-empty {
+  width: calc(100% - 64px);
+  max-width: var(--posts-max-width, 1240px);
+  margin: 0 auto;
+  padding: 40px 0 140px;
+  color: rgb(255 255 255 / 58%);
+  font-family: "Aspekta Variable", Arial, sans-serif;
+  font-size: 20px;
+}
+
+.jn-posts .blog-empty[hidden] {
+  display: none;
+}
+
+/* Filtering: the list fades out, the posts swap while it is invisible, then it fades back in */
+.jn-posts .blog-list {
+  transition: opacity 220ms ease;
+}
+
+.jn-posts .blog-list.is-filtering {
+  opacity: 0;
+}
+
+@media (max-width: 700px) {
+  .jn-posts .blog-toolbar {
+    padding: 12px 16px;
+  }
+
+  .jn-posts .blog-search {
+    flex-basis: 100%;
+  }
+
+  .jn-posts .blog-filter::after {
+    display: none;
+  }
+
+  .jn-posts .blog-filter {
+    width: 44px;
+    height: 44px;
+  }
+
+  .jn-posts .blog-empty {
+    width: auto;
+    margin: 0 16px;
+    padding-bottom: 100px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jn-posts .blog-list {
+    transition: none;
+  }
+}
+
+.jn-posts .blog-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px 36px;
+  width: calc(100% - 64px);
+  max-width: var(--posts-max-width, 1240px);
+  margin: 40px auto 0;
+  padding-bottom: 116px;
+}
+
+.jn-posts .blog-card {
+  min-width: 0;
+}
+
+.jn-posts .blog-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.jn-posts .blog-card-image {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.32;
+  margin: 0 0 24px;
+  overflow: hidden;
+  border-radius: 34px;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jn-posts .blog-card-image > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jn-posts .blog-card-link:hover .blog-card-image > img {
+  transform: scale(1.06);
+}
+
+
+.jn-posts .blog-card-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(0 0 0 / 0%) 46%, rgb(0 0 0 / 50%) 100%);
+}
+
+.jn-posts .blog-card-image .blog-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1;
+}
+
+.jn-posts .blog-card-arrow {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 1;
+  --arrow-badge-size: 46px;
+}
+
+
+.jn-posts .blog-card h2 {
+  max-width: 90%;
+  margin: 0;
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(28px, 2.7vw, 42px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.jn-posts .blog-card p {
+  max-width: 27rem;
+  margin: 10px 0 0;
+  color: rgb(255 255 255 / 58%);
+  font-family: "Aspekta Variable", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.jn-posts .blog-card-link:hover .blog-card-image {
+  transform: translateY(-3px);
+}
+
+.jn-posts .blog-card-link:hover h2 {
+  color: #f3edff;
+}
+
+@media (max-width: 980px) {
+  .jn-posts .blog-list {
+    gap: 44px 24px;
+  }
+
+  .jn-posts .blog-card h2 {
+    font-size: clamp(26px, 4vw, 34px);
+  }
+
+  .jn-posts .blog-card p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .jn-posts .blog-list {
+    grid-template-columns: 1fr;
+    gap: 42px;
+    width: auto;
+    margin: 0 16px;
+    padding-bottom: 76px;
+  }
+
+  .jn-posts .blog-card-image {
+    aspect-ratio: 1.28;
+    margin-bottom: 18px;
+    border-radius: 28px;
+  }
+
+  .jn-posts .blog-card-image .blog-badge {
+    bottom: 14px;
+    left: 14px;
+  }
+
+  .jn-posts .blog-card h2 {
+    max-width: 320px;
+    font-size: 29px;
+    line-height: 1.02;
+    overflow-wrap: break-word;
+  }
+
+  .jn-posts .blog-card p {
+    max-width: 300px;
+    font-size: 16px;
+  }
+}
+
+.jn-posts .blog-list { padding-bottom: 36px; }
+.jn-posts .blog-toolbar { margin: 0; }
+.jn-posts .blog-search { min-width: 0; margin: 0; }
+.jn-posts .blog-filters { flex: 1 1 260px; min-width: 0; }
+.jn-posts .blog-filter { flex-shrink: 0; width: auto; min-width: 50px; padding: 0 12px; border-radius: 25px; max-width: 100%; }
+.jn-posts .blog-filter span { overflow-wrap: anywhere; }
+.jn-posts .blog-count { max-width: var(--posts-max-width, 1240px); width: calc(100% - 64px); margin: 24px auto; color: #ffffff99; font-size: 14px; }
+.jn-posts .blog-card-arrow { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; }
+.jn-posts .blog-card-arrow svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+.jn-posts .blog-card-link:focus-visible, .jn-posts .blog-search-submit:focus-visible, .jn-posts .page-numbers:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
+.jn-posts .blog-pagination { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 0 16px; }
+.jn-posts .page-numbers { display: grid; place-items: center; min-width: 44px; min-height: 44px; padding: 8px; border-radius: 50%; border: 1px solid #ffffff30; color: #fff; text-decoration: none; }
+.jn-posts .page-numbers.current { background: #fff; color: #171717; }
+.jn-posts .page-numbers.dots { border: 0; }
+.jn-posts[aria-busy="true"] .blog-results { opacity: .5; transition: opacity 200ms ease; }
+.jn-posts .blog-error { color: #fff; padding: 16px 32px; }
+@media (max-width: 700px) { .jn-posts .blog-count { width: calc(100% - 32px); } .jn-posts .blog-search { flex: 1 1 180px; } .jn-posts .blog-filters { flex-basis: 100%; } .jn-posts .blog-list { margin-top: 24px; } }
+@media (prefers-reduced-motion: reduce) { .jn-posts *, .jn-posts *::after { transition: none !important; } .jn-posts .blog-card-link:hover .blog-card-image, .jn-posts .blog-card-link:hover .blog-card-image > img { transform: none; } }
+/* Elementor resets figure margins with a more specific selector. Keep card spacing on the title. */
+.jn-posts .blog-card h2 { margin-top: 24px; overflow-wrap: anywhere; }
+@media (max-width: 700px) { .jn-posts .blog-card h2 { margin-top: 18px; } }
+
+.jn-posts .blog-card-image { margin: 0; }
+
+.jn-posts .blog-search-submit { position: absolute; left: 4px; top: 3px; z-index: 1; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #fff; cursor: pointer; }
+.jn-posts .blog-search-submit:hover svg, .jn-posts .blog-search-submit:focus-visible svg { stroke: #fff; }

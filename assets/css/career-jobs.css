@@ -1,0 +1,137 @@
+@font-face { font-family: 'Urbanist'; src: url('../fonts/Urbanist-800.ttf') format('truetype'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'Aspekta Variable'; src: url('../fonts/AspektaVariable.woff2') format('woff2-variations'); font-weight: 50 1000; font-display: swap; }
+.jn-career-jobs, .jn-career-jobs * { box-sizing: border-box; }
+.jn-career-jobs { font-family: "Aspekta Variable", Arial, sans-serif; }
+.jn-career-jobs {
+  color: #fff;
+  background: #0f0f0f;
+  padding: 96px max(clamp(16px, 7vw, 110px), calc((100vw - 1290px) / 2)) 160px;
+}
+
+.jn-career-jobs .career-jobs-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px 40px;
+  margin-bottom: 40px;
+}
+
+.jn-career-jobs .career-jobs-heading {
+  margin: 0;
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(42px, 5.2vw, 76px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 0.98;
+}
+
+.jn-career-jobs .career-search {
+  position: relative;
+  flex: 0 1 360px;
+  min-width: 240px;
+}
+
+.jn-career-jobs .career-search svg {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: rgb(255 255 255 / 50%);
+  stroke-linecap: round;
+  stroke-width: 2.2;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.jn-career-jobs .career-search-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.jn-career-jobs .career-search input {
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  padding: 0 20px 0 52px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  color: #fff;
+  font: 400 17px/1 "Aspekta Variable", Arial, sans-serif;
+  background: #1a1a1a;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
+  outline: 0;
+  transition: border-color 250ms ease;
+}
+
+.jn-career-jobs .career-search input::placeholder {
+  color: rgb(255 255 255 / 42%);
+}
+
+.jn-career-jobs .career-search input:focus {
+  border-color: rgb(255 255 255 / 50%);
+}
+
+.jn-career-jobs .career-search input::-webkit-search-cancel-button {
+  filter: invert(1);
+  opacity: 0.5;
+}
+
+.jn-career-jobs .career-jobs-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.jn-career-jobs .career-jobs-empty[hidden] {
+  display: none;
+}
+
+.jn-career-jobs .career-jobs-empty {
+  margin: 0;
+  padding: 32px 0;
+  border-top: 1px solid rgb(255 255 255 / 12%);
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+  color: rgb(255 255 255 / 60%);
+  font-family: "Aspekta Variable", Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .jn-career-jobs {
+    padding-top: 72px;
+    padding-bottom: 110px;
+  }
+}
+
+@media (max-width: 520px) {
+  .jn-career-jobs {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+.jn-career-jobs .career-jobs-inner { width: 100%; max-width: 1290px; margin: 0 auto; }
+.jn-career-jobs .career-search { min-width: 0; width: 100%; margin: 0; }
+.jn-career-jobs .career-jobs-heading { overflow-wrap: anywhere; }
+.jn-career-jobs .career-job { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 32px 0; border-top: 1px solid #ffffff20; }
+.jn-career-jobs .career-job:last-child { border-bottom: 1px solid #ffffff20; }
+.jn-career-jobs .career-job-copy { min-width: 0; }
+.jn-career-jobs .career-job h3 { margin: 0; font: 800 clamp(26px, 3vw, 40px)/1.1 "Urbanist", Arial, sans-serif; color: #fff; overflow-wrap: anywhere; }
+.jn-career-jobs .career-job-description { margin: 12px 0 0; max-width: 720px; color: #ffffff99; font-size: 18px; line-height: 1.5; overflow-wrap: anywhere; }
+.jn-career-jobs .career-job-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; color: #ffffff99; font-size: 14px; overflow-wrap: anywhere; }
+.jn-career-jobs .career-job-link { display: inline-flex; align-items: center; gap: 12px; flex-shrink: 0; max-width: min(280px, 40%); color: #fff; text-decoration: none; overflow-wrap: anywhere; }
+.jn-career-jobs .career-job-link svg { width: 24px; height: 24px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.jn-career-jobs .career-job-link:focus-visible { outline: 2px solid #fff; outline-offset: 5px; }
+.jn-career-jobs .career-job[hidden], .jn-career-jobs [data-jobs-empty][hidden], .jn-career-jobs [data-jobs-no-results][hidden] { display: none; }
+@media (max-width: 600px) { .jn-career-jobs .career-job { align-items: flex-start; flex-direction: column; } .jn-career-jobs .career-search { flex-basis: 100%; } }
+
+.jn-career-jobs .career-job-link span { min-width: 0; }
+@media (max-width: 600px) { .jn-career-jobs .career-job-link { max-width: 100%; } }

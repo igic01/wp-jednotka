@@ -1,0 +1,120 @@
+/* Scoped adaptation of temp/team.css. */
+@font-face { font-family: 'Urbanist'; src: url('../fonts/Urbanist-800.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Aspekta Variable'; src: url('../fonts/AspektaVariable.woff2') format('woff2-variations'); font-weight: 50 1000; font-style: normal; font-display: swap; }
+.jn-team, .jn-team * { box-sizing: border-box; }
+.jn-team { font-family: 'Aspekta Variable', Arial, sans-serif; }
+.jn-team {
+  color: #ffffff;
+  background: #0f0f0f;
+}
+
+/* Text on the left, a draggable auto-scrolling track of people on the right */
+.jn-team .team__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(24px, 4vw, 80px);
+  align-items: center;
+  width: min(100%, 1440px);
+  min-height: 100vh;
+  margin-inline: auto;
+  padding: 96px var(--page-gutter, 40px);
+}
+
+.jn-team .team__title {
+  margin: 0;
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(48px, 6.4vw, 112px);
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+.jn-team .team__text {
+  max-width: 520px;
+  margin: clamp(20px, 2.4vw, 36px) 0 0;
+  color: rgb(255 255 255 / 68%);
+  font-size: clamp(16px, 1.4vw, 21px);
+  line-height: 1.6;
+}
+
+.jn-team .team__stage {
+  min-width: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.jn-team .team__stage.is-dragging {
+  cursor: grabbing;
+}
+
+.jn-team .team__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.jn-team .team-card {
+  position: relative;
+  flex: none;
+  margin-right: clamp(12px, 1.6vw, 28px);
+  height: min(72vh, 760px);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+.jn-team .team-card__image {
+  display: block;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.jn-team .team-card__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgb(0 0 0 / 82%) 0%, rgb(0 0 0 / 0%) 55%);
+  pointer-events: none;
+}
+
+/* Info sits in the bottom-left corner of the photo */
+.jn-team .team-card__info {
+  position: absolute;
+  bottom: clamp(16px, 2vw, 32px);
+  left: clamp(16px, 2vw, 32px);
+  right: clamp(16px, 2vw, 32px);
+}
+
+.jn-team .team-card__role {
+  margin: 0;
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: clamp(26px, 2.8vw, 46px);
+  font-weight: 800;
+  line-height: 0.95;
+}
+
+.jn-team .team-card__name {
+  margin: clamp(8px, 1vw, 14px) 0 0;
+  color: rgb(255 255 255 / 70%);
+  font-size: clamp(14px, 1.3vw, 20px);
+}
+
+@media (max-width: 800px) {
+  .jn-team .team__layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 72px 20px;
+    min-height: 0;
+  }
+
+  .jn-team .team-card {
+    height: 56vh;
+  }
+}
+
+.jn-team .team__group { display: flex; flex: none; width: max-content; }
+.jn-team .team__title, .jn-team .team-card__role, .jn-team .team-card__name { overflow-wrap: anywhere; }
+.jn-team .team__stage:focus-visible { outline: 2px solid #9b75ff; outline-offset: 5px; }
+.jn-team .team-card { background: #1a1a1a; }

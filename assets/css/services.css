@@ -1,3 +1,4 @@
+@font-face { font-family: "Urbanist"; src: url("../fonts/Urbanist-800.ttf") format("truetype"); font-weight: 800; font-style: normal; font-display: swap; }
 /* Elementor integration; copied visual rules live in reference-services.css. */
 @font-face { font-family: 'Urbanist'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/Urbanist-700.ttf') format('truetype'); }
 .services-overview-section.jn-services, .services-overview-section.jn-services * { box-sizing: content-box; }
@@ -9,3 +10,742 @@
 @media (prefers-reduced-motion: reduce) {
   .jn-services .service-arrow, .jn-services .service-arrow-icon, .jn-services .service-row:hover .service-arrow, .jn-services .service-row:hover .service-arrow-icon { transform: none; transition: none; }
 }
+
+/* Services detail upgrade adapted from temp/services.css. */
+.jn-services.sv-section {
+  position: relative;
+  color: var(--color-white);
+  background: var(--section-dark-bg);
+  overflow-x: clip;
+}
+
+.jn-services.sv-section::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  height: 1px;
+  background: rgb(255 255 255 / 22%);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 900ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* While a detail is open, a line marks where the section ends */
+.jn-services.sv-section.is-detail::after {
+  transform: scaleX(1);
+  transition-delay: 500ms;
+}
+
+.jn-services.sv-section .sv-viewport {
+  overflow: hidden;
+  /* Height is set by services-motion.js to match the open pane, so the section hugs its content */
+  transition: height 900ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Two panes side by side; sliding the track left brings the detail into view */
+.jn-services.sv-section .sv-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  align-items: start;
+  transition: transform 900ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.jn-services.sv-section.is-detail .sv-track {
+  transform: translateX(-100%);
+}
+
+.jn-services.sv-section .sv-pane {
+  --sv-pad: max(var(--section-padding-x), calc((100vw - 1290px) / 2));
+  position: relative;
+  min-width: 0;
+  /* Padding lives inside the clipped viewport so the last row's blur and rise aren't cut off,
+     and so the image wall can span the pane's full height */
+  padding: 96px var(--sv-pad) 220px;
+  transition:
+    opacity 700ms ease,
+    transform 900ms cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.jn-services.sv-section.is-detail .sv-pane--list {
+  opacity: 0;
+  transform: scale(0.94);
+}
+
+.jn-services.sv-section:not(.is-detail) .sv-pane--detail {
+  opacity: 0;
+  transform: scale(0.94);
+}
+
+/* ---------- List (same look as the homepage services) ---------- */
+.jn-services.sv-section .sv-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(270px, 355px);
+  gap: 64px;
+  align-items: start;
+  margin: 0 0 78px;
+}
+
+.jn-services.sv-section .sv-header h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(100px, 10.4vw, 140px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.82;
+}
+
+.jn-services.sv-section .sv-header p {
+  margin: 22px 0 0;
+  color: rgb(255 255 255 / 70%);
+  font-family: var(--font-secondary);
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.13;
+}
+
+.jn-services.sv-section .sv-list {
+  display: grid;
+  gap: 80px;
+}
+
+/* Rows blur and rise into place as they scroll in (driven by services-motion.js) */
+.jn-services.sv-section .sv-row {
+  display: grid;
+  grid-template-columns: 124px minmax(300px, 0.86fr) minmax(0, 1fr) 62px;
+  gap: 34px;
+  align-items: center;
+  will-change: opacity, filter, transform;
+}
+
+.jn-services.sv-section .sv-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 124px;
+  height: 64px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  background: rgb(26 26 26 / 48%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 16%);
+  backdrop-filter: blur(14px);
+}
+
+.jn-services.sv-section .sv-badge-icon {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.jn-services.sv-section .sv-row strong {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 3.8vw, 48px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+.jn-services.sv-section .sv-row-copy {
+  color: rgb(255 255 255 / 70%);
+  font-family: var(--font-secondary);
+  font-size: clamp(22px, 1.85vw, 24px);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.12;
+}
+
+.jn-services.sv-section .sv-arrow {
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  width: 62px;
+  height: 62px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  color: #090909;
+  background: var(--color-white);
+  cursor: pointer;
+  transform: translate(var(--arrow-scroll-x, 0), var(--arrow-scroll-y, 0));
+  transition:
+    background 180ms ease,
+    transform 220ms ease;
+  will-change: transform;
+}
+
+.jn-services.sv-section .sv-arrow:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 76%);
+  outline-offset: 4px;
+}
+
+.jn-services.sv-section .sv-arrow-icon {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.8;
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jn-services.sv-section .sv-arrow:hover,
+.jn-services.sv-section .sv-arrow:focus-visible {
+  transform: translate(calc(var(--arrow-scroll-x, 0px) + 3px), calc(var(--arrow-scroll-y, 0px) - 3px));
+}
+
+.jn-services.sv-section .sv-arrow:hover .sv-arrow-icon,
+.jn-services.sv-section .sv-arrow:focus-visible .sv-arrow-icon {
+  transform: rotate(-45deg);
+}
+
+/* ---------- Detail ---------- */
+.jn-services.sv-section .sv-pane--detail {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  min-height: 900px;
+  padding-bottom: 120px;
+}
+
+.jn-services.sv-section .sv-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: none;
+  cursor: pointer;
+}
+
+/* Static white circle, same look as the list arrows but without any hover animation */
+.jn-services.sv-section .sv-back-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  color: #090909;
+  background: var(--color-white);
+}
+
+.jn-services.sv-section .sv-back-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.8;
+  transform: rotate(-135deg);
+}
+
+.jn-services.sv-section .sv-back:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 76%);
+  outline-offset: 4px;
+}
+
+.jn-services.sv-section .sv-detail {
+  padding-top: 5vh;
+}
+
+.jn-services.sv-section .sv-detail[hidden] {
+  display: none;
+}
+
+.jn-services.sv-section .sv-copy {
+  max-width: clamp(280px, calc(40vw - var(--sv-pad) - 16px), 520px);
+}
+
+.jn-services.sv-section .sv-copy h2 {
+  margin: 0 0 36px;
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.6vw, 68px);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.jn-services.sv-section .sv-bullets {
+  display: grid;
+  gap: 16px;
+  margin: 0 0 40px;
+  padding: 0;
+  list-style: none;
+}
+
+.jn-services.sv-section .sv-bullets li {
+  position: relative;
+  padding-left: 32px;
+  color: rgb(255 255 255 / 72%);
+  font-family: var(--font-secondary);
+  font-size: clamp(17px, 1.4vw, 20px);
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.jn-services.sv-section .sv-bullets li::before {
+  position: absolute;
+  top: 0.5em;
+  left: 2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff6b00;
+  content: "";
+}
+
+/* Wall of images: fills the right side from the top to the bottom of the section and scrolls forever */
+.jn-services.sv-section .sv-wall {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: min(60vw, 960px);
+  overflow: hidden;
+  padding-left: 16px;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+  transform: translateX(80px);
+  opacity: 0;
+  transition:
+    opacity 900ms ease,
+    transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jn-services.sv-section.is-detail .sv-wall {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 450ms;
+}
+
+.jn-services.sv-section .sv-wall-col {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.jn-services.sv-section .sv-wall-track {
+  display: grid;
+  gap: var(--wall-gap, 16px);
+  animation: jn-sv-wall-up 48s linear infinite paused;
+}
+
+.jn-services.sv-section .sv-wall-col--2 .sv-wall-track {
+  animation-name: jn-sv-wall-down;
+  animation-duration: 60s;
+}
+
+.jn-services.sv-section .sv-wall-col--3 .sv-wall-track {
+  animation-duration: 54s;
+}
+
+.jn-services.sv-section .sv-wall-set {
+  display: grid;
+  gap: 16px;
+}
+
+.jn-services.sv-section.is-detail .sv-wall-track {
+  animation-play-state: running;
+}
+
+.jn-services.sv-section .sv-tile {
+  overflow: hidden;
+  border-radius: 24px;
+  background: #1a1a1a;
+}
+
+.jn-services.sv-section .sv-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes jn-sv-wall-up {
+  to {
+    transform: translateY(calc(-50% - var(--wall-gap, 16px) / 2));
+  }
+}
+
+@keyframes jn-sv-wall-down {
+  from {
+    transform: translateY(calc(-50% - var(--wall-gap, 16px) / 2));
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.jn-services.sv-section .sv-copy h2,
+.jn-services.sv-section .sv-bullets li,
+.jn-services.sv-section .sv-cta {
+  opacity: 0;
+  transform: translateX(40px);
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Detail content arrives after the slide, one piece at a time; leaving doesn't wait */
+.jn-services.sv-section.is-detail .sv-copy h2,
+.jn-services.sv-section.is-detail .sv-bullets li,
+.jn-services.sv-section.is-detail .sv-cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.jn-services.sv-section.is-detail .sv-copy h2 {
+  transition-delay: 450ms;
+}
+
+.jn-services.sv-section.is-detail .sv-bullets li {
+  transition-delay: calc(600ms + var(--k) * 110ms);
+}
+
+.jn-services.sv-section.is-detail .sv-cta {
+  transition-delay: 1000ms;
+}
+
+@media (max-width: 900px) {
+  .jn-services.sv-section .sv-pane {
+    padding-top: 94px;
+    padding-bottom: 160px;
+  }
+
+  .jn-services.sv-section .sv-header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 58px;
+  }
+
+  .jn-services.sv-section .sv-header p {
+    max-width: 430px;
+    margin-top: 0;
+  }
+
+  .jn-services.sv-section .sv-list {
+    gap: 54px;
+  }
+
+  .jn-services.sv-section .sv-row {
+    position: relative;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 20px 18px;
+    align-items: start;
+    padding-right: 58px;
+  }
+
+  .jn-services.sv-section .sv-badge {
+    width: 76px;
+    height: 48px;
+  }
+
+  .jn-services.sv-section .sv-badge-icon {
+    width: 27px;
+    height: 27px;
+  }
+
+  .jn-services.sv-section .sv-row-copy {
+    grid-column: 1 / -1;
+    max-width: 620px;
+    font-size: 23px;
+  }
+
+  .jn-services.sv-section .sv-arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 48px;
+  }
+
+  .jn-services.sv-section .sv-arrow-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .jn-services.sv-section .sv-pane--detail {
+    gap: 40px;
+  }
+
+  .jn-services.sv-section .sv-detail {
+    padding-top: 0;
+  }
+
+  .jn-services.sv-section .sv-copy {
+    max-width: none;
+  }
+
+  /* On small screens the wall sits under the copy and bleeds to both screen edges */
+  .jn-services.sv-section .sv-wall {
+    position: relative;
+    inset: auto;
+    width: auto;
+    height: 560px;
+    margin: 48px calc(var(--sv-pad) * -1) 0;
+    padding: 0 var(--sv-pad);
+    transform: translateY(40px);
+  }
+}
+
+@media (max-width: 520px) {
+  .jn-services.sv-section .sv-pane {
+    --sv-pad: 16px;
+    padding: 76px 16px 120px;
+  }
+
+  .jn-services.sv-section .sv-header {
+    margin-bottom: 46px;
+  }
+
+  .jn-services.sv-section .sv-header h2 {
+    font-size: 68px;
+  }
+
+  .jn-services.sv-section .sv-header p,
+  .jn-services.sv-section .sv-row-copy {
+    font-size: 19px;
+  }
+
+  .jn-services.sv-section .sv-list {
+    gap: 42px;
+  }
+
+  .jn-services.sv-section .sv-row {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 16px 14px;
+    padding-right: 46px;
+  }
+
+  .jn-services.sv-section .sv-badge {
+    width: 64px;
+    height: 42px;
+  }
+
+  .jn-services.sv-section .sv-badge-icon {
+    width: 23px;
+    height: 23px;
+  }
+
+  .jn-services.sv-section .sv-row strong {
+    font-size: 34px;
+  }
+
+  .jn-services.sv-section .sv-arrow {
+    width: 42px;
+    height: 42px;
+  }
+
+  .jn-services.sv-section .sv-arrow-icon {
+    width: 23px;
+    height: 23px;
+  }
+
+  .jn-services.sv-section .sv-wall {
+    gap: 10px;
+    height: 460px;
+  }
+
+  .jn-services.sv-section .sv-wall-track,
+  .jn-services.sv-section .sv-wall-set {
+    --wall-gap: 10px;
+    gap: 10px;
+  }
+
+  .jn-services.sv-section .sv-tile {
+    border-radius: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jn-services.sv-section .sv-track,
+  .jn-services.sv-section .sv-pane,
+  .jn-services.sv-section::after,
+  .jn-services.sv-section .sv-wall,
+  .jn-services.sv-section .sv-copy h2,
+  .jn-services.sv-section .sv-bullets li,
+  .jn-services.sv-section .sv-cta {
+    transition: none !important;
+  }
+
+  .jn-services.sv-section .sv-copy h2,
+  .jn-services.sv-section .sv-bullets li,
+  .jn-services.sv-section .sv-cta {
+    opacity: 1;
+    transform: none;
+  }
+
+  .jn-services.sv-section .sv-wall {
+    opacity: 1;
+    transform: none;
+  }
+
+  .jn-services.sv-section .sv-wall-track {
+    animation: none !important;
+  }
+}
+
+.jn-services.sv-section .button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: var(--button-height);
+  padding: 0 var(--button-padding-x);
+  border-radius: var(--button-radius);
+  color: var(--button-color);
+  font-family: var(--font-primary);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  letter-spacing: var(--button-letter-spacing);
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.jn-services.sv-section .button--primary {
+  background: var(--button-bg);
+}
+
+.jn-services.sv-section .button:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 76%);
+  outline-offset: 4px;
+}
+
+.jn-services.sv-section .button-label {
+  --button-label-height: 1.22em;
+  --button-label-gap: 0.32em;
+  display: block;
+  height: var(--button-label-height);
+  overflow: hidden;
+  line-height: var(--button-label-height);
+}
+
+.jn-services.sv-section .button-label-track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--button-label-gap);
+  transform: translateY(0);
+  transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jn-services.sv-section .button-label-line {
+  display: flex;
+  align-items: center;
+  height: var(--button-label-height);
+  line-height: var(--button-label-height);
+}
+
+.jn-services.sv-section .button:hover .button-label-track,
+.jn-services.sv-section .button:focus-visible .button-label-track {
+  transform: translateY(calc(-1 * (var(--button-label-height) + var(--button-label-gap))));
+}
+
+.jn-services.sv-section .button-arrow {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  color: var(--color-white);
+}
+
+.jn-services.sv-section .button-arrow svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+  transform: rotate(45deg);
+  transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.jn-services.sv-section .button:hover .button-arrow svg,
+.jn-services.sv-section .button:focus-visible .button-arrow svg {
+  transform: rotate(0deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.jn-services.sv-section .button,
+.jn-services.sv-section .button-label-track,
+.jn-services.sv-section .button-arrow svg,
+.jn-services.sv-section .site-nav-toggle-line {
+    transition: none;
+  }
+
+.jn-services.sv-section .button:hover .button-label-track,
+.jn-services.sv-section .button:focus-visible .button-label-track {
+    transform: none;
+  }
+}
+
+
+
+/* Detail panes retain the original service control selectors for saved widgets. */
+.jn-services.sv-section, .jn-services.sv-section * { box-sizing: border-box; }
+.jn-services.sv-section { padding: 0; --button-height: 56px; --button-padding-x: 24px; --button-radius: 999px; --button-color: #fff; --button-bg: #5f2df5; --button-font-size: 14px; --button-font-weight: 700; --button-letter-spacing: .04em; }
+.jn-services.sv-section .sv-row { color: #fff; text-decoration: none; }
+.jn-services.sv-section .sv-row > strong { margin: 0; }
+.jn-services.sv-section .sv-badge { min-width: 0; flex: none; }
+.jn-services.sv-section .sv-arrow { min-width: 0; min-height: 0; text-decoration: none; }
+.jn-services.sv-section .sv-arrow img, .jn-services.sv-section .sv-arrow video { object-fit: contain; }
+.jn-services.sv-section .sv-arrow .sv-arrow-icon { fill: none; }
+.jn-services.sv-section .sv-copy { position: relative; z-index: 1; }
+.jn-services.sv-section .sv-back { max-width: 100%; text-align: left; }
+.jn-services.sv-section .sv-back-icon { flex: none; }
+.jn-services.sv-section .sv-copy h2, .jn-services.sv-section .sv-bullets li { overflow-wrap: anywhere; }
+.jn-services.sv-section .sv-pane--detail[aria-hidden="true"] .sv-wall-track { animation-play-state: paused; }
+.jn-services.sv-section:not(.is-enhanced) .sv-pane--detail { display: none; }
+.jn-services.sv-section .sv-wall { pointer-events: none; }
+.jn-services.sv-section .sv-cta { max-width: 100%; white-space: normal; padding-block: 16px; }
+@media (max-width: 900px) { .jn-services.sv-section .sv-copy { max-width: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .jn-services.sv-section .sv-viewport, .jn-services.sv-section .sv-arrow, .jn-services.sv-section .sv-arrow-icon { transition: none; }
+}
+
+.jn-services.sv-section.is-wall-paused .sv-wall-track { animation-play-state: paused; }
+
+.jn-services.sv-section .sv-badge { min-height: 0; }
+.jn-services.sv-section .sv-cta .button-label { height: auto; }
+.jn-services.sv-section .sv-cta .button-label-track { display: grid; gap: 0; }
+.jn-services.sv-section .sv-cta .button-label-line { height: auto; min-height: var(--button-label-height); grid-area: 1 / 1; }
+.jn-services.sv-section .sv-cta .button-label-line[aria-hidden] { transform: translateY(calc(100% + var(--button-label-gap))); }
+.jn-services.sv-section .sv-cta:is(:hover, :focus-visible) .button-label-track { transform: translateY(calc(-100% - var(--button-label-gap))); }
+@media (prefers-reduced-motion: reduce) { .jn-services.sv-section .sv-cta:is(:hover, :focus-visible) .button-label-track { transform: none; } }
+
+/* Inline editing uses one multiline field for benefits, so each line remains editable. */
+.jn-services.sv-section .sv-bullets-editor { display: none; }
+.jn-services.sv-section.is-services-editor .sv-bullets-readonly { display: none; }
+.jn-services.sv-section.is-services-editor .sv-bullets-editor { display: block; white-space: pre-line; margin-bottom: 40px; color: rgb(255 255 255 / 72%); font: 400 clamp(17px, 1.4vw, 20px)/2 var(--font-secondary); }
+.jn-services.sv-section.is-services-editor .sv-copy h2,
+.jn-services.sv-section.is-services-editor .sv-cta { opacity: 1; transform: none; transition: none; }
+.jn-services.sv-section.is-services-editor .sv-wall-track { animation-play-state: paused; }
+.jn-services.sv-section.is-services-editor .sv-cta .button-label { height: auto; overflow: visible; }
+.jn-services.sv-section.is-services-editor .sv-cta .button-label-track { transform: none; }
+.jn-services.sv-section.is-services-editor .sv-cta .button-label-line[aria-hidden] { display: none; }
+.jn-services.sv-section.is-services-editor .elementor-inline-editing { cursor: text; user-select: text; }
+
+.jn-services.sv-section .sv-editor-tools { display: none; }
+.jn-services.sv-section.is-services-editor .sv-editor-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.jn-services.sv-section.is-services-editor .sv-editor-tools button { padding: 8px 12px; border: 1px solid #b49aff; border-radius: 8px; background: #29194b; color: #fff; font: 500 13px/1.4 var(--font-secondary); cursor: pointer; }
+.jn-services.sv-section.is-services-editor .sv-wall { pointer-events: auto; cursor: pointer; }
+.jn-services.sv-section.is-services-editor .sv-wall:hover { outline: 2px solid #b49aff; outline-offset: -3px; }

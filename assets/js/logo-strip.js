@@ -18,31 +18,23 @@
         if (!strip) return;
         const groups = [...strip.querySelectorAll('.logo-strip-group')];
         const originals = [...groups[0].children];
-        const control = strip.querySelector('.jn-logo-strip__motion');
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
         const editing = elementorFrontend.isEditMode();
         let playing = strip.dataset.animate === 'yes' && !reduce.matches;
         let hovered = false;
-        let allowEditorVideo = false;
         const syncVideos = () => {
           this.videos = [...strip.querySelectorAll('video')];
           this.videos.forEach(video => {
-            if (playing && !hovered && (!editing || allowEditorVideo)) video.play().catch(() => {});
+            if (playing && !hovered && !editing) video.play().catch(() => {});
             else video.pause();
           });
         };
-        const setPlaying = (value, userInitiated = false) => {
+        const setPlaying = value => {
           playing = value;
-          if (userInitiated) allowEditorVideo = true;
           strip.classList.toggle('is-paused', !playing);
-          control.textContent = playing ? 'Ⅱ' : '▶';
-          control.setAttribute('aria-pressed', String(playing));
-          control.setAttribute('aria-label', playing ? control.dataset.pauseLabel : control.dataset.playLabel);
           syncVideos();
         };
-        control.hidden = strip.dataset.animate !== 'yes' && !strip.querySelector('video');
-        control.addEventListener('click', () => setPlaying(!playing, true), { signal });
-        reduce.addEventListener('change', () => { if (reduce.matches) setPlaying(false); }, { signal });
+        reduce.addEventListener('change', () => setPlaying(strip.dataset.animate === 'yes' && !reduce.matches), { signal });
         strip.addEventListener('pointerenter', () => {
           if (strip.dataset.pauseHover === 'yes') { hovered = true; syncVideos(); }
         }, { signal });

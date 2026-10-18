@@ -72,4 +72,7 @@ target/
 *.bak
 *.tmp
 *.orig
+
+# nikii ==================
 examples/
+# temp/

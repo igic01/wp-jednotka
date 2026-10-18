@@ -68,7 +68,6 @@ class Logo_Strip_Widget extends Widget_Base {
 					</div>
 				<?php endfor; ?>
 			</div>
-			<button class="jn-logo-strip__motion" type="button" aria-pressed="false" aria-label="<?php echo esc_attr__( 'Pause logo strip', 'jednotka-elementor' ); ?>" data-play-label="<?php echo esc_attr__( 'Play logo strip', 'jednotka-elementor' ); ?>" data-pause-label="<?php echo esc_attr__( 'Pause logo strip', 'jednotka-elementor' ); ?>">Ⅱ</button>
 		</section>
 		<?php
 	}

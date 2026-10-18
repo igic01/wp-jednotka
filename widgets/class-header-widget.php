@@ -102,7 +102,7 @@ class Header_Widget extends Widget_Base {
 
 		$section( 'layout_section', array( 'label' => 'Header layout', 'tab' => Controls_Manager::TAB_STYLE ) );
 		$add_control( 'background', array(
-			'label' => 'Background', 'type' => Controls_Manager::COLOR, 'default' => '#09031A',
+			'label' => 'Background', 'type' => Controls_Manager::COLOR, 'default' => '#0F0F0F',
 			'selectors' => array( '{{WRAPPER}} .jn-header' => 'background-color: {{VALUE}};' ),
 		) );
 		$responsive( 'padding', array(

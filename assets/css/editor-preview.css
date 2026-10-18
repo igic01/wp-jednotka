@@ -1,0 +1,24 @@
+/* Loaded only inside Elementor's editor canvas. Keep rolling CTA labels editable. */
+[data-widget_type^="jednotka-"] .button,
+[data-widget_type^="jednotka-"] .button .button-label-track,
+[data-widget_type^="jednotka-"] .button .button-label-line,
+[data-widget_type^="jednotka-"] .button .button-arrow,
+[data-widget_type^="jednotka-"] .button .button-arrow svg {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+[data-widget_type^="jednotka-"] .button .button-label {
+  height: auto !important;
+  overflow: visible !important;
+}
+[data-widget_type^="jednotka-"] .button .button-label-track {
+  display: block !important;
+}
+[data-widget_type^="jednotka-"] .button .button-label-line {
+  height: auto !important;
+  white-space: normal !important;
+}
+[data-widget_type^="jednotka-"] .button .button-label-line[aria-hidden="true"] {
+  display: none !important;
+}

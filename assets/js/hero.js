@@ -17,14 +17,12 @@
         const hero = this.$element[0].querySelector('.jn-hero');
         if (!hero) return;
         const frame = hero.querySelector('.jn-hero__frame');
-        const control = hero.querySelector('.jn-hero__motion');
         // The embedded header manages its own logo video and pause control.
         this.videos = [...hero.querySelectorAll('video')].filter(video => !video.closest('.jn-header'));
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
         const editing = elementorFrontend.isEditMode();
         hero.classList.toggle('is-editing', editing);
         const hasMotion = hero.dataset.float === 'yes' || this.videos.length > 0;
-        control.hidden = !hasMotion;
         const badges = [...frame.querySelectorAll(".hero-badge")];
         this.floatFrame = null;
         const updateHeroBadges = (event) => {
@@ -86,20 +84,18 @@
           if (this.floatFrame !== null) window.cancelAnimationFrame(this.floatFrame);
           this.floatFrame = null;
         };
-        const setPlaying = (playing, userInitiated = false) => {
+        const setPlaying = playing => {
           hero.classList.toggle('is-playing', playing);
-          control.textContent = playing ? 'Ⅱ' : '▶';
-          control.setAttribute('aria-pressed', String(playing));
-          control.setAttribute('aria-label', playing ? control.dataset.pauseLabel : control.dataset.playLabel);
           this.videos.forEach(video => {
-            if (playing && (!editing || userInitiated)) video.play().catch(() => {});
+            if (playing && !editing) video.play().catch(() => {});
             else video.pause();
           });
           if (!playing) resetHeroBadges();
           syncHeroBadgeFloat();
         };
-        control.addEventListener('click', () => setPlaying(!hero.classList.contains('is-playing'), true), { signal });
-        reduce.addEventListener('change', () => { if (reduce.matches) setPlaying(false); }, { signal });
+        const syncPlaying = () => setPlaying(hasMotion && !reduce.matches && !document.hidden);
+        reduce.addEventListener('change', syncPlaying, { signal });
+        document.addEventListener('visibilitychange', syncPlaying, { signal });
         frame.addEventListener('pointermove', (event) => {
           if (editing || reduce.matches || !hero.classList.contains('is-playing') || hero.dataset.float !== 'yes' || event.pointerType === 'touch') return;
           updateHeroBadges(event);
@@ -115,7 +111,7 @@
           if (editing && event.target.closest('[contenteditable="true"]')) { hero.classList.add('is-text-editing'); syncHeroBadgeFloat(); }
         }, { signal });
         hero.addEventListener('focusout', () => { hero.classList.remove('is-text-editing'); syncHeroBadgeFloat(); }, { signal });
-        setPlaying(hasMotion && !reduce.matches);
+        syncPlaying();
       }
       onDestroy() {
         this.controller?.abort();

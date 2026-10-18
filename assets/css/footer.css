@@ -1,0 +1,4 @@
+/* Shared footer card styles come from clients-footer.css; no CTA space or effects. */
+.jn-clients-footer.jn-footer-only,
+.jn-clients-footer.jn-footer-only * { box-sizing: border-box; }
+.jn-clients-footer.jn-footer-only { display: block; min-height: 0; height: auto; padding: clamp(16px, 3vw, 48px); overflow: visible; background: #0f0f0f; perspective: none; font-family: var(--font-secondary); }
