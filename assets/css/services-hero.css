@@ -278,20 +278,11 @@
   }
 
   .jn-services-hero .hero-badge-row {
-    position: absolute;
-    top: 118px;
-    right: 24px;
-    left: 24px;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: repeat(3, max-content);
-    justify-content: center;
-    align-content: flex-start;
-    gap: 8px 10px;
+    display: contents;
   }
 
   .jn-services-hero .hero-badge-row .hero-badge {
-    position: relative;
+    position: absolute;
     top: auto;
     right: auto;
     left: auto;
@@ -303,16 +294,39 @@
       var(--hero-badge-float-x),
       var(--hero-badge-float-y),
       0
-    );
+    ) rotate(var(--hero-badge-rotate));
   }
 
-  .jn-services-hero .hero-badge--grafika {
-    grid-column: 1 / span 2;
-    justify-self: end;
+  /* Scatter badges around the heading, leaving the navbar and cards clear. */
+  .jn-services-hero .hero-badge-row .hero-badge--eshopy {
+    --hero-badge-rotate: -8deg;
+    top: 22%;
+    left: 6%;
   }
 
-  .jn-services-hero .hero-badge--reklamy {
-    grid-column: 3;
+  .jn-services-hero .hero-badge-row .hero-badge--web {
+    --hero-badge-rotate: 5deg;
+    top: 17%;
+    left: 50%;
+    transform: translateX(-50%) translate3d(var(--hero-badge-float-x), var(--hero-badge-float-y), 0) rotate(var(--hero-badge-rotate));
+  }
+
+  .jn-services-hero .hero-badge-row .hero-badge--emaily {
+    --hero-badge-rotate: -6deg;
+    top: 26%;
+    right: 6%;
+  }
+
+  .jn-services-hero .hero-badge-row .hero-badge--grafika {
+    --hero-badge-rotate: 7deg;
+    top: 64%;
+    left: 8%;
+  }
+
+  .jn-services-hero .hero-badge-row .hero-badge--reklamy {
+    --hero-badge-rotate: -5deg;
+    top: 68%;
+    right: 8%;
   }
 
   .jn-services-hero .hero-badge-icon {
@@ -372,12 +386,16 @@
     font-size: 46px;
   }
 
-  .jn-services-hero .hero-badge-row {
-    top: 92px;
-    right: auto;
-    left: 50%;
-    width: calc(100vw - 32px);
-    transform: translateX(-50%);
+  .jn-services-hero .hero-badge-row .hero-badge {
+    gap: 6px;
+    height: clamp(32px, 8.4vw, 38px);
+    padding: 0 clamp(12px, 3.4vw, 16px);
+    font-size: clamp(13px, 3.6vw, 16px);
+  }
+
+  .jn-services-hero .hero-badge-icon {
+    width: clamp(13px, 3.4vw, 16px);
+    height: clamp(13px, 3.4vw, 16px);
   }
 
   .jn-services-hero .services-cases {
