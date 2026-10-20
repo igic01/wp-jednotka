@@ -4,6 +4,9 @@
 .jn-stats { box-sizing: border-box; }
 /* The reference uses content-box; preserve its dimensions under Elementor's reset. */
 .jn-stats *, .jn-stats::after { box-sizing: content-box; }
+/* Center each statistic within its equal-width grid column. */
+.jn-stats .stats-grid { justify-items: center; text-align: center; }
+.jn-stats .stat-item { justify-items: center; min-width: 0; }
 .jn-stats .jn-testimonial-avatar--custom { background-image: none; overflow: hidden; }
 .jn-stats .testimonial-avatar :is(img, video) { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 .jn-stats.is-static, .jn-stats[data-reveal=""] { --stats-grid-opacity: 1; --stats-grid-blur: 0px; --stats-grid-shift: 0px; --stats-grid-scale: 1; --testimonials-intro-opacity: 1; --testimonials-intro-shift: 0px; }
