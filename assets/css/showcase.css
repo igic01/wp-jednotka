@@ -118,12 +118,15 @@
 .jn-showcase[data-sticky=""] .jn-showcase__split,
 .jn-showcase[data-sticky=""] .jn-showcase__text { position: relative; top: auto; }
 @media (max-width: 900px) {
-  /* Keep the comparison image stable as mobile browser bars expand/collapse. */
+  /* Size by content and image width, independent of mobile browser chrome. */
   .jn-showcase .jn-showcase__compare {
-    min-height: 100vh;
-    min-height: 100svh;
-    height: 100vh;
-    height: 100svh;
+    min-height: 0;
+    height: auto;
+    grid-template-rows: auto auto;
+  }
+  .jn-showcase .jn-showcase__slider {
+    height: auto;
+    aspect-ratio: 4 / 3;
   }
   .jn-showcase .jn-showcase__split { position: relative; top: auto; grid-template-columns: minmax(0, 1fr); }
   .jn-showcase .jn-showcase__text { position: relative; top: auto; height: auto; padding: 40px 8px 20px; }
