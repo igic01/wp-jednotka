@@ -385,7 +385,7 @@
   }
 }
 
-.jn-services-hero .services-cases { scroll-behavior: auto; overflow-anchor: none; }
+.jn-services-hero .services-cases { scroll-behavior: auto; overflow-anchor: none; overscroll-behavior-x: contain; }
 .jn-services-hero .services-case-card { margin: 0; }
 .jn-services-hero .services-case-link { user-select: none; }
 .jn-services-hero .services-case-arrow { display: grid; place-items: center; width: var(--arrow-badge-size); height: var(--arrow-badge-size); border: 0; border-radius: 50%; background: rgb(255 255 255 / 10%); backdrop-filter: blur(6px); }

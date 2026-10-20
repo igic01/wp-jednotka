@@ -20,10 +20,43 @@
         this.controller = new AbortController(); this.frame = null;
         const { signal } = this.controller;
         const speed = Math.max(5, Math.min(200, Number(section.dataset.speed) || 42));
-        let visible = true, focused = false, lastTime = null, pauseUntil = 0, direction = 1;
+        let visible = true, focused = false, lastTime = null, pauseUntil = 0;
         let position = track?.scrollLeft || 0, lastKnown = position;
         let pointer = null, startX = 0, startScroll = 0, dragged = false, suppressClick = false;
         const maxScroll = () => track ? Math.max(0, track.scrollWidth - track.clientWidth) : 0;
+        const originals = track ? [...track.children] : [];
+        let copies = [], loopLength = 0;
+        const wrap = value => loopLength ? ((value % loopLength) + loopLength) % loopLength : Math.max(0, Math.min(maxScroll(), value));
+        const writePosition = value => {
+          position = focused && pointer === null ? Math.max(0, Math.min(maxScroll(), value)) : wrap(value);
+          track.scrollLeft = position;
+          lastKnown = track.scrollLeft;
+        };
+        const rebuildLoop = () => {
+          if (!track || editing || !originals.length) return;
+          const phase = loopLength ? wrap(position) / loopLength : 0;
+          copies.forEach(copy => copy.remove());
+          copies = [];
+          const gap = parseFloat(window.getComputedStyle(track).columnGap) || 0;
+          loopLength = originals.reduce((width, card) => width + card.getBoundingClientRect().width + gap, 0);
+          if (!loopLength) return;
+          // Enough repeated cards to cover even a viewport wider than the original set.
+          const count = Math.ceil(track.clientWidth / loopLength) + 1;
+          for (let set = 0; set < count; set++) originals.forEach(card => {
+            const copy = card.cloneNode(true);
+            copy.setAttribute('aria-hidden', 'true');
+            copy.setAttribute('data-loop-copy', '');
+            [copy, ...copy.querySelectorAll('*')].forEach(node => {
+              node.removeAttribute('id');
+              node.removeAttribute('contenteditable');
+              node.removeAttribute('data-elementor-setting-key');
+              if (node.matches('a, button, input, select, textarea, [tabindex]')) node.setAttribute('tabindex', '-1');
+            });
+            track.appendChild(copy);
+            copies.push(copy);
+          });
+          if (!focused && pointer === null) writePosition(phase * loopLength);
+        };
         const canFloat = () => !editing && !reduced.matches && section.dataset.floating === 'yes' && badges.length > 0;
         const canScroll = () => track && !editing && !reduced.matches && !focused && pointer === null && section.dataset.auto === 'yes' && maxScroll() > 0;
         const resetPointer = () => {
@@ -47,11 +80,7 @@
           });
           if (canScroll() && time >= pauseUntil) {
             // Keep fractional progress ourselves: browsers may round scrollLeft on readback.
-            position += direction * speed * dt;
-            const max = maxScroll();
-            if (position >= max) { position = max; direction = -1; }
-            if (position <= 0) { position = 0; direction = 1; }
-            track.scrollLeft = position; lastKnown = track.scrollLeft;
+            writePosition(position + speed * dt);
           }
           if (visible && !document.hidden && (canFloat() || canScroll())) this.frame = window.requestAnimationFrame(tick);
           else lastTime = null;
@@ -71,7 +100,7 @@
         if (track) {
           track.addEventListener('pointerdown', event => {
             if (editing || event.isPrimary === false || (event.button !== undefined && event.button !== 0)) return;
-            pointer = event.pointerId; startX = event.clientX; startScroll = track.scrollLeft;
+            pointer = event.pointerId; focused = false; startX = event.clientX; startScroll = track.scrollLeft;
             dragged = false; suppressClick = false; sync();
           }, { signal });
           track.addEventListener('pointermove', event => {
@@ -79,8 +108,7 @@
             const distance = event.clientX - startX;
             if (!dragged && Math.abs(distance) <= 4) return;
             if (!dragged) { dragged = true; track.classList.add('is-dragging'); track.setPointerCapture(pointer); }
-            track.scrollLeft = Math.max(0, Math.min(maxScroll(), startScroll - distance));
-            position = track.scrollLeft; lastKnown = position;
+            writePosition(startScroll - distance);
           }, { signal });
           const end = event => {
             if (pointer === null || pointer !== event.pointerId) return;
@@ -104,24 +132,26 @@
             const current = track.scrollLeft;
             if (Math.abs(current - lastKnown) > 6) { pauseUntil = window.performance.now() + 1400; position = current; }
             lastKnown = current;
+            if (!focused && pointer === null && loopLength && current >= loopLength) writePosition(current);
           }, { passive: true, signal });
           track.addEventListener('keydown', event => {
             if (editing) return;
             const step = track.clientWidth * .8;
-            const destinations = { ArrowRight: track.scrollLeft + step, ArrowLeft: track.scrollLeft - step, Home: 0, End: maxScroll() };
+            const destinations = { ArrowRight: track.scrollLeft + step, ArrowLeft: track.scrollLeft - step, Home: 0, End: loopLength ? loopLength - 1 : maxScroll() };
             if (!(event.key in destinations)) return;
-            event.preventDefault(); position = Math.max(0, Math.min(maxScroll(), destinations[event.key]));
-            track.scrollLeft = position; lastKnown = track.scrollLeft; pauseUntil = window.performance.now() + 1400;
+            event.preventDefault(); writePosition(destinations[event.key]);
+            pauseUntil = window.performance.now() + 1400;
           }, { signal });
-          track.addEventListener('focusin', () => { focused = true; sync(); }, { signal });
+          track.addEventListener('focusin', () => { focused = pointer === null; sync(); }, { signal });
           track.addEventListener('focusout', event => { focused = track.contains(event.relatedTarget); position = track.scrollLeft; lastKnown = position; sync(); }, { signal });
         }
         reduced.addEventListener('change', () => { resetPointer(); resetFloat(); sync(); }, { signal });
         document.addEventListener('visibilitychange', sync, { signal });
-        const resize = () => { position = Math.max(0, Math.min(maxScroll(), track?.scrollLeft || 0)); lastKnown = position; sync(); };
+        const resize = () => { rebuildLoop(); position = track?.scrollLeft || 0; lastKnown = position; sync(); };
+        rebuildLoop();
         if (track && window.ResizeObserver) {
           this.resizeObserver = new window.ResizeObserver(resize); this.resizeObserver.observe(track);
-          [...track.children].forEach(card => this.resizeObserver.observe(card));
+          originals.forEach(card => this.resizeObserver.observe(card));
         } else window.addEventListener('resize', resize, { signal });
         if (window.IntersectionObserver) {
           this.observer = new window.IntersectionObserver(entries => { visible = entries.some(entry => entry.isIntersecting); sync(); });
@@ -133,6 +163,9 @@
             const id = pointer; pointer = null;
             if (id !== null && track.hasPointerCapture(id)) track.releasePointerCapture(id);
             track.classList.remove('is-dragging');
+            copies.forEach(copy => copy.remove());
+            copies = [];
+            track.scrollLeft = 0;
           }
         };
         sync();

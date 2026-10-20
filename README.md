@@ -528,7 +528,8 @@ Cards default to the reference placeholder link and arrow; replace their links
 with real destinations. Removing a link removes the arrow and navigation.
 
 The card row drags with mouse/touch, supports native horizontal scrolling and
-ArrowLeft/ArrowRight/Home/End, and automatically bounces at its ends. Fractional
+ArrowLeft/ArrowRight/Home/End, and automatically loops in one direction without reversing. Hidden repeats
+cover wide viewports and are rebuilt when card sizes change. Fractional
 scroll progress avoids stalls at low speeds. Manual interaction briefly pauses
 automatic scrolling; keyboard focus pauses it until focus leaves. Links remain
 clickable after a normal click, while a drag suppresses its click. Editor and

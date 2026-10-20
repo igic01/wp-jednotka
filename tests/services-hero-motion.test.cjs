@@ -2,10 +2,17 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
-function setup({ editing = false, reduced = false, auto = 'yes', floating = 'yes', observers = false, noTrack = false } = {}) {
+function setup({ editing = false, reduced = false, auto = 'yes', floating = 'yes', observers = false, noTrack = false, trackWidth = 500 } = {}) {
   class Element extends EventTarget {
     constructor() { super(); this.style = { setProperty(key, value) { this[key] = value; } }; const classes = new Set(); this.classList = { add: k => classes.add(k), remove: k => classes.delete(k), contains: k => classes.has(k) }; }
-    getBoundingClientRect() { return { left: 0, top: 0, width: 1000, height: 800 }; }
+    getBoundingClientRect() { return { left: 0, top: 0, width: this.cardWidth ?? 1000, height: 800 }; }
+    cloneNode() { return new Element(); }
+    setAttribute(key, value) { (this.attributes ||= {})[key] = value; }
+    removeAttribute(key) { delete (this.attributes ||= {})[key]; }
+    querySelectorAll() { return []; }
+    matches() { return false; }
+    appendChild(node) { node.parent = this; this.children.push(node); }
+    remove() { if (this.parent) this.parent.children.splice(this.parent.children.indexOf(this), 1); }
     contains(node) { return node === this; }
     setPointerCapture(id) { this.capture = id; }
     hasPointerCapture(id) { return this.capture === id; }
@@ -13,14 +20,16 @@ function setup({ editing = false, reduced = false, auto = 'yes', floating = 'yes
   }
   const section = new Element(), hero = new Element(), track = new Element(), badges = [new Element(), new Element()];
   section.dataset = { auto, floating, parallax: 'yes', speed: '42' };
-  let scroll = 0; Object.defineProperty(track, 'scrollLeft', { get: () => scroll, set: v => { scroll = Math.round(Math.max(0, Math.min(1000, v))); } });
-  track.scrollWidth = 1500; track.clientWidth = 500; track.children = [new Element(), new Element()];
+  let scroll = 0; Object.defineProperty(track, 'scrollLeft', { get: () => scroll, set: v => { scroll = Math.round(Math.max(0, Math.min(track.scrollWidth - track.clientWidth, v))); } });
+  track.clientWidth = trackWidth; track.children = [new Element(), new Element()];
+  track.children.forEach(card => { card.cardWidth = 734; });
+  Object.defineProperty(track, 'scrollWidth', { get: () => track.children.length * 750 });
   section.querySelector = selector => selector === '.services-hero' ? hero : noTrack ? null : track;
   section.querySelectorAll = () => badges;
   const document = new EventTarget(); document.hidden = false;
   const media = new EventTarget(); media.matches = reduced;
   const window = new EventTarget(); const frames = new Map(), intersections = [], resizes = []; let seq = 0, now = 0, handler, hook;
-  Object.assign(window, { performance: { now: () => now }, matchMedia: () => media,
+  Object.assign(window, { getComputedStyle: () => ({ columnGap: '16px' }), performance: { now: () => now }, matchMedia: () => media,
     requestAnimationFrame: fn => { frames.set(++seq, fn); return seq; }, cancelAnimationFrame: id => frames.delete(id),
     elementorFrontend: { isEditMode: () => editing, hooks: { addAction: (name, fn) => { hook = fn; } }, elementsHandler: { addHandler(Type, args) { handler = new Type(); Object.assign(handler, args); handler.onInit(); } } },
     elementorModules: { frontend: { handlers: { Base: class { onInit() {} onDestroy() {} } } } },
@@ -35,12 +44,12 @@ function setup({ editing = false, reduced = false, auto = 'yes', floating = 'yes
     event(target, type, values = {}) { const event = new Event(type, { cancelable: true }); for (const [key, value] of Object.entries(values)) Object.defineProperty(event, key, { value }); target.dispatchEvent(event); return event; },
   };
 }
-test('fractional auto scrolling progresses with rounded scrollLeft and bounces at the ends', () => {
+test('fractional auto scrolling progresses with rounded scrollLeft and wraps without reversing', () => {
   const s = setup({ floating: '' }); s.tick(0);
   for (let i = 1; i <= 60; i++) s.tick(i * 1000 / 60);
   assert.ok(Math.abs(s.track.scrollLeft - 42) <= 1);
-  s.track.scrollLeft = 999; s.event(s.track, 'scroll'); s.tick(2500);
-  assert.equal(s.track.scrollLeft, 1000); s.tick(2550); assert.ok(s.track.scrollLeft < 1000);
+  s.track.scrollLeft = 1499; s.event(s.track, 'scroll'); s.tick(2500);
+  assert.ok(s.track.scrollLeft < 5); const wrapped = s.track.scrollLeft; s.tick(2550); assert.ok(s.track.scrollLeft > wrapped);
   s.handler.onDestroy(); assert.equal(s.frames.size, 0);
 });
 test('badges preserve the reference floating and pointer motion and ignore touch', () => {
@@ -61,7 +70,7 @@ test('clicks work, dragging suppresses its click and manual keyboard navigation 
   assert.equal(s.event(s.track, 'click', { detail: 1 }).defaultPrevented, true);
   assert.equal(s.event(s.track, 'click', { detail: 1 }).defaultPrevented, false);
   s.event(s.track, 'focusin'); const before = s.track.scrollLeft; s.tick(3000); s.tick(3050); assert.equal(s.track.scrollLeft, before);
-  assert.equal(s.event(s.track, 'keydown', { key: 'End' }).defaultPrevented, true); assert.equal(s.track.scrollLeft, 1000);
+  assert.equal(s.event(s.track, 'keydown', { key: 'End' }).defaultPrevented, true); assert.equal(s.track.scrollLeft, 1499);
   s.event(s.track, 'keydown', { key: 'Home' }); assert.equal(s.track.scrollLeft, 0);
   s.event(s.track, 'focusout', { relatedTarget: null }); s.tick(6000); s.tick(6050); assert.ok(s.track.scrollLeft > 0); s.handler.onDestroy();
 });
@@ -91,5 +100,30 @@ test('editor leaves text cursor keys and click propagation available for inline 
   s.event(s.track, 'pointerdown', { pointerId: 1, clientX: 100, button: 0 });
   s.event(s.track, 'pointermove', { pointerId: 1, clientX: 50 });
   assert.equal(s.track.scrollLeft, 0);
+  s.handler.onDestroy();
+});
+
+
+test('wide layouts have enough copies and resizing rebuilds without accumulating duplicates', () => {
+  const s = setup({ trackWidth: 4000, observers: true });
+  assert.ok(s.track.scrollWidth >= 4000 + 1500);
+  const count = s.track.children.length;
+  assert.ok(s.track.children.slice(2).every(card => card.attributes['aria-hidden'] === 'true'));
+  s.resizes[0].callback();
+  assert.equal(s.track.children.length, count);
+  s.track.clientWidth = 8000; s.resizes[0].callback();
+  assert.ok(s.track.scrollWidth >= 8000 + 1500);
+  s.handler.onDestroy();
+  assert.equal(s.track.children.length, 2);
+});
+
+test('dragging past the beginning wraps into the previous repeat', () => {
+  const s = setup();
+  s.event(s.track, 'pointerdown', { pointerId: 1, clientX: 100, button: 0 });
+  s.event(s.track, 'pointermove', { pointerId: 1, clientX: 200 });
+  assert.equal(s.track.scrollLeft, 1400);
+  s.event(s.track, 'pointermove', { pointerId: 1, clientX: 300 });
+  assert.equal(s.track.scrollLeft, 1300);
+  s.event(s.track, 'pointerup', { pointerId: 1 });
   s.handler.onDestroy();
 });
