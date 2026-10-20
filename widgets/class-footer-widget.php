@@ -10,7 +10,7 @@ class Footer_Widget extends Clients_Footer_Widget {
 	public function get_name() { return 'jednotka-footer'; }
 	public function get_title() { return esc_html__( 'Jednotka Footer', 'jednotka-elementor' ); }
 	public function get_keywords() { return array( 'footer', 'contact', 'navigation', 'jednotka' ); }
-	public function get_style_depends() { return array( 'jednotka-footer' ); }
+	public function get_style_depends() { return array( 'jednotka-footer', 'elementor-icons-fa-brands' ); }
 	public function get_script_depends() { return array( 'jednotka-footer' ); }
 
 	protected function register_controls() {

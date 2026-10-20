@@ -1,8 +1,9 @@
 <?php
 /** Standalone featured article checks; WordPress post APIs are stubbed. */
 namespace Elementor {
- class Controls_Manager { const TEXT='text',TEXTAREA='textarea',COLOR='color',RAW_HTML='raw',GALLERY='gallery',MEDIA='media',SELECT='select',REPEATER='repeater',SWITCHER='switcher',NUMBER='number',URL='url',TAB_STYLE='style',SLIDER='slider',DIMENSIONS='dimensions'; }
+ class Controls_Manager { const ICONS='icons',TEXT='text',TEXTAREA='textarea',COLOR='color',RAW_HTML='raw',GALLERY='gallery',MEDIA='media',SELECT='select',REPEATER='repeater',SWITCHER='switcher',NUMBER='number',URL='url',TAB_STYLE='style',SLIDER='slider',DIMENSIONS='dimensions'; }
  class Group_Control_Typography { static function get_type(){ return 'typography'; } }
+ class Icons_Manager { static function render_icon($icon,$attrs){echo '<i class="'.\esc_attr($icon['value']).'" aria-hidden="true"></i>';} }
  class Plugin { public static $instance; }
  class EditorStub { public $editing=false; function is_edit_mode(){return $this->editing;} }
  class Repeater {
@@ -50,6 +51,7 @@ namespace {
  function wp_kses($text,$allowed){return strip_tags($text,'<br>');}
  require dirname(__DIR__).'/widgets/class-clients-footer-widget.php';
  require dirname(__DIR__).'/widgets/class-footer-widget.php';
+ require dirname(__DIR__).'/widgets/class-header-widget.php';
  function check($yes,$message){if(!$yes)throw new \RuntimeException($message);}
  $footer=new \Jednotka\Elementor\Widgets\Footer_Widget;$html=$footer->output();
  check(str_contains($html,'<footer class="site-footer-card"'),'footer landmark');
@@ -58,6 +60,18 @@ namespace {
  check(str_contains($html,'mailto:hello@jednotka.sk')&&str_contains($html,'tel:+421000000000'),'contact links');
  check(str_contains($html,'data-elementor-setting-key="brand_text"'),'editable brand');
  check(str_contains($html,'data-elementor-setting-key="menu_links.0.label"'),'editable navigation');
+ $header=new \Jednotka\Elementor\Widgets\Header_Widget;
+ $header_links=$header->get_settings_for_display()['nav_items'];
+ $footer_links=$footer->get_settings_for_display()['menu_links'];
+ foreach($header_links as $index=>$link){check($footer_links[$index]['label']===$link['label'] && $footer_links[$index]['link']===$link['link'],'footer defaults include header links in the same order');}
+ check($header_links[3]['link']['url']==='/kariera/','career uses a page URL');
+ foreach(['instagram','behance','linkedin-in'] as $brand)check(str_contains($html,'fab fa-'.$brand),'Font Awesome brand '.$brand);
+ check(str_contains($html,'aria-label="Instagram"'),'icon link has an accessible name');
+ check(in_array('elementor-icons-fa-brands',$footer->get_style_depends(),true),'brand font stylesheet is loaded');
+ $legacy=new \Jednotka\Elementor\Widgets\Footer_Widget;
+ $legacy->overrides=['social_links'=>[['_id'=>'old','label'=>'Ig','accessible_name'=>'Instagram','link'=>['url'=>'https://example.com/social']]]];
+ check(str_contains($legacy->output(),'fab fa-instagram'),'old saved social links receive icons');
+
  check(!isset($footer->get_controls()['cards'])&&!isset($footer->get_controls()['heading']),'only footer controls');
  check(isset($footer->get_controls()['newsletter_show']),'newsletter setting retained');
  $footer=new \Jednotka\Elementor\Widgets\Footer_Widget;$footer->overrides=['newsletter_show'=>'','brand_text'=>'<script>Brand</script>'];$safe=$footer->output();check(!str_contains($safe,'<form'),'newsletter can be hidden');check(str_contains($safe,'&lt;script&gt;Brand&lt;/script&gt;'),'brand escaped');

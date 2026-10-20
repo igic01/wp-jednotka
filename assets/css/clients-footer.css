@@ -226,6 +226,8 @@
 .jn-clients-footer .footer-side { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding-top: 24px; border-top: 1px solid #ffffff1a; }
 .jn-clients-footer .footer-socials { display: flex; flex-wrap: wrap; gap: 10px; }
 .jn-clients-footer .footer-socials a { width: 44px; height: 44px; }
+.jn-clients-footer .footer-socials a > i { font-size: 20px; }
+.jn-clients-footer .footer-socials a > svg { width: 20px; height: 20px; fill: currentColor; }
 .jn-clients-footer .footer-side > p { color: #ffffff80; overflow-wrap: anywhere; }
 .jn-clients-footer .jn-newsletter-notice[hidden] { display: none; }
 .jn-clients-footer .jn-newsletter-notice { color: #ffffffc2; font: 400 14px/1.3 var(--font-secondary); }

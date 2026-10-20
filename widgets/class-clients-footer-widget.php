@@ -4,6 +4,7 @@ namespace Jednotka\Elementor\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
+use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Widget_Base;
 
@@ -15,7 +16,7 @@ class Clients_Footer_Widget extends Widget_Base {
 	public function get_icon() { return 'eicon-footer'; }
 	public function get_categories() { return array( 'jednotka' ); }
 	public function get_keywords() { return array( 'clients', 'cta', 'footer', 'jednotka' ); }
-	public function get_style_depends() { return array( 'jednotka-clients-footer' ); }
+	public function get_style_depends() { return array( 'jednotka-clients-footer', 'elementor-icons-fa-brands' ); }
 	public function get_script_depends() { return array( 'jednotka-clients-footer' ); }
 
 	private function text_controls( $stack, $key, $label, $selector, $default = '', $multiline = false ) {
@@ -35,6 +36,7 @@ class Clients_Footer_Widget extends Widget_Base {
 		$item->add_control( 'link', array( 'label' => 'Link', 'type' => Controls_Manager::URL ) );
 		$item->add_control( 'hover_color', array( 'label' => 'Hover color', 'type' => Controls_Manager::COLOR, 'selectors' => array( '{{WRAPPER}} {{CURRENT_ITEM}}:hover' => 'color: {{VALUE}};' ) ) );
 		if ( $social ) {
+			$item->add_control( 'icon', array( 'label' => 'Social icon', 'type' => Controls_Manager::ICONS, 'recommended' => array( 'fa-brands' => array( 'instagram', 'behance', 'linkedin-in' ) ) ) );
 			$item->add_control( 'accessible_name', array( 'label' => 'Accessible name', 'type' => Controls_Manager::TEXT, 'description' => 'Full network name for short labels such as Ig.' ) );
 		}
 		$this->add_control( $key, array( 'label' => $label, 'type' => Controls_Manager::REPEATER, 'fields' => $item->get_controls(), 'title_field' => '{{{ label }}}', 'default' => $defaults, 'prevent_empty' => false ) );
@@ -108,12 +110,11 @@ class Clients_Footer_Widget extends Widget_Base {
 
 		$this->start_controls_section( 'footer_links_section', array( 'label' => 'Footer navigation and contact' ) );
 		$this->text_controls( $this, 'menu_heading', 'Menu heading', '{{WRAPPER}} .jn-footer-menu-heading', 'Menu' );
-		$this->link_repeater( 'menu_links', 'Menu links', array(
-			array( 'label' => 'Služby', 'link' => array( 'url' => home_url( '/sluzby/' ) ) ),
-			array( 'label' => 'Blog', 'link' => array( 'url' => home_url( '/blog/' ) ) ),
-			array( 'label' => 'O nás', 'link' => array( 'url' => home_url( '/o-nas/' ) ) ),
-			array( 'label' => 'Kontakt', 'link' => array( 'url' => home_url( '/kontakt/' ) ) ),
-		) );
+		$menu_defaults = array();
+		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/', 'Kontakt' => '/kontakt/' ) as $label => $url ) {
+			$menu_defaults[] = array( 'label' => $label, 'link' => array( 'url' => home_url( $url ) ) );
+		}
+		$this->link_repeater( 'menu_links', 'Menu links', $menu_defaults );
 		$this->text_controls( $this, 'contact_heading', 'Contact heading', '{{WRAPPER}} .jn-footer-contact-heading', 'Kontakt' );
 		$this->link_repeater( 'contact_links', 'Contact links', array(
 			array( 'label' => 'hello@jednotka.sk', 'link' => array( 'url' => 'mailto:hello@jednotka.sk' ) ),
@@ -124,9 +125,9 @@ class Clients_Footer_Widget extends Widget_Base {
 
 		$this->start_controls_section( 'social_section', array( 'label' => 'Social links and copyright' ) );
 		$this->link_repeater( 'social_links', 'Social links', array(
-			array( 'label' => 'Ig', 'accessible_name' => 'Instagram', 'link' => array( 'url' => '#' ) ),
-			array( 'label' => 'Bē', 'accessible_name' => 'Behance', 'link' => array( 'url' => '#' ) ),
-			array( 'label' => 'In', 'accessible_name' => 'LinkedIn', 'link' => array( 'url' => '#' ) ),
+			array( 'label' => 'Ig', 'accessible_name' => 'Instagram', 'icon' => array( 'value' => 'fab fa-instagram', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
+			array( 'label' => 'Bē', 'accessible_name' => 'Behance', 'icon' => array( 'value' => 'fab fa-behance', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
+			array( 'label' => 'In', 'accessible_name' => 'LinkedIn', 'icon' => array( 'value' => 'fab fa-linkedin-in', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
 		), true );
 		$this->text_controls( $this, 'copyright', 'Copyright', '{{WRAPPER}} .footer-side > p', '© 2026 Jednotka' );
 		$this->end_controls_section();
@@ -179,7 +180,20 @@ class Clients_Footer_Widget extends Widget_Base {
 			$text_key = $this->get_repeater_setting_key( 'label', $key, $index );
 			$this->add_link_attributes( $text_key, $item['link'] );
 			if ( ! empty( $item['accessible_name'] ) ) { $this->add_render_attribute( $text_key, 'aria-label', $item['accessible_name'] ); }
-			?><a <?php $this->inline_text( $text_key, 'elementor-repeater-item-' . $item['_id'] ); ?>><?php echo esc_html( $item['label'] ); ?></a><?php
+			$icon = $item['icon'] ?? array();
+			if ( 'social_links' === $key && empty( $icon['value'] ) ) {
+				// Older saved widgets have text labels only; give known networks their brand icon.
+				$brands = array( 'instagram' => 'instagram', 'ig' => 'instagram', 'behance' => 'behance', 'bē' => 'behance', 'linkedin' => 'linkedin-in', 'in' => 'linkedin-in' );
+				$brand = $brands[ strtolower( $item['accessible_name'] ?? '' ) ] ?? $brands[ strtolower( $item['label'] ) ] ?? '';
+				if ( $brand ) { $icon = array( 'value' => 'fab fa-' . $brand, 'library' => 'fa-brands' ); }
+			}
+			if ( 'social_links' === $key && ! empty( $icon['value'] ) ) {
+				if ( empty( $item['accessible_name'] ) ) { $this->add_render_attribute( $text_key, 'aria-label', $item['label'] ); }
+				$this->add_render_attribute( $text_key, 'class', 'elementor-repeater-item-' . $item['_id'] );
+				?><a <?php $this->print_render_attribute_string( $text_key ); ?>><?php Icons_Manager::render_icon( $icon, array( 'aria-hidden' => 'true' ) ); ?></a><?php
+			} else {
+				?><a <?php $this->inline_text( $text_key, 'elementor-repeater-item-' . $item['_id'] ); ?>><?php echo esc_html( $item['label'] ); ?></a><?php
+			}
 		}
 	}
 	protected function render() {

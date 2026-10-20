@@ -84,7 +84,7 @@ class Header_Widget extends Widget_Base {
 			'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} .jn-header__nav-text',
 		) );
 		$defaults = array();
-		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '#kariera', 'Blog' => '/blog/' ) as $label => $url ) {
+		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/' ) as $label => $url ) {
 			$defaults[] = array( 'label' => $label, 'link' => array( 'url' => '#' === substr( $url, 0, 1 ) ? $url : home_url( $url ) ) );
 		}
 		$add_control( 'nav_items', array(
