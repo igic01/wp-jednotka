@@ -20,14 +20,36 @@
         if (!header) return;
         const toggle = header.querySelector('.jn-header__toggle');
         const nav = header.querySelector('.jn-header__nav');
-        const breakpoint = header.closest('.jn-hero, .jn-services-hero') ? 700 : 1024;
-        const mobile = window.matchMedia(`(max-width: ${breakpoint}px)`);
+        const menu = header.querySelector('.jn-header__menu');
+        const close = header.querySelector('.jn-header__menu-close');
+        const mobile = window.matchMedia('(max-width: 1024px)');
         const editing = elementorFrontend.isEditMode();
+        let previousOverflow = null;
+        const syncClosed = () => {
+          header.classList.remove('is-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          if (previousOverflow !== null) {
+            document.body.style.overflow = previousOverflow;
+            previousOverflow = null;
+          }
+        };
         const setOpen = (open, returnFocus = false) => {
+          open = open && mobile.matches;
+          if (open && !menu.open) {
+            previousOverflow = document.body.style.overflow;
+            menu.showModal();
+            document.body.style.overflow = 'hidden';
+          } else if (!open) {
+            menu.close();
+            syncClosed();
+          }
           header.classList.toggle('is-open', open);
           toggle.setAttribute('aria-expanded', String(open));
           if (returnFocus) toggle.focus();
         };
+        this.closeMenu = () => setOpen(false);
+        close.addEventListener('click', () => setOpen(false, true), { signal });
+        menu.addEventListener('close', syncClosed, { signal });
         toggle.addEventListener('click', () => setOpen(!header.classList.contains('is-open')), { signal });
         nav.addEventListener('click', (event) => {
           if (!editing && event.target.closest('a')) setOpen(false);
@@ -37,9 +59,6 @@
         }, { signal });
         document.addEventListener('pointerdown', (event) => {
           if (!header.contains(event.target)) setOpen(false);
-        }, { signal });
-        header.addEventListener('focusout', (event) => {
-          if (!editing && !header.contains(event.relatedTarget)) setOpen(false);
         }, { signal });
         mobile.addEventListener('change', () => setOpen(false), { signal });
         header.addEventListener('input', (event) => {
@@ -69,6 +88,7 @@
       }
 
       onDestroy() {
+        this.closeMenu?.();
         this.controller?.abort();
         this.video?.pause();
         super.onDestroy();

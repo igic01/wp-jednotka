@@ -82,33 +82,93 @@
 .elementor-editor-active .jn-header__button-track { transform: none; }
 .elementor-editor-active .jn-header__button-copy { display: none; }
 
+/* On desktop the dialog is a transparent wrapper around the normal navigation. */
+.jn-header .jn-header__menu { display: contents; }
+.jn-header .jn-header__menu-close { display: none; }
+
 @media (max-width: 1024px) {
   .jn-header { --jn-logo-width: 130px; justify-content: space-between; gap: 16px; padding: 20px; }
   .jn-header .jn-header__media { height: 42px; }
-  .jn-header .jn-header__cta { display: none; }
-  .jn-header .jn-header__toggle { display: flex; }
-  .jn-header__nav {
-    position: absolute;
-    top: calc(100% - 4px);
-    right: 20px;
-    left: 20px;
+  .jn-header .jn-header__cta.site-header-button { display: none; }
+  .jn-header .jn-header__toggle.site-nav-toggle { display: flex; }
+  .jn-header .jn-header__menu {
     display: none;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 4px;
-    padding: 16px;
-    border-radius: 18px;
-    background: var(--jn-mobile-background, rgb(15 10 35 / 96%));
-    backdrop-filter: blur(14px);
-    box-shadow: 0 20px 40px rgb(0 0 0 / 35%);
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: max(92px, env(safe-area-inset-top)) clamp(24px, 7vw, 80px) max(32px, env(safe-area-inset-bottom));
+    border: 0;
+    border-radius: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    color: #fff;
+    background: radial-gradient(ellipse at 0 0, #45247d40, transparent 60%), var(--jn-mobile-background, #1a1a1a);
+    font-family: "Jednotka Aspekta", Arial, sans-serif;
   }
-  .jn-header.is-open .jn-header__nav { display: flex; }
-  .jn-header .jn-header__nav-link { padding: 12px 14px; border-radius: 12px; }
-  .jn-header__nav-link:is(:hover, :focus-visible) { background: rgb(255 255 255 / 8%); }
+  .jn-header .jn-header__menu[open] { display: flex; flex-direction: column; }
+  .jn-header .jn-header__menu::backdrop { background: #1a1a1a; }
+  .jn-header .jn-header__menu-close {
+    position: absolute;
+    top: max(20px, env(safe-area-inset-top));
+    right: max(24px, env(safe-area-inset-right));
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 1px solid #ffffff26;
+    border-radius: 50%;
+    background: #ffffff08;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .jn-header .jn-header__menu .jn-header__nav {
+    position: static;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+  .jn-header .jn-header__menu .jn-header__nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: clamp(16px, 3vh, 28px) 0;
+    border-bottom: 1px solid #ffffff26;
+    border-radius: 0;
+  }
+  .jn-header .jn-header__menu .jn-header__nav-text {
+    font-size: clamp(30px, 5.5vw, 64px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -.035em;
+  }
+  .jn-header .jn-header__menu .jn-header__nav-link::after {
+    content: "↗";
+    color: #bda3f7;
+    font-size: clamp(24px, 4vw, 40px);
+    transition: transform 180ms ease;
+  }
+  .jn-header .jn-header__menu .jn-header__nav-link:is(:hover, :focus-visible)::after { transform: translate(3px, -3px); }
 }
 @media (max-width: 520px) {
   .jn-header { --jn-logo-width: 118px; padding: 16px; }
-  .jn-header__nav { right: 16px; left: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .jn-header *, .jn-header *::before, .jn-header *::after { transition: none; }

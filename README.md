@@ -29,7 +29,7 @@ only in Elementor's preview canvas; public button animations are preserved.
 ## Header widget
 
 Recreates the reference page's top navigation bar: logo, five editable links,
-animated action button, and mobile dropdown. No Elementor Pro features are used.
+animated action button, and full-screen mobile menu. No Elementor Pro features are used.
 
 - Click a navigation label or the action button's text in the Elementor preview
   to edit it directly. Changes are saved with Elementor's **Update / Publish**.
@@ -44,9 +44,10 @@ animated action button, and mobile dropdown. No Elementor Pro features are used.
   navigation gap, and mobile menu colors. The default dark background makes the
   white logo visible; clear it when placing the standalone header over a background.
 
-The dropdown opens at widths of 1024px or less. It supports keyboard navigation,
-Escape, and outside click. The desktop action button is hidden at these widths,
-matching the reference's mobile layout. In the editor, open the mobile menu to
+The full-screen menu opens at widths of 1024px or less, including inside heroes.
+It uses the footer's charcoal surface and purple glow, large links, and a close
+button. Focus stays inside the open menu and background scrolling is locked.
+Escape and selecting a link close it. The desktop action button is hidden at these widths. In the editor, open the mobile menu to
 edit its labels; it stays open when you click its text.
 
 This is a page widget. It does not replace the theme's header or automatically
@@ -111,7 +112,7 @@ Elementor controls without recreating their design.
 
 For the reference appearance, use image mode for both heading lines and leave
 style overrides at their defaults. The copied hero badge breakpoint is 900px;
-the integrated navigation breakpoint is 700px, matching the example.
+the integrated navigation breakpoint is 1024px for the full-screen mobile menu.
 
 ### Place the header over the hero
 

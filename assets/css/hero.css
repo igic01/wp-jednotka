@@ -19,8 +19,8 @@
 .jn-hero.is-text-editing .button-label-track, .elementor-editor-active .jn-hero .button-label-track { transform: none; }
 .elementor-editor-active .jn-hero .button-label-line[aria-hidden="true"] { display: none; }
 
-/* Reset the standalone header's tablet rules; the reference collapses at 700px. */
-@media (min-width: 701px) {
+/* Reset the standalone header's tablet rules; the reference collapses at 1024px. */
+@media (min-width: 1025px) {
   .jn-hero .site-header { --jn-logo-width: 165px; }
   .jn-hero .site-header-logo, .jn-hero .jn-header__media { width: 165px; height: 52px; }
   .jn-hero .site-nav { position: static; display: flex; flex-direction: row; align-items: center; padding: 0; border-radius: 0; background: transparent; backdrop-filter: none; box-shadow: none; }
@@ -31,7 +31,7 @@
   /* Saved badge positions apply only to desktop, as their controls describe. */
   .jn-hero .hero-badge-row .hero-badge { top: auto !important; left: auto !important; }
 }
-@media (max-width: 700px) {
+@media (max-width: 1024px) {
   .jn-hero .site-header { --jn-logo-width: 130px; }
   .jn-hero .jn-header__media { height: auto; }
   .jn-hero .site-nav { align-items: stretch; background: var(--jn-mobile-background, rgb(15 10 35 / 92%)); }

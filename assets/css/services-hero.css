@@ -397,7 +397,7 @@
 
 /* Shared, editable navbar overlays the reference hero. */
 .jn-services-hero .jn-header { position: absolute; top: 5.4%; right: 6.8%; left: 6.8%; width: auto; padding: 0; background: transparent; z-index: 10; }
-@media (min-width: 701px) {
+@media (min-width: 1025px) {
   .jn-services-hero .jn-header { --jn-logo-width: 165px; gap: 28px; }
   .jn-services-hero .jn-header__media { height: 52px; }
   .jn-services-hero .jn-header__nav { position: static; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 38px; padding: 0; background: transparent; border-radius: 0; box-shadow: none; backdrop-filter: none; }
@@ -405,7 +405,7 @@
   .jn-services-hero .jn-header__cta { display: inline-flex; }
   .jn-services-hero .jn-header__toggle { display: none; }
 }
-@media (max-width: 700px) {
+@media (max-width: 1024px) {
   .jn-services-hero .jn-header { --jn-logo-width: 130px; top: 20px; right: 20px; left: 20px; }
   .jn-services-hero .jn-header__nav { top: calc(100% + 12px); right: 0; left: 0; }
 }
@@ -413,7 +413,7 @@
   .jn-services-hero .jn-header { --jn-logo-width: 118px; top: 16px; right: 16px; left: 16px; }
 }
 
-@media (min-width: 701px) and (max-width: 1100px) {
+@media (min-width: 1025px) and (max-width: 1100px) {
   .jn-services-hero .jn-header { --jn-logo-width: 118px; gap: 12px; }
   .jn-services-hero .jn-header__nav { gap: 14px; }
   .jn-services-hero .jn-header__nav-text { font-size: 14px; }

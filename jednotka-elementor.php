@@ -2,7 +2,7 @@
 /**
  * Plugin Name: wp-jednotka
  * Description: Custom Elementor Free widgets for the Jednotka website.
- * Version: 0.34.10
+ * Version: 0.34.11
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Requires Plugins: elementor
@@ -12,7 +12,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'JEDNOTKA_ELEMENTOR_VERSION', '0.34.10' );
+define( 'JEDNOTKA_ELEMENTOR_VERSION', '0.34.11' );
 define( 'JEDNOTKA_ELEMENTOR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'JEDNOTKA_ELEMENTOR_URL', plugin_dir_url( __FILE__ ) );
 

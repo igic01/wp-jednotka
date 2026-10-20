@@ -119,7 +119,7 @@ class Header_Widget extends Widget_Base {
 		) );
 		$add_control( 'mobile_background', array(
 			'label' => 'Mobile menu background', 'type' => Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .jn-header__nav' => '--jn-mobile-background: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .jn-header' => '--jn-mobile-background: {{VALUE}};' ),
 		) );
 		$add_control( 'toggle_color', array(
 			'label' => 'Mobile menu icon', 'type' => Controls_Manager::COLOR,
@@ -177,6 +177,8 @@ class Header_Widget extends Widget_Base {
 					<button class="jn-header__video-toggle" type="button" aria-label="<?php echo esc_attr__( 'Play logo animation', 'jednotka-elementor' ); ?>" data-play-label="<?php echo esc_attr__( 'Play logo animation', 'jednotka-elementor' ); ?>" data-pause-label="<?php echo esc_attr__( 'Pause logo animation', 'jednotka-elementor' ); ?>" aria-pressed="false">▶</button>
 				<?php endif; ?>
 			</div>
+			<dialog class="jn-header__menu" aria-label="<?php echo esc_attr__( 'Main navigation', 'jednotka-elementor' ); ?>">
+				<button class="jn-header__menu-close" type="button" aria-label="<?php echo esc_attr__( 'Close menu', 'jednotka-elementor' ); ?>"><span aria-hidden="true">✕</span></button>
 			<nav class="jn-header__nav site-nav" id="<?php echo esc_attr( $nav_id ); ?>" aria-label="<?php echo esc_attr__( 'Primary navigation', 'jednotka-elementor' ); ?>">
 				<?php foreach ( $settings['nav_items'] as $index => $item ) :
 					$text_key = $this->get_repeater_setting_key( 'label', $prefix . 'nav_items', $index );
@@ -189,6 +191,7 @@ class Header_Widget extends Widget_Base {
 					<a <?php $this->print_render_attribute_string( $link_key ); ?>><span <?php $this->print_render_attribute_string( $text_key ); ?>><?php echo esc_html( $item['label'] ); ?></span></a>
 				<?php endforeach; ?>
 			</nav>
+			</dialog>
 			<?php if ( 'yes' === $settings['show_button'] ) : ?>
 				<a <?php $this->print_render_attribute_string( $prefix . 'button_link' ); ?>>
 					<span class="jn-header__button-label button-label"><span class="jn-header__button-track button-label-track"><span <?php $this->print_render_attribute_string( $prefix . 'button_text' ); ?>><?php echo esc_html( $settings['button_text'] ); ?></span><span class="jn-header__button-copy button-label-line" aria-hidden="true"><?php echo esc_html( $settings['button_text'] ); ?></span></span></span>
