@@ -34,7 +34,8 @@ class Showcase_Widget extends Widget_Base {
 
 		$this->start_controls_section( 'gallery_section', array( 'label' => 'Gallery items' ) );
 		$image = new Repeater();
-		$image->add_control( 'content_type', array( 'label' => 'Content type', 'type' => Controls_Manager::SELECT, 'default' => 'image', 'options' => array( 'image' => 'Image', 'text' => 'Text' ) ) );
+		$image->add_control( 'content_type', array( 'label' => 'Content type', 'type' => Controls_Manager::SELECT, 'default' => 'image', 'options' => array( 'image' => 'Image', 'text' => 'Text', 'spacer' => 'Spacer' ) ) );
+		$image->add_responsive_control( 'spacer_height', array( 'label' => 'Spacer height', 'type' => Controls_Manager::SLIDER, 'size_units' => array( 'px', 'vh', 'rem' ), 'default' => array( 'size' => 100, 'unit' => 'px' ), 'range' => array( 'px' => array( 'min' => 0, 'max' => 1000 ), 'vh' => array( 'min' => 0, 'max' => 100 ), 'rem' => array( 'min' => 0, 'max' => 60 ) ), 'condition' => array( 'content_type' => 'spacer' ), 'selectors' => array( '{{WRAPPER}} {{CURRENT_ITEM}}.jn-showcase__spacer' => 'height: {{SIZE}}{{UNIT}};' ) ) );
 		$image->add_control( 'text', array( 'label' => 'Text', 'type' => Controls_Manager::TEXTAREA, 'condition' => array( 'content_type' => 'text' ) ) );
 		$image->add_control( 'text_color', array( 'label' => 'Text color', 'type' => Controls_Manager::COLOR, 'condition' => array( 'content_type' => 'text' ), 'selectors' => array( '{{WRAPPER}} {{CURRENT_ITEM}} .jn-showcase__item-text' => 'color: {{VALUE}};' ) ) );
 		$image->add_group_control( Group_Control_Typography::get_type(), array( 'name' => 'item_text_font', 'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} .jn-showcase__item-text', 'condition' => array( 'content_type' => 'text' ) ) );
@@ -45,7 +46,7 @@ class Showcase_Widget extends Widget_Base {
 		foreach ( array( 'River valley between mountains', 'Misty forest landscape', 'Green hills under a clear sky', 'Waterfall in the woods' ) as $index => $alt ) {
 			$defaults[] = array( 'image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/showcase/gallery-' . ( $index + 1 ) . '.jpg' ), 'alt' => $alt );
 		}
-		$this->add_control( 'gallery', array( 'label' => 'Items', 'type' => Controls_Manager::REPEATER, 'fields' => $image->get_controls(), 'default' => $defaults, 'title_field' => '{{{ content_type === "text" ? "Text" : (alt || "Gallery image") }}}', 'prevent_empty' => false ) );
+		$this->add_control( 'gallery', array( 'label' => 'Items', 'type' => Controls_Manager::REPEATER, 'fields' => $image->get_controls(), 'default' => $defaults, 'title_field' => '{{{ content_type === "spacer" ? "Spacer" : (content_type === "text" ? "Text" : (alt || "Gallery image")) }}}', 'prevent_empty' => false ) );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'comparison_section', array( 'label' => 'Before / after comparison' ) );
@@ -60,7 +61,7 @@ class Showcase_Widget extends Widget_Base {
 		$this->add_control( 'slider_label', array( 'label' => 'Slider accessible name', 'type' => Controls_Manager::TEXT, 'default' => 'Before and after comparison' ) );
 		$this->add_control( 'position', array( 'label' => 'Comparison position (%)', 'type' => Controls_Manager::NUMBER, 'min' => 0, 'max' => 100, 'step' => 1, 'default' => 65, 'description' => 'Before is on the left; After is on the right. Fully left shows After; fully right shows Before.' ) );
 		$this->add_control( 'animate', array( 'label' => 'Intro sweep when visible', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
-		$this->add_control( 'snap', array( 'label' => 'Snap comparison to viewport', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
+		$this->add_control( 'snap', array( 'label' => 'Snap comparison to viewport', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes', 'description' => 'Desktop only. Disabled on screens up to 900px so mobile scrolling stays natural.' ) );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'layout_section', array( 'label' => 'Theme and layout', 'tab' => Controls_Manager::TAB_STYLE ) );
@@ -96,6 +97,9 @@ class Showcase_Widget extends Widget_Base {
 				</div></div>
 				<div class="jn-showcase__images">
 					<?php foreach ( $s['gallery'] as $index => $item ) : ?>
+						<?php if ( 'spacer' === ( $item['content_type'] ?? 'image' ) ) : ?>
+							<div class="jn-showcase__spacer elementor-repeater-item-<?php echo esc_attr( $item['_id'] ); ?>" aria-hidden="true"></div>
+						<?php continue; endif; ?>
 						<?php if ( 'text' === ( $item['content_type'] ?? 'image' ) ) : ?>
 							<div class="jn-showcase__text-item elementor-repeater-item-<?php echo esc_attr( $item['_id'] ); ?>"><p <?php $this->inline_text( $this->get_repeater_setting_key( 'text', 'gallery', $index ), 'jn-showcase__item-text' ); ?>><?php echo nl2br( esc_html( $item['text'] ?? '' ) ); ?></p></div>
 						<?php continue; endif; if ( empty( $item['image']['url'] ) ) { continue; } ?>

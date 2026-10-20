@@ -55,6 +55,7 @@
 .jn-showcase .jn-showcase__lead,
 .jn-showcase .jn-showcase__compare-description { margin: 0; color: #eee6ffb8; font-size: clamp(16px, 1.4vw, 19px); font-weight: 400; line-height: 1.65; text-wrap: pretty; }
 .jn-showcase .jn-showcase__images { display: flex; flex-direction: column; gap: var(--jn-showcase-gap); min-width: 0; }
+.jn-showcase .jn-showcase__spacer { flex: 0 0 auto; height: 100px; pointer-events: none; }
 .jn-showcase .jn-showcase__image { margin: 0; overflow: hidden; border: 1px solid #ffffff26; border-radius: var(--jn-showcase-radius); background: #1a1a1a; box-shadow: 0 24px 70px #09021a40; }
 .jn-showcase .jn-showcase__image img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
 .jn-showcase .jn-showcase__compare {

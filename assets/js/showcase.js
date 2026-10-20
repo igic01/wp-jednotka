@@ -36,6 +36,7 @@
         this.controller = new AbortController();
         const { signal } = this.controller;
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const mobile = window.matchMedia('(max-width: 900px)');
         const editing = elementorFrontend.isEditMode();
         const configured = Number(root.dataset.position);
         const target = Number.isFinite(configured) ? Math.min(100, Math.max(0, configured)) : 65;
@@ -55,13 +56,13 @@
           const viewport = window.innerHeight;
           const top = compare.getBoundingClientRect().top;
           if (Math.abs(top) > viewport * 0.65) snapped = false;
-          if (editing || reduced.matches || document.hidden || root.dataset.snap !== 'yes' ||
+          if (mobile.matches || editing || reduced.matches || document.hidden || root.dataset.snap !== 'yes' ||
               snapped || pointerId !== null || compare.contains?.(document.activeElement) ||
               Math.abs(top) < 2 || Math.abs(top) > viewport * 0.22) return;
           // Settle after the user's scroll gesture, then snap once per approach.
           this.snapTimer = window.setTimeout(() => {
             this.snapTimer = null;
-            if (reduced.matches || document.hidden || pointerId !== null) return;
+            if (mobile.matches || reduced.matches || document.hidden || pointerId !== null) return;
             const remaining = compare.getBoundingClientRect().top;
             if (Math.abs(remaining) > window.innerHeight * 0.22) return;
             snapped = true;
@@ -156,6 +157,7 @@
         window.addEventListener('touchstart', cancelSnap, { passive: true, signal });
         window.addEventListener('keydown', cancelSnap, { signal });
         reduced.addEventListener('change', () => { if (reduced.matches) { cancelSnap(); stopAutomaticMotion(); } else setPosition(current); }, { signal });
+        mobile.addEventListener('change', cancelSnap, { signal });
         document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelSnap(); stopAutomaticMotion(); } }, { signal });
         updateLayout();
         updateCorners();

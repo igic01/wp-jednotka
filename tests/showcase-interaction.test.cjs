@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const source = fs.readFileSync(__dirname + '/../assets/js/showcase.js', 'utf8');
 
-function setup({ editing = false, reduced = false, animate = true, observers = true, snap = false, comparison = true } = {}) {
+function setup({ editing = false, reduced = false, mobile = false, animate = true, observers = true, snap = false, comparison = true } = {}) {
   class Element extends EventTarget {
     constructor() {
       super(); this.dataset = {}; this.attributes = {}; this.value = '65'; this.offsetHeight = 2200;
@@ -32,6 +32,7 @@ function setup({ editing = false, reduced = false, animate = true, observers = t
   const timers = new Map(), scrolls = [];
   const frames = new Map(), resizeObservers = [], intersectionObservers = [];
   const reducedMedia = new EventTarget(); reducedMedia.matches = reduced;
+  const mobileMedia = new EventTarget(); mobileMedia.matches = mobile;
   const document = new EventTarget(); document.hidden = false;
   let nextFrame = 0, hook;
   const handlers = [];
@@ -40,7 +41,7 @@ function setup({ editing = false, reduced = false, animate = true, observers = t
     setTimeout: callback => { const id = ++nextFrame; timers.set(id, callback); return id; },
     clearTimeout: id => timers.delete(id),
     scrollTo: options => scrolls.push(options),
-    matchMedia: () => reducedMedia,
+    matchMedia: query => query.includes('max-width') ? mobileMedia : reducedMedia,
     requestAnimationFrame: callback => { frames.set(++nextFrame, callback); return nextFrame; },
     cancelAnimationFrame: id => frames.delete(id),
     elementorFrontend: {
@@ -64,7 +65,7 @@ function setup({ editing = false, reduced = false, animate = true, observers = t
   }
   vm.runInNewContext(source, { window, document, AbortController, elementorFrontend: window.elementorFrontend, elementorModules: window.elementorModules, jQuery: () => ({ on() {} }) });
   hook([{ querySelector: () => roots[0] }]);
-  return { ...children[0], children, roots, frames, timers, scrolls, window, document, reducedMedia, resizeObservers, intersectionObservers, handlers,
+  return { ...children[0], children, roots, frames, timers, scrolls, window, document, reducedMedia, mobileMedia, resizeObservers, intersectionObservers, handlers,
     addSecond() { hook([{ querySelector: () => roots[1] }]); },
     tick(time) { const callbacks = [...frames.values()]; frames.clear(); callbacks.forEach(callback => callback(time)); },
     settle() { const callbacks = [...timers.values()]; timers.clear(); callbacks.forEach(callback => callback()); },
@@ -185,4 +186,20 @@ test('gallery-only mode measures its height and cleans up without comparison or 
     assert.equal(s.split.style['--split-h'], undefined);
     if (observers) assert.equal(s.resizeObservers[0].targets.size, 0);
   }
+});
+
+test('mobile scrolling never snaps and resizing cancels a pending desktop snap', () => {
+  const s = setup({ animate: false, snap: true, mobile: true });
+  s.compare.top = 120;
+  s.window.dispatchEvent(new Event('scroll')); s.tick(0); s.settle();
+  assert.equal(s.timers.size, 0);
+  assert.equal(s.scrolls.length, 0);
+  s.key('ArrowLeft'); assert.equal(s.range.value, '60');
+  s.mobileMedia.matches = false; s.mobileMedia.dispatchEvent(new Event('change'));
+  s.window.dispatchEvent(new Event('scroll')); s.tick(0);
+  assert.equal(s.timers.size, 1);
+  s.mobileMedia.matches = true; s.mobileMedia.dispatchEvent(new Event('change'));
+  assert.equal(s.timers.size, 0);
+  s.settle(); assert.equal(s.scrolls.length, 0);
+  s.destroy();
 });
