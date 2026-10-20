@@ -150,6 +150,7 @@
   object-fit: contain;
 }
 
+/* The carousel sits outside the contained heading so its edges meet the hero edges. */
 .jn-services-hero .services-cases {
   position: absolute;
   right: 0;

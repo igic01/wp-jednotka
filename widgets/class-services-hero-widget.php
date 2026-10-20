@@ -97,6 +97,7 @@ class Services_Hero_Widget extends Header_Widget {
 					<div class="hero-badge hero-badge--<?php echo esc_attr( $position ); ?> elementor-repeater-item-<?php echo esc_attr( $badge['_id'] ); ?>"><?php if ( ! empty( $badge['icon']['url'] ) ) : ?><img class="hero-badge-icon" src="<?php echo esc_url( $badge['icon']['url'] ); ?>" alt="" decoding="async" /><?php endif; ?><span <?php $this->inline_text( $this->get_repeater_setting_key( 'label', 'badges', $badge_index ) ); ?>><?php echo esc_html( $badge['label'] ); ?></span></div>
 				<?php endforeach; ?></div><?php endif; ?>
 				<<?php echo $tag; ?> <?php $this->inline_text( 'heading', 'services-title' ); ?> id="services-title-<?php echo esc_attr( $this->get_id() ); ?>"><?php echo nl2br( esc_html( $s['heading'] ) ); ?></<?php echo $tag; ?>>
+				</div>
 				<?php if ( $s['cards'] ) : ?><div class="services-cases" role="region" tabindex="0" aria-label="<?php echo esc_attr( $s['track_label'] ); ?>">
 				<?php foreach ( $s['cards'] as $index => $card ) :
 					$linked = ! empty( $card['link']['url'] ); $card_tag = $linked ? 'a' : 'div'; $key = 'card-link-' . $index;
@@ -109,7 +110,6 @@ class Services_Hero_Widget extends Header_Widget {
 						<span class="services-case-copy"><strong <?php $this->inline_text( $this->get_repeater_setting_key( 'title', 'cards', $index ) ); ?>><?php echo esc_html( $card['title'] ); ?></strong><span <?php $this->inline_text( $this->get_repeater_setting_key( 'description', 'cards', $index ) ); ?>><?php echo esc_html( $card['description'] ); ?></span></span>
 					</<?php echo $card_tag; ?>></article>
 				<?php endforeach; ?></div><?php endif; ?>
-			</div>
 			</div>
 		</section>
 		<?php
