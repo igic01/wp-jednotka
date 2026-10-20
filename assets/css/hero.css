@@ -1,6 +1,6 @@
 /* Elementor integration only. The visual design is copied in reference-hero.css. */
 .jn-hero, .jn-hero * { box-sizing: border-box; }
-.jn-hero { background: #0f0f0f; }
+.jn-hero { background: #0f0f0f; width: 100%; max-width: 1290px; margin-inline: auto; }
 .jn-hero .site-header { padding: 0; width: auto; gap: 0; background: transparent !important; color: #fff; }
 .jn-hero .site-header-logo { color: inherit; }
 .jn-hero .site-nav { flex: initial; flex-wrap: nowrap; min-width: 0; }

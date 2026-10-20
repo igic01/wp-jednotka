@@ -5,6 +5,9 @@
 /* The gradient fades to near-white, and the cards hang below it onto the dark wrapper.
    The cards are anchored to the bottom of the wrap, so the overhang stays constant at any hero height. */
 .jn-services-hero {
+  width: 100%;
+  max-width: 1290px;
+  margin-inline: auto;
   --case-height: 397px;
   --case-bottom-gap: 64px;
   --case-inside-hero: 130px;
