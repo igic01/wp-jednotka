@@ -18,8 +18,9 @@
         const statsSection = this.$element[0].querySelector('.jn-stats');
         if (!statsSection) return;
         const testimonialCards = [...statsSection.querySelectorAll('.testimonial-card')];
+        const cardProgress = new WeakMap();
         const testimonialReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const testimonialStackedLayout = window.matchMedia('(max-width: 900px)');
+        const testimonialStackedLayout = window.matchMedia('(max-width: 1200px)');
         const testimonialCompactLayout = window.matchMedia('(max-width: 520px)');
         const editing = statsSection.dataset.editor === 'yes' || elementorFrontend.isEditMode();
         let playing = !editing && !testimonialReduceMotion.matches;
@@ -135,7 +136,10 @@
           testimonialCards.forEach((card, index) => {
             const rect = card.getBoundingClientRect();
             const stagger = index * 0.055;
-            const progress = clampTestimonialProgress((start - rect.top) / (start - end) - stagger);
+            // Reveal once: transforms or scrolling back must not hide readable cards.
+            const progress = Math.max(cardProgress.get(card) || 0,
+              clampTestimonialProgress((start - rect.top) / (start - end) - stagger));
+            cardProgress.set(card, progress);
         
             setTestimonialProgress(card, progress);
           });

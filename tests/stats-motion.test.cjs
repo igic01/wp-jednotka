@@ -25,7 +25,7 @@ function setup({ editing = false, reduced = false, stacked = false, serverEditor
   const window = new EventTarget();
   Object.assign(window, {
     innerHeight: 900,
-    matchMedia(query) { const result = new EventTarget(); result.matches = (query.includes('reduced') && reduced) || (query.includes('900px') && stacked); media.set(query, result); return result; },
+    matchMedia(query) { const result = new EventTarget(); result.matches = (query.includes('reduced') && reduced) || (query.includes('1200px') && stacked); media.set(query, result); return result; },
     getComputedStyle: () => ({ getPropertyValue: () => '' }),
     requestAnimationFrame(callback) { frames.set(++sequence, callback); return sequence; },
     cancelAnimationFrame(id) { frames.delete(id); },
@@ -52,6 +52,9 @@ test('counts once when visible, reveals on scroll, pauses, and cleans up', () =>
   assert.equal(s.card.style.opacity, '0.120');
   s.card.top = 0; s.window.dispatchEvent(new Event('scroll')); s.tick(1300);
   assert.equal(s.card.style.opacity, '1.000');
+  s.card.top = 1000; s.window.dispatchEvent(new Event('scroll')); s.tick(1400);
+  assert.equal(s.card.style.opacity, '1.000');
+  assert.equal(s.card.style.filter, 'blur(0.00px)');
   const reduced = s.media.get('(prefers-reduced-motion: reduce)');
   reduced.matches = true; reduced.dispatchEvent(new Event('change'));
   assert.ok(s.section.classes.has('is-paused') && s.section.classes.has('is-static'));
@@ -85,7 +88,7 @@ test('stacked cards stay visible and clear desktop reveal styles when resizing',
   assert.equal(s.card.style.opacity, '');
   assert.equal(s.card.style.filter, '');
   assert.equal(s.card.style.transform, '');
-  const stacked = s.media.get('(max-width: 900px)');
+  const stacked = s.media.get('(max-width: 1200px)');
   stacked.matches = false; stacked.dispatchEvent(new Event('change'));
   assert.equal(s.card.style.opacity, '0.120');
   stacked.matches = true; stacked.dispatchEvent(new Event('change'));
