@@ -470,7 +470,12 @@ the **Jednotka** category. Six tilted columns loop in alternating directions,
 with varied speeds and image zoom/caption effects on hover. The section uses a
 near-black (`#0F0F0F`) background and the existing Urbanist and Aspekta fonts.
 
-Edit each project's name, type, image, alternative text, link, aspect ratio,
+Use **Content → Projects → Project images** to select and reorder images in a
+gallery picker. Images are distributed across the columns automatically, with
+titles, captions, and alt text from the Media Library. An empty gallery preserves
+the existing Projects repeater and sample images.
+
+You can also edit each project's name, type, image, alternative text, link, aspect ratio,
 and column in the Projects repeater. The original thirty sample entries use
 existing plugin gallery photos and placeholders; replace them with project
 images in Elementor. Section colors, typography, padding, gallery height,

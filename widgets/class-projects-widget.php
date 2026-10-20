@@ -18,6 +18,7 @@ class Projects_Widget extends Widget_Base {
 	protected function register_controls() {
 		$this->start_controls_section( 'content', array( 'label' => 'Projects' ) );
 		$this->add_control( 'heading', array( 'label' => 'Heading', 'type' => Controls_Manager::TEXT, 'default' => 'Projekty' ) );
+		$this->add_control( 'gallery', array( 'label' => 'Project images', 'type' => Controls_Manager::GALLERY, 'default' => array(), 'description' => 'Select and reorder images together. Images are arranged across the columns automatically; titles, captions, and alternative text come from the Media Library. Leave empty to use the existing project entries below.' ) );
 		$item = new Repeater();
 		$item->add_control( 'name', array( 'label' => 'Project name', 'type' => Controls_Manager::TEXT ) );
 		$item->add_control( 'type', array( 'label' => 'Project type', 'type' => Controls_Manager::TEXT ) );
@@ -72,6 +73,28 @@ class Projects_Widget extends Widget_Base {
 		$this->add_responsive_control( 'radius', array( 'label' => 'Card corners', 'type' => Controls_Manager::SLIDER, 'range' => array( 'px' => array( 'min' => 0, 'max' => 80 ) ), 'selectors' => array( '{{WRAPPER}} .projects__item' => 'border-radius: {{SIZE}}{{UNIT}};' ) ) );
 		$this->end_controls_section();
 	}
+	private function gallery_projects( $images ) {
+		$projects = array();
+		$ratios = array( '4 / 5', '1 / 1', '3 / 4', '4 / 3' );
+		foreach ( $images as $image ) {
+			$id = (int) ( $image['id'] ?? 0 );
+			$url = $image['url'] ?? '';
+			if ( ! $url && $id ) { $url = wp_get_attachment_image_url( $id, 'full' ); }
+			if ( ! $url ) { continue; }
+			$index = count( $projects );
+			$projects[] = array(
+				'_id' => 'gallery-' . $index,
+				'name' => $id ? get_the_title( $id ) : '',
+				'type' => $id ? wp_get_attachment_caption( $id ) : '',
+				'alt' => $id ? get_post_meta( $id, '_wp_attachment_image_alt', true ) : '',
+				'photo' => array( 'url' => $url ),
+				'ratio' => $ratios[ $index % count( $ratios ) ],
+				'column' => $index % 6 + 1,
+				'link' => array(),
+			);
+		}
+		return $projects;
+	}
 	private function render_items( $items, $clone = false, $view = 'desktop' ) {
 		foreach ( $items as $item ) {
 			$ratio = in_array( $item['ratio'], array( '4 / 5', '3 / 4', '1 / 1', '4 / 3' ), true ) ? $item['ratio'] : '4 / 5';
@@ -89,8 +112,9 @@ class Projects_Widget extends Widget_Base {
 	}
 	protected function render() {
 		$s = $this->get_settings_for_display();
+		$projects = empty( $s['gallery'] ) ? $s['projects'] : $this->gallery_projects( $s['gallery'] );
 		$columns = array_fill( 1, 6, array() );
-		foreach ( $s['projects'] as $item ) { $columns[ max( 1, min( 6, (int) $item['column'] ) ) ][] = $item; }
+		foreach ( $projects as $item ) { $columns[ max( 1, min( 6, (int) $item['column'] ) ) ][] = $item; }
 		$speed = max( 15, min( 180, (float) $s['speed'] ) );
 		$durations = array( 62, 48, 70, 54, 66, 52 );
 		?>
