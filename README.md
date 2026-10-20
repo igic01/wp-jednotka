@@ -179,7 +179,8 @@ count-up, scroll reveal, and floating card animations are retained.
   or uploaded video, and change individual card backgrounds, padding, and avatar
   sizes. More than five cards use a grid to avoid overlapping.
 - Scroll reveal and floating motion have independent switches. Cards stay fully
-  visible and static throughout editing. On screens up to 1200px (and in narrow Elementor columns), cards stack in
+  visible and static in a single column with a 24px gap throughout editing.
+  On screens up to 900px, cards stack in
   one column with a 24px gap and no reveal or floating motion. There is no
   animation control button. Videos start paused in the editor; reduced-motion visitors start
   with static content.

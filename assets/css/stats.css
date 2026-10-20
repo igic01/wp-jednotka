@@ -1,7 +1,7 @@
 /* Elementor integration only; reference-stats.css contains the copied design. */
 @font-face { font-family: 'Momo Trust Sans'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/MomoTrustSans-700.ttf') format('truetype'); }
 @font-face { font-family: 'Urbanist'; font-style: normal; font-weight: 800; font-display: swap; src: url('../fonts/Urbanist-800.ttf') format('truetype'); }
-.jn-stats { box-sizing: border-box; container: jn-stats / inline-size; }
+.jn-stats { box-sizing: border-box; }
 /* The reference uses content-box; preserve its dimensions under Elementor's reset. */
 .jn-stats *, .jn-stats::after { box-sizing: content-box; }
 .jn-stats .jn-testimonial-avatar--custom { background-image: none; overflow: hidden; }
@@ -27,45 +27,38 @@
 }
 .jn-stats[data-editor="yes"] .testimonial-card,
 .elementor-editor-active .jn-stats .testimonial-card {
+  position: static;
+  inset: auto;
+  width: 100%;
+  min-width: 0;
+  max-width: 620px;
+  margin: 0 auto;
   /* Editor re-renders can retain inline reveal styles from an earlier handler. */
   visibility: visible !important;
   opacity: 1 !important;
   filter: none !important;
   animation: none !important;
   transition: none !important;
-  transform: translate3d(var(--testimonial-x, 0px), var(--testimonial-y, 0px), 0) rotate(var(--testimonial-rotate, 0deg));
+  transform: none !important;
+}
+.jn-stats[data-editor="yes"] .testimonials-field,
+.elementor-editor-active .jn-stats .testimonials-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  min-height: 0;
+  perspective: none;
 }
 .jn-stats[data-editor="yes"] .testimonial-card-inner,
-.elementor-editor-active .jn-stats .testimonial-card-inner { animation: none; }
-
-@media (max-width: 1200px) {
-  .jn-stats .testimonials-field, .jn-stats[data-many="yes"] .testimonials-field {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
-    min-height: 0;
-  }
-  .jn-stats .testimonial-card {
-    position: static;
-    width: 100%;
-    min-width: 0;
-    max-width: 620px;
-    margin: 0 auto;
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
-  }
-  .jn-stats .testimonial-card-inner {
-    box-sizing: border-box;
-    min-height: 0;
-    overflow-wrap: anywhere;
-    animation: none;
-  }
+.elementor-editor-active .jn-stats .testimonial-card-inner {
+  box-sizing: border-box;
+  min-height: 0;
+  overflow-wrap: anywhere;
+  animation: none;
 }
 
-/* Also handle narrow Elementor columns on wide screens. */
-@container jn-stats (max-width: 1100px) {
-  .jn-stats .testimonials-field, .jn-stats[data-many="yes"] .testimonials-field {
+@media (max-width: 900px) {
+  .jn-stats .testimonials-field {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
@@ -75,10 +68,8 @@
     position: static;
     width: 100%;
     min-width: 0;
-    max-width: 620px;
-    margin: 0 auto;
-    opacity: 1 !important;
-    filter: none !important;
+    opacity: 1;
+    filter: none;
     transform: none !important;
   }
   .jn-stats .testimonial-card-inner {
