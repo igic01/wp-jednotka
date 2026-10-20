@@ -64,6 +64,7 @@ namespace {
  $header_links=$header->get_settings_for_display()['nav_items'];
  $footer_links=$footer->get_settings_for_display()['menu_links'];
  foreach($header_links as $index=>$link){check($footer_links[$index]['label']===$link['label'] && $footer_links[$index]['link']===$link['link'],'footer defaults include header links in the same order');}
+ check(count($footer_links)===count($header_links),'footer menu matches header without an extra Kontakt link');
  check($header_links[3]['link']['url']==='/kariera/','career uses a page URL');
  foreach(['instagram','behance','linkedin-in'] as $brand)check(str_contains($html,'fab fa-'.$brand),'Font Awesome brand '.$brand);
  check(str_contains($html,'aria-label="Instagram"'),'icon link has an accessible name');

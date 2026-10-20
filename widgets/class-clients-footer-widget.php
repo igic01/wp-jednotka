@@ -111,7 +111,7 @@ class Clients_Footer_Widget extends Widget_Base {
 		$this->start_controls_section( 'footer_links_section', array( 'label' => 'Footer navigation and contact' ) );
 		$this->text_controls( $this, 'menu_heading', 'Menu heading', '{{WRAPPER}} .jn-footer-menu-heading', 'Menu' );
 		$menu_defaults = array();
-		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/', 'Kontakt' => '/kontakt/' ) as $label => $url ) {
+		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/' ) as $label => $url ) {
 			$menu_defaults[] = array( 'label' => $label, 'link' => array( 'url' => home_url( $url ) ) );
 		}
 		$this->link_repeater( 'menu_links', 'Menu links', $menu_defaults );
