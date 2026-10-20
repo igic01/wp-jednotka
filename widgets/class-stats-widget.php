@@ -70,9 +70,10 @@ class Stats_Widget extends Widget_Base {
 	protected function render() {
 		$s = $this->get_settings_for_display();
 		$title_id = 'testimonials-title-' . $this->get_id();
+		$editing = \Elementor\Plugin::$instance->editor->is_edit_mode();
 		$variants = array( 'one', 'two', 'three', 'four', 'five' );
 		?>
-		<section class="stats-section jn-stats" aria-label="Výsledky agentúry" data-count="<?php echo esc_attr( $s['count_animation'] ); ?>" data-reveal="<?php echo esc_attr( $s['reveal_animation'] ); ?>" data-drift="<?php echo esc_attr( $s['drift_animation'] ); ?>" data-many="<?php echo count( $s['testimonials'] ) > 5 ? 'yes' : 'no'; ?>">
+		<section class="stats-section jn-stats" aria-label="Výsledky agentúry" data-editor="<?php echo $editing ? 'yes' : 'no'; ?>" data-count="<?php echo esc_attr( $s['count_animation'] ); ?>" data-reveal="<?php echo esc_attr( $s['reveal_animation'] ); ?>" data-drift="<?php echo esc_attr( $s['drift_animation'] ); ?>" data-many="<?php echo count( $s['testimonials'] ) > 5 ? 'yes' : 'no'; ?>">
 			<div class="stats-grid">
 				<?php foreach ( $s['stats'] as $index => $stat ) : ?>
 					<div class="stat-item elementor-repeater-item-<?php echo esc_attr( $stat['_id'] ); ?>">

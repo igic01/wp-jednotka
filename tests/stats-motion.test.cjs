@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 
-function setup({ editing = false, reduced = false } = {}) {
+function setup({ editing = false, reduced = false, stacked = false, serverEditor = false } = {}) {
   class Element extends EventTarget {
     constructor(dataset = {}) {
       super(); this.dataset = dataset; this.textContent = ''; this.attributes = {};
@@ -17,6 +17,7 @@ function setup({ editing = false, reduced = false } = {}) {
   const counter = new Element({ countTo: '100', countSuffix: '+' }); counter.textContent = '100+';
   const card = new Element(); card.top = 1000;
   const section = new Element({ count: 'yes', reveal: 'yes', drift: 'yes' });
+  section.dataset.editor = serverEditor ? 'yes' : 'no';
   section.querySelectorAll = selector => ({ '.testimonial-card': [card], '[data-count-to]': [counter], video: [] })[selector];
   section.querySelector = () => null;
   const frames = new Map(); let sequence = 0, observer, handler, hook;
@@ -24,7 +25,7 @@ function setup({ editing = false, reduced = false } = {}) {
   const window = new EventTarget();
   Object.assign(window, {
     innerHeight: 900,
-    matchMedia(query) { const result = new EventTarget(); result.matches = query.includes('reduced') && reduced; media.set(query, result); return result; },
+    matchMedia(query) { const result = new EventTarget(); result.matches = (query.includes('reduced') && reduced) || (query.includes('900px') && stacked); media.set(query, result); return result; },
     getComputedStyle: () => ({ getPropertyValue: () => '' }),
     requestAnimationFrame(callback) { frames.set(++sequence, callback); return sequence; },
     cancelAnimationFrame(id) { frames.delete(id); },
@@ -62,13 +63,38 @@ test('counts once when visible, reveals on scroll, pauses, and cleans up', () =>
 });
 
 test('editor and reduced-motion visitors see final editable values without counting', () => {
-  for (const config of [{ editing: true }, { reduced: true }]) {
+  for (const config of [{ editing: true }, { serverEditor: true }, { reduced: true }]) {
     const s = setup(config);
     assert.equal(s.observer, undefined);
     assert.equal(s.counter.textContent, '100+');
     assert.ok(s.section.classes.has('is-static'));
+    assert.ok(s.section.classes.has('is-paused'));
+    const reduced = s.media.get('(prefers-reduced-motion: reduce)');
+    reduced.matches = true; reduced.dispatchEvent(new Event('change'));
+    reduced.matches = false; reduced.dispatchEvent(new Event('change'));
+    if (config.editing || config.serverEditor) {
+      assert.ok(s.section.classes.has('is-paused'));
+      assert.equal(s.card.style.opacity, '');
+    }
     s.handler.onDestroy();
   }
+});
+
+test('stacked cards stay visible and clear desktop reveal styles when resizing', () => {
+  const s = setup({ stacked: true });
+  assert.equal(s.card.style.opacity, '');
+  assert.equal(s.card.style.filter, '');
+  assert.equal(s.card.style.transform, '');
+  const stacked = s.media.get('(max-width: 900px)');
+  stacked.matches = false; stacked.dispatchEvent(new Event('change'));
+  assert.equal(s.card.style.opacity, '0.120');
+  stacked.matches = true; stacked.dispatchEvent(new Event('change'));
+  assert.equal(s.card.style.opacity, '');
+  assert.equal(s.card.style.filter, '');
+  assert.equal(s.card.style.transform, '');
+  s.window.dispatchEvent(new Event('scroll')); s.tick(100);
+  assert.equal(s.card.style.opacity, '');
+  s.handler.onDestroy();
 });
 
 test('changing reduced-motion preference completes and cancels active counters', () => {

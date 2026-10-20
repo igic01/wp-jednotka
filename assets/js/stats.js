@@ -21,8 +21,8 @@
         const testimonialReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         const testimonialStackedLayout = window.matchMedia('(max-width: 900px)');
         const testimonialCompactLayout = window.matchMedia('(max-width: 520px)');
-        const editing = elementorFrontend.isEditMode();
-        let playing = !testimonialReduceMotion.matches;
+        const editing = statsSection.dataset.editor === 'yes' || elementorFrontend.isEditMode();
+        let playing = !editing && !testimonialReduceMotion.matches;
         this.videos = [...statsSection.querySelectorAll('video')];
         const clampTestimonialProgress = (value) => Math.min(Math.max(value, 0), 1);
         
@@ -108,7 +108,7 @@
         };
         
         const updateTestimonialsOnScroll = () => {
-          if (editing || testimonialReduceMotion.matches || !playing || statsSection.dataset.reveal !== 'yes') {
+          if (editing || testimonialStackedLayout.matches || testimonialReduceMotion.matches || !playing || statsSection.dataset.reveal !== 'yes') {
             resetTestimonials();
             return;
           }
@@ -199,7 +199,7 @@
           counters.forEach(counter => this.counterObserver.observe(counter));
         }
         const setPlaying = value => {
-          playing = value;
+          playing = value && !editing;
           statsSection.classList.toggle('is-paused', !playing);
           statsSection.classList.toggle('is-static', editing || testimonialReduceMotion.matches || !playing || statsSection.dataset.reveal !== 'yes');
           this.videos.forEach(video => {
