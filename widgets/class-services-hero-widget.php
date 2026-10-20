@@ -89,6 +89,7 @@ class Services_Hero_Widget extends Header_Widget {
 		?>
 		<section class="services-hero-wrap jn-services-hero" data-floating="<?php echo esc_attr( $s['floating'] ); ?>" data-parallax="<?php echo esc_attr( $s['parallax'] ); ?>" data-auto="<?php echo esc_attr( $s['auto_scroll'] ); ?>" data-speed="<?php echo esc_attr( max( 5, min( 200, (float) $s['speed'] ) ) ); ?>" aria-labelledby="services-title-<?php echo esc_attr( $this->get_id() ); ?>">
 			<div class="services-hero">
+				<div class="services-hero__content">
 				<?php if ( 'yes' === $s['show_navigation'] ) { $this->render_header( 'header_' ); } ?>
 				<?php if ( 'yes' === $s['show_badges'] ) : ?><div class="hero-badge-row" aria-hidden="true">
 				<?php foreach ( $s['badges'] as $badge_index => $badge ) :
@@ -108,6 +109,7 @@ class Services_Hero_Widget extends Header_Widget {
 						<span class="services-case-copy"><strong <?php $this->inline_text( $this->get_repeater_setting_key( 'title', 'cards', $index ) ); ?>><?php echo esc_html( $card['title'] ); ?></strong><span <?php $this->inline_text( $this->get_repeater_setting_key( 'description', 'cards', $index ) ); ?>><?php echo esc_html( $card['description'] ); ?></span></span>
 					</<?php echo $card_tag; ?>></article>
 				<?php endforeach; ?></div><?php endif; ?>
+			</div>
 			</div>
 		</section>
 		<?php

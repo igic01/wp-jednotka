@@ -113,6 +113,7 @@ class Hero_Widget extends Header_Widget {
 		<section class="jn-hero hero" data-float="<?php echo esc_attr( $s['animate_badges'] ); ?>">
 			<?php if ( 'yes' === $s['show_navigation'] ) { $this->render_header( 'header_' ); } ?>
 			<div class="jn-hero__frame hero-frame">
+				<div class="jn-hero__content">
 				<div class="jn-hero__badges hero-badge-row">
 					<?php foreach ( $s['badges'] as $index => $badge ) :
 						$key = $this->get_repeater_setting_key( 'text', 'badges', $index );
@@ -141,6 +142,7 @@ class Hero_Widget extends Header_Widget {
 						<a <?php $this->print_render_attribute_string( 'button_link' ); ?>><span class="button-label"><span class="button-label-track"><span <?php $this->print_render_attribute_string( 'button_text' ); ?>><?php echo esc_html( $s['button_text'] ); ?></span><span class="button-label-line" aria-hidden="true"><?php echo esc_html( $s['button_text'] ); ?></span></span></span><span class="button-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg></span></a>
 					<?php endif; ?>
 				</div>
+			</div>
 			</div>
 		</section>
 		<?php

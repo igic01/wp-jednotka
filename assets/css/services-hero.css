@@ -6,8 +6,6 @@
    The cards are anchored to the bottom of the wrap, so the overhang stays constant at any hero height. */
 .jn-services-hero {
   width: 100%;
-  max-width: 1290px;
-  margin-inline: auto;
   --case-height: 397px;
   --case-bottom-gap: 64px;
   --case-inside-hero: 130px;
@@ -428,3 +426,12 @@
 .elementor-editor-active .jn-services-hero .services-cases,
 .elementor-editor-active .jn-services-hero .services-case-link { user-select: text; }
 .elementor-editor-active .jn-services-hero .elementor-inline-editing { cursor: text; }
+
+/* The gradient spans the viewport; only its content has a width limit. */
+.jn-services-hero .services-hero__content {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  max-width: 1290px;
+  margin-inline: auto;
+}

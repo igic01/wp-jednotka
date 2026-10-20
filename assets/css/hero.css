@@ -1,6 +1,7 @@
 /* Elementor integration only. The visual design is copied in reference-hero.css. */
 .jn-hero, .jn-hero * { box-sizing: border-box; }
-.jn-hero { background: #0f0f0f; width: 100%; max-width: 1290px; margin-inline: auto; }
+.jn-hero { background: #0f0f0f; width: 100%; }
+.jn-hero .jn-hero__content { position: relative; width: 100%; max-width: 1290px; height: 100%; margin-inline: auto; }
 .jn-hero .site-header { padding: 0; width: auto; gap: 0; background: transparent !important; color: #fff; }
 .jn-hero .site-header-logo { color: inherit; }
 .jn-hero .site-nav { flex: initial; flex-wrap: nowrap; min-width: 0; }
@@ -44,3 +45,8 @@
 .jednotka-hero-layout { position: relative; }
 .jednotka-hero-layout .elementor-widget-jednotka-header { position: absolute; top: 16px; left: 16px; width: calc(100% - 32px); z-index: 20; }
 .jednotka-hero-layout .elementor-widget-jednotka-header .jn-header { background: transparent !important; }
+
+/* Keep the navigation aligned with the contained hero elements on wide screens. */
+@media (min-width: 1494px) {
+  .jn-hero .site-header { left: calc((100% - 1290px) / 2); right: calc((100% - 1290px) / 2); }
+}
