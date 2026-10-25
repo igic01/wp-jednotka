@@ -15,8 +15,8 @@
   display: grid;
   align-items: center;
   min-height: 720px;
-  padding-block: 80px;
-  overflow: hidden;
+  padding-block: 120px 240px;
+  overflow: visible;
 }
 
 .jn-values .values__layout {
@@ -60,10 +60,11 @@
   transform:
     translate3d(calc(var(--pose-x, 0) * 1%), calc(var(--pose-y, 0) * 1%), 0)
     translate3d(calc(var(--dir, 0) * var(--fall, 0) * 22%), calc(var(--fall, 0) * 135%), 0)
-    translate3d(0, calc(var(--enter, 0) * 105%), 0)
+    translate3d(0, calc(var(--enter, 0) * 24%), 0)
     rotate(calc(var(--pose-rot, 0) * 1deg + var(--dir, 0) * var(--fall, 0) * 22deg));
   filter: brightness(calc(1 - var(--settle, 0) * 0.16 - var(--behind, 0) * 0.07));
-  will-change: transform, filter;
+  opacity: clamp(0, calc(1 - var(--enter, 0) - var(--fall, 0)), 1);
+  will-change: transform, filter, opacity;
 }
 
 .jn-values .values__face {
@@ -139,11 +140,11 @@
 @media (max-width: 1024px) {
   .jn-values { --card-scroll-px: 1600px; }
 
-  .jn-values .values__sticky { min-height: 700px; padding-block: 64px; }
+  .jn-values .values__sticky { min-height: 700px; padding-block: 64px 208px; }
 
   .jn-values .values__layout {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 56px;
   }
 
   .jn-values .values__lead {
@@ -156,7 +157,7 @@
 }
 
 @media (max-width: 767px) {
-  .jn-values .values__sticky { min-height: 600px; padding-block: 48px; }
+  .jn-values .values__sticky { min-height: 600px; padding-block: 48px 160px; }
   .jn-values .values__stage { height: 360px; }
 }
 
@@ -165,7 +166,7 @@
 .jn-values[data-static="yes"] .values__sticky { position: relative; height: auto; overflow: visible; padding-block: 80px; }
 .jn-values[data-static="yes"] .values__layout { align-items: start; }
 .jn-values[data-static="yes"] .values__stage { display: grid; gap: 24px; height: auto; perspective: none; }
-.jn-values[data-static="yes"] .values__card { position: relative; transform: none; filter: none; will-change: auto; }
+.jn-values[data-static="yes"] .values__card { position: relative; transform: none; filter: none; opacity: 1; will-change: auto; }
 .jn-values[data-static="yes"] .values__face { position: relative; min-height: 360px; transform: none; }
 .jn-values[data-static="yes"] .values__lead { display: block; }
 @media (prefers-reduced-motion: reduce) {
