@@ -45,7 +45,7 @@ class Values_Widget extends Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'motion_section', array( 'label' => 'Animation' ) );
-		$this->add_control( 'animate', array( 'label' => 'Scroll animation', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes', 'description' => 'Cards follow normal page scrolling on every device. Adjust Scroll distance per card separately for desktop, tablet, and mobile. Keep the parent container overflow visible. Editor and reduced-motion views show a static list.' ) );
+		$this->add_control( 'animate', array( 'label' => 'Scroll animation', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes', 'description' => 'Keep the parent container overflow visible. Editor and reduced-motion views show all cards as a static list.' ) );
 		$this->add_control( 'mode', array( 'label' => 'Stack transition', 'type' => Controls_Manager::SELECT, 'default' => 'stack', 'options' => array( 'stack' => 'Build the stack', 'fall' => 'Cards fall away' ) ) );
 		$this->add_control( 'pointer', array( 'label' => 'Mouse tilt and glow', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
 		$this->end_controls_section();
@@ -54,17 +54,7 @@ class Values_Widget extends Widget_Base {
 		foreach ( array( 'background' => array( 'Section background', '{{WRAPPER}} .jn-values', 'background: {{VALUE}};', '#0F0F0F' ), 'card_color' => array( 'Card color', '{{WRAPPER}} .jn-values', '--card-color: {{VALUE}};', '#5F2DF5' ), 'glow_color' => array( 'Glow color', '{{WRAPPER}} .jn-values', '--glow-color: {{VALUE}};', '' ) ) as $key => $definition ) {
 			$this->add_control( $key, array( 'label' => $definition[0], 'type' => Controls_Manager::COLOR, 'default' => $definition[3], 'selectors' => array( $definition[1] => $definition[2] ) ) );
 		}
-		$this->add_responsive_control( 'scroll_distance_px', array(
-			'label' => 'Scroll distance per card',
-			'type' => Controls_Manager::SLIDER,
-			'size_units' => array( 'px' ),
-			'default' => array( 'size' => 1000, 'unit' => 'px' ),
-			'tablet_default' => array( 'size' => 1600, 'unit' => 'px' ),
-			'mobile_default' => array( 'size' => 1600, 'unit' => 'px' ),
-			'range' => array( 'px' => array( 'min' => 100, 'max' => 5000, 'step' => 10 ) ),
-			'description' => 'Drag the slider or type a number in its value field. Values are pixels of scroll distance. Larger values require more scrolling. Use the device icon to set desktop, tablet, and mobile separately.',
-			'selectors' => array( '{{WRAPPER}} .jn-values' => '--card-scroll-px: {{SIZE}}px;' ),
-		) );
+		$this->add_responsive_control( 'scroll_distance', array( 'label' => 'Scroll distance per card', 'type' => Controls_Manager::SLIDER, 'size_units' => array( 'vh' ), 'range' => array( 'vh' => array( 'min' => 20, 'max' => 150 ) ), 'selectors' => array( '{{WRAPPER}} .jn-values' => '--card-scroll: {{SIZE}}{{UNIT}};' ) ) );
 		$this->add_responsive_control( 'padding', array( 'label' => 'Layout padding', 'type' => Controls_Manager::DIMENSIONS, 'size_units' => array( 'px', '%' ), 'selectors' => array( '{{WRAPPER}} .values__layout' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ) ) );
 		$this->add_responsive_control( 'card_radius', array( 'label' => 'Card corners', 'type' => Controls_Manager::SLIDER, 'range' => array( 'px' => array( 'min' => 0, 'max' => 100 ) ), 'selectors' => array( '{{WRAPPER}} .jn-values' => '--card-radius: {{SIZE}}{{UNIT}};' ) ) );
 		$this->add_responsive_control( 'card_padding', array( 'label' => 'Card padding', 'type' => Controls_Manager::DIMENSIONS, 'size_units' => array( 'px', '%' ), 'selectors' => array( '{{WRAPPER}} .values__face' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ) ) );
