@@ -4,7 +4,7 @@
 .jn-values, .jn-values * { box-sizing: border-box; }
 .jn-values { --card-color: #5f2df5; --card-radius: clamp(20px, 2.2vw, 32px); font-family: 'Aspekta Variable', Arial, sans-serif; }
 .jn-values {
-  height: calc(var(--count, 5) * var(--card-scroll, 80vh) + 100vh);
+  height: calc(var(--count, 5) * var(--card-scroll, 107vh) + 100vh);
   color: #ffffff;
   background: #0f0f0f;
 }
