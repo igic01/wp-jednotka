@@ -4,7 +4,7 @@
 .jn-values, .jn-values * { box-sizing: border-box; }
 .jn-values { --card-color: #5f2df5; --card-radius: clamp(20px, 2.2vw, 32px); font-family: 'Aspekta Variable', Arial, sans-serif; }
 .jn-values {
-  height: calc(var(--count, 5) * var(--card-scroll, 107vh) + 100vh);
+  height: calc(var(--count, 5) * var(--card-scroll-px, 1000px) + var(--values-frame-height, 720px));
   color: #ffffff;
   background: #0f0f0f;
 }
@@ -14,7 +14,8 @@
   top: 0;
   display: grid;
   align-items: center;
-  height: 100vh;
+  min-height: 720px;
+  padding-block: 80px;
   overflow: hidden;
 }
 
@@ -47,7 +48,7 @@
 /* Cards are stacked in one cell; scripts slide each one up over the last */
 .jn-values .values__stage {
   position: relative;
-  height: min(62vh, 560px);
+  height: 560px;
   perspective: 1400px;
 }
 
@@ -136,7 +137,9 @@
 }
 
 @media (max-width: 1024px) {
-  .jn-values { --card-scroll: 160vh; }
+  .jn-values { --card-scroll-px: 1600px; }
+
+  .jn-values .values__sticky { min-height: 700px; padding-block: 64px; }
 
   .jn-values .values__layout {
     grid-template-columns: 1fr;
@@ -148,10 +151,14 @@
   }
 
   .jn-values .values__stage {
-    height: min(52vh, 460px);
+    height: 420px;
   }
 }
 
+@media (max-width: 767px) {
+  .jn-values .values__sticky { min-height: 600px; padding-block: 48px; }
+  .jn-values .values__stage { height: 360px; }
+}
 
 .jn-values .values__title, .jn-values .values__card-title, .jn-values .values__card-text { overflow-wrap: anywhere; }
 .jn-values[data-static="yes"] { height: auto; }

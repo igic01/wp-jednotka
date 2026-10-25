@@ -10,20 +10,22 @@ function setup({ count=5, editing=false, reduced=false, animate=true, mode='stac
     getBoundingClientRect(){return{top:this.top,left:100,width:600,height:this.height??500};}
   }
   const section=new Element();section.height=3000;section.dataset={animate:animate?'yes':'',mode,pointer:pointer?'yes':''};
+  const sticky=new Element();sticky.offsetHeight=1000;section.querySelector=()=>sticky;
   const cards=Array.from({length:count},()=>{const card=new Element();card.top=200;return card;});section.querySelectorAll=()=>cards;
   const reduce=new EventTarget();reduce.matches=reduced;const fine=new EventTarget();fine.matches=true;
   const document=new EventTarget();document.hidden=false;
-  const frames=new Map(),observers=[];let next=0,hook,handler;
+  const frames=new Map(),observers=[],frameObservers=[];let next=0,hook,handler;
   const window=new EventTarget();Object.assign(window,{
     innerHeight:1000,matchMedia:q=>q.includes('reduced')?reduce:fine,
     requestAnimationFrame:fn=>{frames.set(++next,fn);return next;},cancelAnimationFrame:id=>frames.delete(id),
     IntersectionObserver:class{constructor(fn){this.fn=fn;this.targets=new Set();observers.push(this);}observe(e){this.targets.add(e);}disconnect(){this.targets.clear();}},
+    ResizeObserver:class{constructor(fn){this.fn=fn;this.targets=new Set();frameObservers.push(this);}observe(e){this.targets.add(e);}disconnect(){this.targets.clear();}},
     elementorFrontend:{isEditMode:()=>editing,hooks:{addAction:(name,fn)=>{assert.equal(name,'frontend/element_ready/jednotka-values.default');hook=fn;}},elementsHandler:{addHandler(Type,args){handler=new Type();Object.assign(handler,args);handler.onInit();}}},
     elementorModules:{frontend:{handlers:{Base:class{onInit(){}onDestroy(){}}}}},
   });
   vm.runInNewContext(source,{window,document,AbortController,elementorFrontend:window.elementorFrontend,elementorModules:window.elementorModules,jQuery:()=>({on(){}})});
   hook([{querySelector:()=>section}]);
-  return{section,cards,frames,observers,reduce,fine,document,handler,
+  return{section,sticky,cards,frames,observers,frameObservers,reduce,fine,document,handler,window,
     gesture(type){const event=new Event(type,{cancelable:true});window.dispatchEvent(event);return event;},
     flush(){const callbacks=[...frames.values()];frames.clear();callbacks.forEach(fn=>fn());},
     queue(){window.dispatchEvent(new Event('scroll'));},
@@ -97,4 +99,17 @@ test('swipes and wheel gestures are not intercepted and cannot advance cards wit
   assert.equal(s.frames.size,0);
  }
  s.handler.onDestroy();
+});
+
+test('browser bar resizing does not change progress when the content frame is unchanged',()=>{
+ const s=setup();s.scroll(.115);
+ const before=s.cards.map(card=>[card.style['--enter'],card.style['--settle']]);
+ s.window.innerHeight=700;s.window.dispatchEvent(new Event('resize'));s.flush();
+ assert.deepEqual(s.cards.map(card=>[card.style['--enter'],card.style['--settle']]),before);
+ assert.equal(s.section.style['--values-frame-height'],'1000px');
+ s.sticky.offsetHeight=800;s.frameObservers[0].fn();s.flush();
+ assert.equal(s.section.style['--values-frame-height'],'800px');
+ assert.notDeepEqual(s.cards.map(card=>[card.style['--enter'],card.style['--settle']]),before);
+ s.handler.onDestroy();assert.equal(s.frameObservers[0].targets.size,0);
+ assert.equal(s.section.style['--values-frame-height'],undefined);
 });

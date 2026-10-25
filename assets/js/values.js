@@ -12,6 +12,8 @@
         super.onInit();
         const section = this.$element[0].querySelector('.jn-values');
         if (!section) return;
+        const sticky = section.querySelector('.values__sticky');
+        if (!sticky) return;
         const cards = [...section.querySelectorAll('.values__card')];
         this.controller = new AbortController(); this.scrollFrame = null; this.tiltFrame = null;
         const { signal } = this.controller;
@@ -24,7 +26,13 @@
         const stackProperties = ['--pose-x','--pose-y','--pose-rot','--enter','--settle','--fall','--dir','--behind','--drift'];
         const pointerProperties = ['--rx','--ry','--px','--py','--lift','--ox','--oy'];
         const states = new Map(), active = new Map();
-        let visible = true;
+        let visible = true, frameHeight = 0;
+        const measureFrame = () => {
+          const height = sticky.offsetHeight;
+          if (height === frameHeight) return;
+          frameHeight = height;
+          section.style.setProperty('--values-frame-height', `${height}px`);
+        };
         const staticView = () => editing || reduced.matches || section.dataset.animate !== 'yes' || cards.length < 2;
         const cancelScroll = () => {
           if (this.scrollFrame !== null) window.cancelAnimationFrame(this.scrollFrame);
@@ -39,7 +47,7 @@
         const update = () => {
           if (staticView()) return;
           const rect = section.getBoundingClientRect();
-          const progress = clamp(-rect.top / Math.max(1, rect.height - window.innerHeight));
+          const progress = clamp(-rect.top / Math.max(1, rect.height - frameHeight));
           const position = clamp(progress / .92) * (cards.length - 1);
           cards.forEach((card, index) => {
             const pose = poses[index % poses.length];
@@ -104,11 +112,12 @@
           cancelScroll(); resetPointer();
           section.setAttribute('data-static', staticView() ? 'yes' : 'no');
           section.style.setProperty('--count', cards.length);
+          measureFrame();
           cards.forEach(card => { stackProperties.forEach(key => card.style.removeProperty(key)); card.style.zIndex = ''; });
           update();
         };
         window.addEventListener('scroll', requestUpdate, { passive:true, signal });
-        window.addEventListener('resize', requestUpdate, { signal });
+        window.addEventListener('resize', () => { measureFrame(); requestUpdate(); }, { signal });
         reduced.addEventListener('change', configure, { signal });
         fine.addEventListener('change', resetPointer, { signal });
         document.addEventListener('visibilitychange', () => {
@@ -121,14 +130,19 @@
           });
           this.observer.observe(section);
         }
+        if (window.ResizeObserver) {
+          this.frameObserver = new window.ResizeObserver(() => { measureFrame(); requestUpdate(); });
+          this.frameObserver.observe(sticky);
+        }
         this.cleanup = () => {
           cancelScroll(); resetPointer(); section.setAttribute('data-static','yes');
+          section.style.removeProperty('--values-frame-height');
           cards.forEach(card => { stackProperties.forEach(key => card.style.removeProperty(key)); card.style.zIndex = ''; });
         };
         configure();
       }
       onDestroy() {
-        this.controller?.abort(); this.observer?.disconnect(); this.cleanup?.(); super.onDestroy();
+        this.controller?.abort(); this.observer?.disconnect(); this.frameObserver?.disconnect(); this.cleanup?.(); super.onDestroy();
       }
     }
     elementorFrontend.hooks.addAction('frontend/element_ready/jednotka-values.default', $element => {
