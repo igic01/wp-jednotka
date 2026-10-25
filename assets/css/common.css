@@ -1,15 +1,3 @@
-/* Stable viewport height while mobile browser bars open and close.
-   Older browsers retain the vh fallback. */
-:root {
-    --jn-viewport-height: 1vh;
-}
-
-@supports (height: 1svh) {
-    :root {
-        --jn-viewport-height: 1svh;
-    }
-}
-
 /* Match the page canvas exposed by overscroll and pinch gestures. */
 html:not(:has(body.elementor-editor-active)),
 body:not(.elementor-editor-active) {

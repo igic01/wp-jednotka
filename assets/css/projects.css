@@ -21,7 +21,7 @@
 /* Full-width window onto a tilted board of photo strips that all drift up and down in turn */
 .jn-projects .projects__gallery {
   position: relative;
-  height: var(--gallery-height, min(calc(100 * var(--jn-viewport-height)), 900px));
+  height: var(--gallery-height, min(100vh, 900px));
   overflow: hidden;
 }
 
@@ -145,7 +145,7 @@
   .jn-projects .projects__tilt--desktop, .jn-projects[data-static="yes"] .projects__tilt--desktop { display: none; }
   .jn-projects .projects__tilt--mobile { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); transform: rotate(-7deg); }
   .jn-projects[data-static="yes"] .projects__tilt--mobile { display: grid; transform: none; }
-  .jn-projects .projects__gallery { height: var(--gallery-height, min(calc(85 * var(--jn-viewport-height)), 720px)); }
+  .jn-projects .projects__gallery { height: var(--gallery-height, min(85vh, 720px)); }
   .jn-projects[data-static="yes"] .projects__gallery { height: auto; }
   .jn-projects .projects__title { padding-inline: 20px; }
   .jn-projects[data-static="yes"] .projects__gallery { padding-inline: 20px; }

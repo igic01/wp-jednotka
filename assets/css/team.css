@@ -15,7 +15,7 @@
   gap: clamp(24px, 4vw, 80px);
   align-items: center;
   width: min(100%, 1440px);
-  min-height: calc(100 * var(--jn-viewport-height));
+  min-height: 100vh;
   margin-inline: auto;
   padding: 96px var(--page-gutter, 40px);
 }
@@ -59,7 +59,7 @@
   position: relative;
   flex: none;
   margin-right: clamp(12px, 1.6vw, 28px);
-  height: min(calc(72 * var(--jn-viewport-height)), 760px);
+  height: min(72vh, 760px);
   aspect-ratio: 3 / 4;
   overflow: hidden;
 }
@@ -110,7 +110,7 @@
   }
 
   .jn-team .team-card {
-    height: calc(56 * var(--jn-viewport-height));
+    height: 56vh;
   }
 }
 

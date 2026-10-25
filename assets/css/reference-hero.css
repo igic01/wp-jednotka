@@ -302,7 +302,7 @@
   display: grid;
   place-items: center;
   box-sizing: border-box;
-  height: calc(100 * var(--jn-viewport-height));
+  height: 100vh;
   overflow: hidden;
   padding: var(--page-frame-margin);
 }
@@ -508,7 +508,7 @@
 @media (max-width: 900px) {
 .jn-hero {
     min-height: 760px;
-    height: calc(100 * var(--jn-viewport-height));
+    height: 100svh;
     padding: 8px;
   }
 
@@ -573,7 +573,7 @@
 @media (max-width: 520px) {
 .jn-hero {
     min-height: 650px;
-    height: calc(100 * var(--jn-viewport-height));
+    height: 100svh;
     padding: 5px;
   }
 
