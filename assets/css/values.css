@@ -4,7 +4,7 @@
 .jn-values, .jn-values * { box-sizing: border-box; }
 .jn-values { --card-color: #5f2df5; --card-radius: clamp(20px, 2.2vw, 32px); font-family: 'Aspekta Variable', Arial, sans-serif; }
 .jn-values {
-  height: calc(var(--count, 5) * var(--card-scroll, 40vh) + 100vh);
+  height: calc(var(--count, 5) * var(--card-scroll, calc(40 * var(--jn-viewport-height))) + calc(100 * var(--jn-viewport-height)));
   color: #ffffff;
   background: #0f0f0f;
 }
@@ -14,7 +14,7 @@
   top: 0;
   display: grid;
   align-items: center;
-  height: 100vh;
+  height: calc(100 * var(--jn-viewport-height));
   overflow: hidden;
 }
 
@@ -47,7 +47,7 @@
 /* Cards are stacked in one cell; scripts slide each one up over the last */
 .jn-values .values__stage {
   position: relative;
-  height: min(62vh, 560px);
+  height: min(calc(62 * var(--jn-viewport-height)), 560px);
   perspective: 1400px;
 }
 
@@ -146,7 +146,7 @@
   }
 
   .jn-values .values__stage {
-    height: min(52vh, 460px);
+    height: min(calc(52 * var(--jn-viewport-height)), 460px);
   }
 }
 

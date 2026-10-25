@@ -97,7 +97,7 @@
     inset: 0;
     width: 100%;
     max-width: none;
-    height: 100dvh;
+    height: calc(100 * var(--jn-viewport-height));
     max-height: none;
     margin: 0;
     padding: max(92px, env(safe-area-inset-top)) clamp(24px, 7vw, 80px) max(32px, env(safe-area-inset-bottom));
@@ -149,7 +149,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    padding: clamp(16px, 3vh, 28px) 0;
+    padding: clamp(16px, calc(3 * var(--jn-viewport-height)), 28px) 0;
     border-bottom: 1px solid #ffffff26;
     border-radius: 0;
   }

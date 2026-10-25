@@ -20,7 +20,7 @@
   --hero-badge-x: 0px;
   --hero-badge-y: 0px;
   min-height: 780px;
-  height: 100vh;
+  height: calc(100 * var(--jn-viewport-height));
   max-height: 1000px;
   overflow: visible;
   color: #fff;
@@ -269,7 +269,7 @@
 
   .jn-services-hero .services-hero {
     min-height: 720px;
-    height: 100svh;
+    height: calc(100 * var(--jn-viewport-height));
   }
 
   .jn-services-hero .services-title {

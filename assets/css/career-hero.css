@@ -1,7 +1,7 @@
 @font-face { font-family: 'Urbanist'; src: url('../fonts/Urbanist-800.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
 .jn-career-hero, .jn-career-hero * { box-sizing: border-box; }
 .jn-career-hero { padding: 24px clamp(16px, 7vw, 110px) 0; color: #fff; background: #0f0f0f; }
-.jn-career-hero .jn-career-hero__card { position: relative; display: flex; align-items: flex-end; width: 100%; max-width: 1290px; min-height: clamp(340px, 46vh, 480px); margin: 0 auto; padding: 0 clamp(24px, 4vw, 56px) clamp(28px, 4vw, 48px); overflow: hidden; border-radius: 28px; background: #1a1a1a; isolation: isolate; }
+.jn-career-hero .jn-career-hero__card { position: relative; display: flex; align-items: flex-end; width: 100%; max-width: 1290px; min-height: clamp(340px, calc(46 * var(--jn-viewport-height)), 480px); margin: 0 auto; padding: 0 clamp(24px, 4vw, 56px) clamp(28px, 4vw, 48px); overflow: hidden; border-radius: 28px; background: #1a1a1a; isolation: isolate; }
 .jn-career-hero .jn-career-hero__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--career-image-x, 50%) var(--career-image-y, 35%); }
 .jn-career-hero .jn-career-hero__shade { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, #00000099 100%); pointer-events: none; }
 .jn-career-hero .jn-career-hero__heading { position: relative; min-width: 0; margin: 0; font-family: 'Urbanist', Arial, sans-serif; font-size: clamp(64px, 9vw, 140px); font-weight: 800; letter-spacing: 0; line-height: .9; color: #fff; overflow-wrap: anywhere; }

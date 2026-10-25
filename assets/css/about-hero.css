@@ -3,7 +3,7 @@
 .jn-about-hero, .jn-about-hero * { box-sizing: border-box; }
 .jn-about-hero {
   position: relative;
-  padding-bottom: clamp(72px, 12vh, 140px);
+  padding-bottom: clamp(72px, calc(12 * var(--jn-viewport-height)), 140px);
   color: var(--jd-color-white, #fff);
   background: #0f0f0f;
 }
@@ -13,7 +13,7 @@
   z-index: 2;
   width: min(calc(100% - 32px), 940px);
   margin: 0 auto;
-  padding-top: clamp(106px, 15.7vh, 154px);
+  padding-top: clamp(106px, calc(15.7 * var(--jn-viewport-height)), 154px);
 }
 
 .jn-about-hero .about-title {

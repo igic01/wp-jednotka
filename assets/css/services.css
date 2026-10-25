@@ -259,7 +259,7 @@
 }
 
 .jn-services.sv-section .sv-detail {
-  padding-top: 5vh;
+  padding-top: calc(5 * var(--jn-viewport-height));
 }
 
 .jn-services.sv-section .sv-detail[hidden] {
