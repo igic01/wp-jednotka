@@ -150,8 +150,9 @@
   }
 }
 
-.jn-values[data-counted="yes"] { height: auto; min-height: 100vh; }
-.jn-values[data-counted="yes"] .values__sticky { position: relative; height: auto; min-height: 100vh; padding-block: 40px; }
+.jn-values[data-counted="yes"] { height: auto; min-height: var(--values-frame-height, 100vh); }
+.jn-values[data-counted="yes"] .values__sticky { position: relative; height: auto; min-height: var(--values-frame-height, 100vh); padding-block: 40px; }
+.jn-values[data-scroll-locked="yes"] { overscroll-behavior: contain; }
 .jn-values[data-counted="yes"] .values__card { transition: transform 420ms ease, filter 420ms ease; }
 
 .jn-values .values__title, .jn-values .values__card-title, .jn-values .values__card-text { overflow-wrap: anywhere; }
