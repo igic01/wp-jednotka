@@ -158,8 +158,11 @@ final class Plugin {
 		wp_register_script( 'jednotka-contact', JEDNOTKA_ELEMENTOR_URL . 'assets/js/contact.js', array( 'elementor-frontend' ), JEDNOTKA_ELEMENTOR_VERSION, true );
 		wp_register_style( 'jednotka-projects', JEDNOTKA_ELEMENTOR_URL . 'assets/css/projects.css', array( 'jednotka-common' ), JEDNOTKA_ELEMENTOR_VERSION );
 		wp_register_script( 'jednotka-projects', JEDNOTKA_ELEMENTOR_URL . 'assets/js/projects.js', array( 'elementor-frontend' ), JEDNOTKA_ELEMENTOR_VERSION, true );
-		wp_register_style( 'jednotka-values', JEDNOTKA_ELEMENTOR_URL . 'assets/css/values.css', array( 'jednotka-common' ), JEDNOTKA_ELEMENTOR_VERSION );
-		wp_register_script( 'jednotka-values', JEDNOTKA_ELEMENTOR_URL . 'assets/js/values.js', array( 'elementor-frontend' ), JEDNOTKA_ELEMENTOR_VERSION, true );
+		// Refresh Values assets when their contents change, including after reverting gesture handling.
+		$values_css_version = JEDNOTKA_ELEMENTOR_VERSION . '.' . substr( md5_file( JEDNOTKA_ELEMENTOR_PATH . 'assets/css/values.css' ), 0, 12 );
+		$values_js_version = JEDNOTKA_ELEMENTOR_VERSION . '.' . substr( md5_file( JEDNOTKA_ELEMENTOR_PATH . 'assets/js/values.js' ), 0, 12 );
+		wp_register_style( 'jednotka-values', JEDNOTKA_ELEMENTOR_URL . 'assets/css/values.css', array( 'jednotka-common' ), $values_css_version );
+		wp_register_script( 'jednotka-values', JEDNOTKA_ELEMENTOR_URL . 'assets/js/values.js', array( 'elementor-frontend' ), $values_js_version, true );
 		wp_register_style( 'jednotka-our-story', JEDNOTKA_ELEMENTOR_URL . 'assets/css/our-story.css', array( 'jednotka-common' ), JEDNOTKA_ELEMENTOR_VERSION );
 		wp_register_script( 'jednotka-our-story', JEDNOTKA_ELEMENTOR_URL . 'assets/js/our-story.js', array( 'elementor-frontend' ), JEDNOTKA_ELEMENTOR_VERSION, true );
 		wp_register_style( 'jednotka-team', JEDNOTKA_ELEMENTOR_URL . 'assets/css/team.css', array( 'jednotka-common' ), JEDNOTKA_ELEMENTOR_VERSION );

@@ -24,6 +24,7 @@ function setup({ count=5, editing=false, reduced=false, animate=true, mode='stac
   vm.runInNewContext(source,{window,document,AbortController,elementorFrontend:window.elementorFrontend,elementorModules:window.elementorModules,jQuery:()=>({on(){}})});
   hook([{querySelector:()=>section}]);
   return{section,cards,frames,observers,reduce,fine,document,handler,
+    gesture(type){const event=new Event(type,{cancelable:true});window.dispatchEvent(event);return event;},
     flush(){const callbacks=[...frames.values()];frames.clear();callbacks.forEach(fn=>fn());},
     queue(){window.dispatchEvent(new Event('scroll'));},
     scroll(p){section.top=-p*2000;this.queue();this.flush();},
@@ -76,4 +77,24 @@ test('preference changes and teardown reset transforms and remove listeners',()=
  assert.equal(s.section.attributes['data-static'],'yes');assert.equal(s.frames.size,0);assert.equal(s.cards[0].style['--pose-x'],undefined);
  s.reduce.matches=false;s.reduce.dispatchEvent(new Event('change'));assert.equal(s.section.attributes['data-static'],'no');
  s.queue();s.handler.onDestroy();assert.equal(s.frames.size,0);assert.equal(s.observers[0].targets.size,0);s.queue();s.move();assert.equal(s.frames.size,0);
+});
+
+test('the same physical scroll advances less when the section scroll distance is increased',()=>{
+ const normal=setup(), longer=setup();
+ longer.section.height=5000;
+ for(const s of [normal,longer]){s.section.top=-460;s.queue();s.flush();}
+ assert.equal(normal.cards[1].style['--enter'],'0.0000');
+ assert.ok(Number(longer.cards[1].style['--enter'])>0);
+ assert.ok(Number(longer.cards[0].style['--settle'])<Number(normal.cards[0].style['--settle']));
+ normal.handler.onDestroy();longer.handler.onDestroy();
+});
+
+test('swipes and wheel gestures are not intercepted and cannot advance cards without scrolling',()=>{
+ const s=setup();
+ for(const type of ['touchstart','touchmove','touchend','wheel']){
+  assert.equal(s.gesture(type).defaultPrevented,false);
+  assert.equal(s.cards[1].style['--enter'],'1.0000');
+  assert.equal(s.frames.size,0);
+ }
+ s.handler.onDestroy();
 });
