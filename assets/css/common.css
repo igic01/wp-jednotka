@@ -1,5 +1,11 @@
 /* Match the page canvas exposed by overscroll and pinch gestures. */
-html,
-body {
+html:not(:has(body.elementor-editor-active)),
+body:not(.elementor-editor-active) {
     background-color: #0F0F0F !important;
+}
+
+/* Keep Elementor's editing canvas white. Widget backgrounds remain independent. */
+html:has(body.elementor-editor-active),
+body.elementor-editor-active {
+    background-color: #FFFFFF !important;
 }

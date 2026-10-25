@@ -8,7 +8,7 @@
 .jn-approach[data-editor="yes"] .gradient-wave-text, .jn-approach[data-animate=""] .gradient-wave-text { color: var(--jn-wave-final, #fff); }
 .jn-approach .jn-approach__video-toggle { position: absolute; bottom: 12px; right: 12px; width: 30px; height: 30px; padding: 0; border: 1px solid #ffffff99; border-radius: 50%; background: #121212; color: #fff; font: 12px Arial,sans-serif; cursor: pointer; opacity: 0; }
 .jn-approach .approach-window:hover .jn-approach__video-toggle, .jn-approach .jn-approach__video-toggle:focus-visible { opacity: 1; }
-@media (prefers-reduced-motion: reduce) {
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
   .jn-approach { min-height: 0 !important; }
   .jn-approach .approach-grid { position: relative; }
   .jn-approach .gradient-wave-text, .jn-approach .wave-char { color: var(--jn-wave-final, #fff); transition: none; }

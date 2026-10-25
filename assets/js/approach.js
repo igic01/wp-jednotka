@@ -19,6 +19,7 @@
         const text = section.querySelector('[data-gradient-wave-text]');
         const editing = elementorFrontend.isEditMode();
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const phone = window.matchMedia('(max-width: 767px)');
         const originalText = text.textContent;
         const originalLabel = text.getAttribute('aria-label');
         let chars = [];
@@ -66,7 +67,8 @@
         };
         this.restoreText = restoreText;
         const configureWave = () => {
-          if (editing || reduceMotion.matches || section.dataset.animate !== 'yes') {
+          if (this.frame !== null) { window.cancelAnimationFrame(this.frame); this.frame = null; }
+          if (editing || reduceMotion.matches || phone.matches || section.dataset.animate !== 'yes') {
             restoreText();
             return;
           }
@@ -116,6 +118,7 @@
           if (reduceMotion.matches) this.video?.pause();
           configureWave();
         }, { signal });
+        phone.addEventListener('change', configureWave, { signal });
         configureWave();
       }
       onDestroy() {
