@@ -85,6 +85,10 @@ class Our_Story_Widget extends Widget_Base {
 				<div class="jn-our-story__images" aria-hidden="true">
 					<?php foreach ( $s['photos'] as $photo ) : if ( empty( $photo['image']['url'] ) ) { continue; }
 						$x = max( 0, min( 100, (float) $photo['x'] ) );
+						// Bring right-side photos inward, including photos in existing widgets.
+						if ( $x > 50 ) {
+							$x = max( 50, $x - 10 );
+						}
 						$y = max( 0, min( 100, (float) $photo['y'] ) );
 						$width = max( 1, min( 100, (float) $photo['width'] ) );
 						$start = max( 0, min( 0.99, (float) $photo['start'] / 100 ) );
