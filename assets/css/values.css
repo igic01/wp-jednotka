@@ -135,7 +135,7 @@
   line-height: 1.55;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .jn-values .values__layout {
     grid-template-columns: 1fr;
     gap: 28px;
@@ -149,6 +149,10 @@
     height: min(52vh, 460px);
   }
 }
+
+.jn-values[data-counted="yes"] { height: auto; min-height: 100vh; }
+.jn-values[data-counted="yes"] .values__sticky { position: relative; height: auto; min-height: 100vh; padding-block: 40px; }
+.jn-values[data-counted="yes"] .values__card { transition: transform 420ms ease, filter 420ms ease; }
 
 .jn-values .values__title, .jn-values .values__card-title, .jn-values .values__card-text { overflow-wrap: anywhere; }
 .jn-values[data-static="yes"] { height: auto; }

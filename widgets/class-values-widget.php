@@ -45,7 +45,7 @@ class Values_Widget extends Widget_Base {
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'motion_section', array( 'label' => 'Animation' ) );
-		$this->add_control( 'animate', array( 'label' => 'Scroll animation', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes', 'description' => 'Keep the parent container overflow visible. Editor and reduced-motion views show all cards as a static list.' ) );
+		$this->add_control( 'animate', array( 'label' => 'Scroll animation', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes', 'description' => 'Desktop follows scroll distance. Phones and tablets (up to 1024px) advance one card per vertical swipe or wheel gesture. Scroll past the first or last card to leave. Keep the parent container overflow visible. Editor and reduced-motion views show a static list.' ) );
 		$this->add_control( 'mode', array( 'label' => 'Stack transition', 'type' => Controls_Manager::SELECT, 'default' => 'stack', 'options' => array( 'stack' => 'Build the stack', 'fall' => 'Cards fall away' ) ) );
 		$this->add_control( 'pointer', array( 'label' => 'Mouse tilt and glow', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
 		$this->end_controls_section();
