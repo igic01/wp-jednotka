@@ -70,6 +70,7 @@ class FAQ_Widget extends Widget_Base {
 	protected function render() {
 		$s = $this->get_settings_for_display();
 		$editing = \Elementor\Plugin::$instance->editor->is_edit_mode();
+		$s['description'] = str_replace( 'do 1 pracovného dňa', 'do 24 hodín', $s['description'] );
 		if ( '#kontakt' === ( $s['contact_link']['url'] ?? '' ) ) { $s['contact_link']['url'] = home_url( '/kontakt/' ); }
 		$this->add_link_attributes( 'contact_link', $s['contact_link'] );
 		$this->add_render_attribute( 'contact_link', 'class', 'services-faq-cta' );

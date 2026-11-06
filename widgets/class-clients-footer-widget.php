@@ -110,11 +110,7 @@ class Clients_Footer_Widget extends Widget_Base {
 
 		$this->start_controls_section( 'footer_links_section', array( 'label' => 'Footer navigation and contact' ) );
 		$this->text_controls( $this, 'menu_heading', 'Menu heading', '{{WRAPPER}} .jn-footer-menu-heading', 'Menu' );
-		$menu_defaults = array();
-		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/', 'Kontakt' => '/kontakt/' ) as $label => $url ) {
-			$menu_defaults[] = array( 'label' => $label, 'link' => array( 'url' => home_url( $url ) ) );
-		}
-		$this->link_repeater( 'menu_links', 'Menu links', $menu_defaults );
+		$this->link_repeater( 'menu_links', 'Menu links', $this->footer_menu() );
 		$this->text_controls( $this, 'contact_heading', 'Contact heading', '{{WRAPPER}} .jn-footer-contact-heading', 'Kontakt' );
 		$this->link_repeater( 'contact_links', 'Contact links', array(
 			array( 'label' => 'info@jednotka.studio', 'link' => array( 'url' => 'mailto:info@jednotka.studio' ) ),
@@ -175,6 +171,21 @@ class Clients_Footer_Widget extends Widget_Base {
 			?><img src="<?php echo esc_url( $item[ $prefix . '_image' ]['url'] ); ?>" alt="<?php echo esc_attr( $alt ); ?>" /><?php
 		}
 	}
+	private function footer_menu() {
+		$menu = array();
+		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/', 'Kontakt' => '/kontakt/' ) as $label => $url ) {
+			$menu[] = array( 'label' => $label, 'link' => array( 'url' => home_url( $url ) ) );
+		}
+		return $menu;
+	}
+	/** Replaces only the earlier menu variants, so a newly edited menu stays as saved. */
+	private function current_menu( $items ) {
+		$labels = implode( '|', array_column( $items, 'label' ) );
+		if ( ! in_array( $labels, array( 'Služby|Blog|O nás|Kariéra', 'Služby|Blog|O nás|Kontakt', 'Domov|O nás|Služby|Kariéra|Blog' ), true ) ) { return $items; }
+		$menu = $this->footer_menu();
+		foreach ( $menu as $index => $item ) { $menu[ $index ]['_id'] = 'menu-' . $index; }
+		return $menu;
+	}
 	/** Saved widgets may still hold the launch placeholders; show the real details instead. */
 	private function current_item( $item, $key ) {
 		$url = $item['link']['url'] ?? '';
@@ -193,6 +204,7 @@ class Clients_Footer_Widget extends Widget_Base {
 		return $item;
 	}
 	private function render_links( $s, $key ) {
+		if ( 'menu_links' === $key ) { $s[ $key ] = $this->current_menu( $s[ $key ] ); }
 		foreach ( $s[ $key ] as $index => $item ) {
 			$item = $this->current_item( $item, $key );
 			$text_key = $this->get_repeater_setting_key( 'label', $key, $index );
@@ -217,6 +229,9 @@ class Clients_Footer_Widget extends Widget_Base {
 	protected function render() {
 		$s = $this->get_settings_for_display();
 		$id = $this->get_id();
+		// Pages saved before the new call to action keep working copy in the database.
+		if ( "Dobrý nápad?\nDajme mu život." === str_replace( "\r\n", "\n", trim( $s['heading'] ) ) ) { $s['heading'] = "Spravme aj z vás jednotku\nvo vašom obore."; }
+		if ( in_array( trim( $s['description'] ), array( 'Web, značka alebo marketing. Povedzte nám, čo máte v hlave — spolu z toho spravíme niečo, čo funguje.', 'Web, značka alebo marketing. Spolu z vás spravíme jednotku vo vašom obore.' ), true ) ) { $s['description'] = 'Web, značka alebo marketing. Začneme tým, čo vás dnes najviac brzdí.'; }
 		$this->add_link_attributes( 'button_link', $s['button_link'] );
 		$this->add_render_attribute( 'button_link', 'class', 'button button--primary' );
 		$this->add_link_attributes( 'logo_link', $s['logo_link'] );

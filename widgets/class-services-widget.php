@@ -164,7 +164,7 @@ Rozpoznateľná na prvý pohľad', 'cta' => 'Chcem branding' ),
 						<div class="service-row sv-row">
 							<span class="content-badge service-icon sv-badge" aria-hidden="true"><?php $this->render_media( $item, 'icon', 'content-badge-icon sv-badge-icon' ); ?></span>
 							<strong <?php $this->inline_text( $this->get_repeater_setting_key( 'title', 'services', $index ) ); ?>><?php echo esc_html( $item['title'] ); ?></strong>
-							<span <?php $this->inline_text( $this->get_repeater_setting_key( 'description', 'services', $index ), 'service-copy sv-row-copy' ); ?>><?php echo esc_html( strip_tags( $item['description'] ) ); ?></span>
+							<span <?php $this->inline_text( $this->get_repeater_setting_key( 'description', 'services', $index ), 'service-copy sv-row-copy' ); ?>><?php echo esc_html( str_replace( 'funkčné a pripravené premieňať', 'funkčné a premieňali', strip_tags( $item['description'] ) ) ); ?></span>
 							<<?php echo $arrow_tag; ?> class="service-arrow sv-arrow" <?php if ( $external ) { $this->print_render_attribute_string( $arrow_key ); } else { ?>type="button" data-sv-open="<?php echo esc_attr( $model['id'] ); ?>" aria-controls="<?php echo esc_attr( $model['hash'] ); ?>"<?php } ?> data-sv-editor-open="<?php echo esc_attr( $model['id'] ); ?>" aria-label="<?php echo esc_attr( ( $external ? 'Otvoriť službu: ' : 'Zobraziť detail: ' ) . $item['title'] ); ?>">
 							<?php if ( 'reference' === $item['arrow_type'] ) : ?><svg class="service-arrow-icon sv-arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg><?php else : $this->render_media( $item, 'arrow', 'service-arrow-icon sv-arrow-icon' ); endif; ?>
 							</<?php echo $arrow_tag; ?>>

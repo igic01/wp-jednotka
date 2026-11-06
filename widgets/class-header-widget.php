@@ -154,6 +154,17 @@ class Header_Widget extends Widget_Base {
 				$settings[ substr( $key, strlen( $prefix ) ) ] = $value;
 			}
 		}
+		// Bring headers saved with the earlier menu and button in line with the rest of the site.
+		foreach ( $settings['nav_items'] as $index => $item ) {
+			if ( '#kariera' === ( $item['link']['url'] ?? '' ) ) { $settings['nav_items'][ $index ]['link']['url'] = home_url( '/kariera/' ); }
+		}
+		if ( 'Domov|O nás|Služby|Kariéra|Blog' === implode( '|', array_column( $settings['nav_items'], 'label' ) ) ) {
+			$settings['nav_items'][] = array_merge( end( $settings['nav_items'] ), array( '_id' => 'kontakt', 'label' => 'Kontakt', 'link' => array( 'url' => home_url( '/kontakt/' ) ) ) );
+		}
+		if ( 'Pozrieť služby' === $settings['button_text'] ) {
+			$settings['button_text'] = 'Napíšte nám';
+			$settings['button_link'] = array( 'url' => home_url( '/kontakt/' ) );
+		}
 		$nav_id = 'jn-nav-' . $this->get_id();
 		$this->add_link_attributes( $prefix . 'logo_link', $settings['logo_link'] );
 		$this->add_render_attribute( $prefix . 'logo_link', array( 'class' => 'jn-header__logo site-header-logo', 'aria-label' => $settings['logo_label'] ) );
