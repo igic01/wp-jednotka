@@ -12,6 +12,8 @@ final class Plugin {
 	public static function init() {
 		require_once JEDNOTKA_ELEMENTOR_PATH . 'includes/class-post-settings.php';
 		Post_Settings::init();
+		require_once JEDNOTKA_ELEMENTOR_PATH . 'includes/class-google-rating.php';
+		Google_Rating::init();
 
 		if ( ! did_action( 'elementor/loaded' ) ) {
 			add_action( 'admin_notices', array( __CLASS__, 'missing_elementor_notice' ) );

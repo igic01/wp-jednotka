@@ -60,7 +60,7 @@
           return {
             cardBlur: 24,
             cardTranslateY: 90,
-            statsBlur: 18,
+            statsBlur: 8,
             statsFade: 0.72,
             statsShift: -22,
             statsScale: 0.035,
@@ -123,11 +123,13 @@
             const focusStart = viewportHeight * 0.58;
             const focusEnd = viewportHeight * -0.05;
             const progress = clampTestimonialProgress((focusStart - rect.top) / (focusStart - focusEnd));
+            // Keep the numbers readable until they have nearly left the viewport.
+            const fadeProgress = clampTestimonialProgress((viewportHeight * -0.08 - rect.top) / (viewportHeight * 0.32));
         
-            statsSection.style.setProperty("--stats-grid-opacity", (1 - progress * tuning.statsFade).toFixed(3));
-            statsSection.style.setProperty("--stats-grid-blur", `${(progress * tuning.statsBlur).toFixed(2)}px`);
-            statsSection.style.setProperty("--stats-grid-shift", `${(progress * tuning.statsShift).toFixed(2)}px`);
-            statsSection.style.setProperty("--stats-grid-scale", (1 - progress * tuning.statsScale).toFixed(3));
+            statsSection.style.setProperty("--stats-grid-opacity", (1 - fadeProgress * tuning.statsFade).toFixed(3));
+            statsSection.style.setProperty("--stats-grid-blur", `${(fadeProgress * tuning.statsBlur).toFixed(2)}px`);
+            statsSection.style.setProperty("--stats-grid-shift", `${(fadeProgress * tuning.statsShift).toFixed(2)}px`);
+            statsSection.style.setProperty("--stats-grid-scale", (1 - fadeProgress * tuning.statsScale).toFixed(3));
             statsSection.style.setProperty("--testimonials-intro-opacity", (0.58 + progress * 0.42).toFixed(3));
             statsSection.style.setProperty("--testimonials-intro-shift", `${((1 - progress) * tuning.introShift).toFixed(2)}px`);
           }

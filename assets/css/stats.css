@@ -87,3 +87,22 @@
 @media (max-width: 520px) {
   .jn-stats .testimonials-intro h2 { font-size: var(--jn-heading-lg); }
 }
+
+/* Reviews: one quote size, comfortable reading, and an optional link to the source. */
+.jn-stats .testimonials-intro .jn-google-rating { justify-self: center; margin-top: 26px; }
+.jn-stats .testimonials-intro .jn-google-rating span { color: inherit; font: inherit; letter-spacing: 0; text-transform: none; }
+.jn-stats .testimonials-intro .jn-google-rating .jn-stars { color: #fbbc04; }
+.jn-stats .testimonial-card--one { --testimonial-rotate: -2deg; }
+.jn-stats .testimonial-card--two { --testimonial-width: 480px; --testimonial-padding: 28px; --testimonial-avatar-size: 48px; --testimonial-rotate: 1.2deg; }
+.jn-stats .testimonial-card--three { --testimonial-rotate: 2deg; }
+.jn-stats .testimonial-card-inner { gap: 20px; }
+.jn-stats .testimonial-card p { color: #ffffffe6; font-size: 19px; font-weight: 400; line-height: 1.45; }
+.jn-stats .testimonial-card strong { font-size: 16px; line-height: 1.25; }
+.jn-stats .testimonial-card small { color: #ffffff99; line-height: 1.3; }
+.jn-stats .testimonial-card .jn-stars { display: flex; }
+.jn-stats .testimonial-link { width: fit-content; color: #ffffffd9; font: 500 14px/1.4 "Aspekta Variable", Arial, sans-serif; text-decoration: underline; text-decoration-color: #ffffff59; text-underline-offset: 4px; }
+.jn-stats .testimonial-link:is(:hover, :focus-visible) { color: #fff; text-decoration-color: #fff; }
+@media (max-width: 520px) {
+  .jn-stats .testimonials-intro .jn-google-rating { margin-top: 18px; }
+  .jn-stats .testimonial-card p { font-size: 17px; }
+}

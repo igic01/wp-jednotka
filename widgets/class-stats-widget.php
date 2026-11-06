@@ -30,12 +30,15 @@ class Stats_Widget extends Widget_Base {
 		$this->start_controls_section( 'intro_content', array( 'label' => 'Testimonials heading' ) );
 		$this->text_controls( $this, 'eyebrow', 'Small heading', '{{WRAPPER}} .testimonials-intro > span', 'Klienti' );
 		$this->text_controls( $this, 'heading', 'Heading', '{{WRAPPER}} .testimonials-intro h2', 'Za číslami sú naši klienti' );
+		$this->add_control( 'show_google_rating', array( 'label' => 'Show Google rating', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes', 'description' => 'Set the link and rating under Settings → General.' ) );
 		$this->end_controls_section();
 		$this->start_controls_section( 'cards_content', array( 'label' => 'Testimonials' ) );
 		$card = new Repeater();
 		$this->text_controls( $card, 'quote', 'Quote', '{{WRAPPER}} {{CURRENT_ITEM}} p' );
 		$this->text_controls( $card, 'name', 'Client name', '{{WRAPPER}} {{CURRENT_ITEM}} strong' );
 		$this->text_controls( $card, 'role', 'Client description', '{{WRAPPER}} {{CURRENT_ITEM}} small' );
+		$card->add_control( 'review_link', array( 'label' => 'Link to this review', 'type' => Controls_Manager::URL, 'description' => 'Optional. Shows a link so visitors can verify the review.' ) );
+		$card->add_control( 'show_stars', array( 'label' => 'Show five stars', 'type' => Controls_Manager::SWITCHER, 'description' => 'Use only for a real five-star review.' ) );
 		$card->add_control( 'avatar_type', array( 'label' => 'Avatar', 'type' => Controls_Manager::SELECT, 'default' => 'reference', 'options' => array( 'reference' => 'Original reference avatar', 'image' => 'Image', 'video' => 'Uploaded video' ) ) );
 		$card->add_control( 'avatar_image', array( 'label' => 'Image', 'type' => Controls_Manager::MEDIA, 'condition' => array( 'avatar_type' => 'image' ) ) );
 		$card->add_control( 'avatar_video', array( 'label' => 'Video', 'type' => Controls_Manager::MEDIA, 'media_types' => array( 'video' ), 'condition' => array( 'avatar_type' => 'video' ) ) );
@@ -59,6 +62,10 @@ class Stats_Widget extends Widget_Base {
 			array( 'quote' => '" Cením osobný prístup, záujem, a veľmi ustretovú komunikáciu, logo mi dodali vo viacerých verziách a už teraz sa nachádza na firemnom oblečení. Som veľmi spokojný s výsledkom, ďakujem."', 'name' => 'Roman Buckulčík', 'role' => 'Fitness centrum' ),
 			array( 'quote' => '“ Super, že neriešili len pekný dizajn, ale celý predaj. ”', 'name' => 'Lucia Benková', 'role' => 'Lokálna značka' ),
 		);
+	}
+	/** Saved quotes use mixed marks; show them all the same way. */
+	private function quote_text( $quote ) {
+		return '„' . trim( html_entity_decode( $quote, ENT_QUOTES, 'UTF-8' ), " \t\r\n\"'“”„" ) . '“';
 	}
 	private function inline_text( $key, $class = '' ) {
 		$this->add_inline_editing_attributes( $key, 'none' );
@@ -84,12 +91,14 @@ class Stats_Widget extends Widget_Base {
 				<div class="testimonials-intro">
 					<span <?php $this->inline_text( 'eyebrow' ); ?>><?php echo esc_html( $s['eyebrow'] ); ?></span>
 					<h2 id="<?php echo esc_attr( $title_id ); ?>" <?php $this->inline_text( 'heading' ); ?>><?php echo esc_html( $s['heading'] ); ?></h2>
+					<?php if ( 'yes' === $s['show_google_rating'] ) { echo \Jednotka\Elementor\Google_Rating::markup(); } // phpcs:ignore WordPress.Security.EscapeOutput -- Escaped in markup(). ?>
 				</div>
 				<div class="testimonials-field">
 					<?php foreach ( $s['testimonials'] as $index => $card ) : $variant = $variants[ $index % 5 ]; ?>
 						<article class="testimonial-card testimonial-card--<?php echo esc_attr( $variant ); ?> elementor-repeater-item-<?php echo esc_attr( $card['_id'] ); ?>">
 							<div class="testimonial-card-inner">
-								<p <?php $this->inline_text( $this->get_repeater_setting_key( 'quote', 'testimonials', $index ) ); ?>><?php echo esc_html( $card['quote'] ); ?></p>
+								<?php if ( 'yes' === ( $card['show_stars'] ?? '' ) ) : ?><span class="jn-stars" role="img" aria-label="5 z 5 hviezdičiek"><?php for ( $star = 0; $star < 5; $star++ ) : ?><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7.2.8-5.4 4.8 1.5 7.1L12 17.7l-6.3 3.6 1.5-7.1L1.8 9.4 9 8.6z"/></svg><?php endfor; ?></span><?php endif; ?>
+								<p <?php $this->inline_text( $this->get_repeater_setting_key( 'quote', 'testimonials', $index ) ); ?>><?php echo esc_html( $this->quote_text( $card['quote'] ) ); ?></p>
 								<footer>
 									<span class="testimonial-avatar<?php echo 'reference' === $card['avatar_type'] ? ' testimonial-avatar--' . esc_attr( $variant ) : ' jn-testimonial-avatar--custom'; ?>" aria-hidden="true">
 										<?php if ( 'image' === $card['avatar_type'] && ! empty( $card['avatar_image']['url'] ) ) : ?>
@@ -103,6 +112,9 @@ class Stats_Widget extends Widget_Base {
 										<small <?php $this->inline_text( $this->get_repeater_setting_key( 'role', 'testimonials', $index ) ); ?>><?php echo esc_html( $card['role'] ); ?></small>
 									</span>
 								</footer>
+								<?php if ( ! empty( $card['review_link']['url'] ) ) : $link_key = 'review-link-' . $index; $this->add_link_attributes( $link_key, $card['review_link'] ); $this->add_render_attribute( $link_key, 'class', 'testimonial-link' ); ?>
+									<a <?php $this->print_render_attribute_string( $link_key ); ?>>Pozrieť recenziu →</a>
+								<?php endif; ?>
 							</div>
 						</article>
 					<?php endforeach; ?>
