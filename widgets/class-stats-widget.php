@@ -24,7 +24,7 @@ class Stats_Widget extends Widget_Base {
 		$stat = new Repeater();
 		$this->text_controls( $stat, 'value', 'Number / value', '{{WRAPPER}} {{CURRENT_ITEM}} .jn-stat-value', '100+' );
 		$this->text_controls( $stat, 'label', 'Label', '{{WRAPPER}} {{CURRENT_ITEM}} .jn-stat-label', 'klientov' );
-		$this->add_control( 'stats', array( 'label' => 'Statistics', 'type' => Controls_Manager::REPEATER, 'fields' => $stat->get_controls(), 'title_field' => '{{{ value }}} — {{{ label }}}', 'default' => array( array( 'value' => '100+', 'label' => 'klientov' ), array( 'value' => '5', 'label' => 'rokov praxe' ), array( 'value' => '15+', 'label' => 'odvetví' ) ), 'description' => 'Click numbers and labels to edit. Whole numbers with optional suffixes count up; other text displays as entered.' ) );
+		$this->add_control( 'stats', array( 'label' => 'Statistics', 'type' => Controls_Manager::REPEATER, 'fields' => $stat->get_controls(), 'title_field' => '{{{ value }}} — {{{ label }}}', 'default' => array( array( 'value' => '25+', 'label' => 'klientov' ), array( 'value' => '5', 'label' => 'rokov praxe' ), array( 'value' => '10+', 'label' => 'odvetví' ) ), 'description' => 'Click numbers and labels to edit. Whole numbers with optional suffixes count up; other text displays as entered.' ) );
 		$this->add_control( 'count_animation', array( 'label' => 'Count-up animation', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
 		$this->end_controls_section();
 		$this->start_controls_section( 'intro_content', array( 'label' => 'Testimonials heading' ) );
@@ -55,11 +55,9 @@ class Stats_Widget extends Widget_Base {
 	}
 	private function default_testimonials() {
 		return array(
-			array( 'quote' => '“Jednotka nám upratala marketing do jedného systému. Konečne vieme, čo funguje a prečo.”', 'name' => 'Mária Kováčová', 'role' => 'E-shop s kozmetikou' ),
-			array( 'quote' => '“Web, reklamy aj emaily začali spolupracovať. Výsledky prišli rýchlejšie, než sme čakali.”', 'name' => 'Tomáš Hric', 'role' => 'Fitness centrum' ),
-			array( 'quote' => '“Najviac oceňujem, že neriešili len pekný dizajn, ale celý predajný tok.”', 'name' => 'Lucia Benková', 'role' => 'Lokálna značka' ),
-			array( 'quote' => '“Komunikácia bola jednoduchá, výstupy čisté a kampane mali jasný smer.”', 'name' => 'Peter Varga', 'role' => 'B2B služby' ),
-			array( 'quote' => '“Zrazu sme mali jasné priority. Menej chaosu, viac objednávok a lepší prehľad.”', 'name' => 'Nina Poláková', 'role' => 'Prémiový retail' ),
+			array( 'quote' => '" Fantastická spolupráca - promptná komunikácia, rýchle a kvalitné riešenie a hlavne s prínosom objektívnych výsledkov. Odporúčam "', 'name' => 'Patrik B.', 'role' => 'Fitness centrum' ),
+			array( 'quote' => '" Cením osobný prístup, záujem, a veľmi ustretovú komunikáciu, logo mi dodali vo viacerých verziách a už teraz sa nachádza na firemnom oblečení. Som veľmi spokojný s výsledkom, ďakujem."', 'name' => 'Roman Buckulčík', 'role' => 'Fitness centrum' ),
+			array( 'quote' => '“ Super, že neriešili len pekný dizajn, ale celý predaj. ”', 'name' => 'Lucia Benková', 'role' => 'Lokálna značka' ),
 		);
 	}
 	private function inline_text( $key, $class = '' ) {

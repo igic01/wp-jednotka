@@ -19,7 +19,7 @@ class Approach_Widget extends Widget_Base {
 
 	protected function register_controls() {
 		$this->start_controls_section( 'text_section', array( 'label' => 'Approach text' ) );
-		$this->add_control( 'text', array( 'label' => 'Text', 'type' => Controls_Manager::TEXTAREA, 'rows' => 6, 'default' => 'Email, reklamu aj web riešime spolu, nie ako samostatné projekty. Výsledok je jednoduchý: viac ľudí, ktorí u vás nakúpia.' ) );
+		$this->add_control( 'text', array( 'label' => 'Text', 'type' => Controls_Manager::TEXTAREA, 'rows' => 6, 'default' => 'Email, reklamu aj web riešime spolu, nie ako samostatné projekty.' ) );
 		$this->add_control( 'animate', array( 'label' => 'Scroll color wave', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes', 'description' => 'The text stays editable in the editor. Preview the page to see the original sticky scroll animation.' ) );
 		$this->end_controls_section();
 

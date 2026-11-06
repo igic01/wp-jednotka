@@ -21,9 +21,9 @@ class FAQ_Widget extends Widget_Base {
 	protected function register_controls() {
 		$this->start_controls_section( 'intro', array( 'label' => 'Introduction' ) );
 		$this->add_control( 'heading', array( 'label' => 'Heading', 'type' => Controls_Manager::TEXT, 'default' => 'Časté otázky' ) );
-		$this->add_control( 'description', array( 'label' => 'Description', 'type' => Controls_Manager::TEXTAREA, 'default' => 'Nenašli ste odpoveď? Napíšte nám a ozveme sa do 1 pracovného dňa.' ) );
+		$this->add_control( 'description', array( 'label' => 'Description', 'type' => Controls_Manager::TEXTAREA, 'default' => 'Nenašli ste odpoveď? Napíšte nám a ozveme sa do 24 hodín.' ) );
 		$this->add_control( 'show_contact', array( 'label' => 'Show contact link', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
-		$this->add_control( 'contact_text', array( 'label' => 'Contact link text', 'type' => Controls_Manager::TEXT, 'default' => 'Napísať nám', 'condition' => array( 'show_contact' => 'yes' ) ) );
+		$this->add_control( 'contact_text', array( 'label' => 'Contact link text', 'type' => Controls_Manager::TEXT, 'default' => 'Napíšte nám', 'condition' => array( 'show_contact' => 'yes' ) ) );
 		$this->add_control( 'contact_link', array( 'label' => 'Contact link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#kontakt' ), 'condition' => array( 'show_contact' => 'yes' ), 'description' => 'For the default link, set the contact section’s Advanced → CSS ID to kontakt.' ) );
 		$this->end_controls_section();
 
@@ -36,7 +36,7 @@ class FAQ_Widget extends Widget_Base {
 		$this->add_control( 'questions', array( 'label' => 'Questions', 'type' => Controls_Manager::REPEATER, 'fields' => $item->get_controls(), 'title_field' => '{{{ question }}}', 'prevent_empty' => false, 'default' => array(
 			array( 'question' => 'Koľko to stojí?', 'answer' => 'Cena závisí od rozsahu. Po konzultácii dostanete konkrétnu ponuku, nie balíček od stola.' ),
 			array( 'question' => 'Ako dlho trvá spolupráca?', 'answer' => 'Od jednorazových projektov po dlhodobú správu marketingu. Dohodneme si to, čo dáva zmysel.' ),
-			array( 'question' => 'Som viazaný zmluvou na roky?', 'answer' => 'Nie. Spolupracujeme na základe výsledkov, nie viazanosti.' ),
+			array( 'question' => 'Som viazaný zmluvou?', 'answer' => 'Nie. Spolupracujeme na základe výsledkov, nie viazanosti.' ),
 			array( 'question' => 'Budem mať prehľad o tom, čo sa deje?', 'answer' => 'Áno. Dostanete pravidelné reporty a jeden kontaktný bod namiesto piatich.' ),
 		) ) );
 		$this->end_controls_section();

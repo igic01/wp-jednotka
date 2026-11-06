@@ -24,7 +24,7 @@
   font-family: "Urbanist", Arial, sans-serif;
   font-size: clamp(82px, 9.6vw, 124px);
   font-weight: 800;
-  letter-spacing: 0;
+  letter-spacing: var(--jn-heading-tracking);
   line-height: 0.82;
   text-align: center;
 }

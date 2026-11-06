@@ -37,7 +37,7 @@
   font-family: "Urbanist", Arial, sans-serif;
   font-size: clamp(86px, 8.4vw, 140px);
   font-weight: 700;
-  letter-spacing: 0;
+  letter-spacing: var(--jn-heading-tracking);
   line-height: 1.18;
   text-align: center;
   transform: translate(-50%, -50%);

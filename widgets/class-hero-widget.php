@@ -43,7 +43,7 @@ class Hero_Widget extends Header_Widget {
 			$this->end_controls_section();
 		}
 		$this->start_controls_section( 'copy_section', array( 'label' => 'Description and button' ) );
-		$this->add_control( 'description', array( 'label' => 'Description', 'type' => Controls_Manager::TEXTAREA, 'default' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus at dapibus nisl, et volutpat ex. Donec blandit euismod felis pulvinar facilisis.' ) );
+		$this->add_control( 'description', array( 'label' => 'Description', 'type' => Controls_Manager::TEXTAREA, 'default' => 'Spájame výkonnostný marketing, kreatívu a technológie do riešení, ktoré prinášajú výsledky. Od stratégie a reklám až po weby, e-shopy a dizajn, s jediným cieľom - posúvať váš biznis vpred.' ) );
 		$this->add_control( 'show_button', array( 'label' => 'Show button', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
 		$this->add_control( 'button_text', array( 'label' => 'Button text', 'type' => Controls_Manager::TEXT, 'default' => 'Pozrieť služby' ) );
 		$this->add_control( 'button_link', array( 'label' => 'Button link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => home_url( '/sluzby/' ) ) ) );

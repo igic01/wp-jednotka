@@ -222,10 +222,10 @@
 .jn-blog-featured .blog-intro-heading {
   margin: 0;
   font-family: "Urbanist", Arial, sans-serif;
-  font-size: clamp(60px, 8vw, 112px);
+  font-size: var(--jn-heading-xl);
   font-weight: 800;
-  letter-spacing: 0;
-  line-height: 0.9;
+  letter-spacing: var(--jn-heading-tracking);
+  line-height: 0.98;
 }
 
 .jn-blog-featured .blog-intro p {
@@ -256,7 +256,7 @@
   }
 
   .jn-blog-featured .blog-intro-heading {
-    font-size: 64px;
+    font-size: var(--jn-heading-xl);
   }
 
   .jn-blog-featured .blog-intro p {

@@ -13,9 +13,9 @@
 .jn-work h2 {
   margin: 0;
   font-family: "Urbanist", Arial, sans-serif;
-  font-size: clamp(42px, 5.2vw, 76px);
+  font-size: var(--jn-heading-lg);
   font-weight: 800;
-  letter-spacing: 0;
+  letter-spacing: var(--jn-heading-tracking);
   line-height: 0.98;
   max-width: 780px;
   margin-bottom: 88px;

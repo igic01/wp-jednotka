@@ -95,10 +95,10 @@
 .jn-services.sv-section .sv-header h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(100px, 10.4vw, 140px);
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 0.82;
+  font-size: var(--jn-heading-xl);
+  font-weight: 800;
+  letter-spacing: var(--jn-heading-tracking);
+  line-height: 0.98;
 }
 
 .jn-services.sv-section .sv-header p {
@@ -516,7 +516,7 @@
   }
 
   .jn-services.sv-section .sv-header h2 {
-    font-size: 68px;
+    font-size: var(--jn-heading-xl);
   }
 
   .jn-services.sv-section .sv-header p,

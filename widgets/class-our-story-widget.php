@@ -20,7 +20,7 @@ class Our_Story_Widget extends Widget_Base {
 
 	protected function register_controls() {
 		$this->start_controls_section( 'story_section', array( 'label' => 'Our story' ) );
-		$this->add_control( 'text', array( 'label' => 'Statement', 'type' => Controls_Manager::TEXTAREA, 'rows' => 6, 'default' => 'Email, reklamu aj web riešime spolu, nie ako samostatné projekty. Výsledok je jednoduchý: viac ľudí, ktorí u vás nakúpia.' ) );
+		$this->add_control( 'text', array( 'label' => 'Statement', 'type' => Controls_Manager::TEXTAREA, 'rows' => 6, 'default' => 'Web robi jeden, grafiku druhý, emaily tretí a reklamy si spravujete sami. Jednotka to rieši inak - jeden tím, jedna zodpovednost, jeden prehl\'ad nad všetkým, co pre vás robíme' ) );
 		$this->add_control( 'section_label', array( 'label' => 'Section accessible name', 'type' => Controls_Manager::TEXT, 'default' => 'Náš príbeh' ) );
 		$this->add_control( 'animate', array( 'label' => 'Scroll animation', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes', 'description' => 'Keep the parent Elementor container overflow visible. Editor and reduced-motion views show a static, readable statement.' ) );
 		$this->end_controls_section();

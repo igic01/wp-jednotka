@@ -36,15 +36,15 @@ class Clients_Footer_Widget extends Widget_Base {
 		$item->add_control( 'link', array( 'label' => 'Link', 'type' => Controls_Manager::URL ) );
 		$item->add_control( 'hover_color', array( 'label' => 'Hover color', 'type' => Controls_Manager::COLOR, 'selectors' => array( '{{WRAPPER}} {{CURRENT_ITEM}}:hover' => 'color: {{VALUE}};' ) ) );
 		if ( $social ) {
-			$item->add_control( 'icon', array( 'label' => 'Social icon', 'type' => Controls_Manager::ICONS, 'recommended' => array( 'fa-brands' => array( 'instagram', 'behance', 'linkedin-in' ) ) ) );
+			$item->add_control( 'icon', array( 'label' => 'Social icon', 'type' => Controls_Manager::ICONS, 'recommended' => array( 'fa-brands' => array( 'facebook-f', 'instagram', 'linkedin-in' ) ) ) );
 			$item->add_control( 'accessible_name', array( 'label' => 'Accessible name', 'type' => Controls_Manager::TEXT, 'description' => 'Full network name for short labels such as Ig.' ) );
 		}
 		$this->add_control( $key, array( 'label' => $label, 'type' => Controls_Manager::REPEATER, 'fields' => $item->get_controls(), 'title_field' => '{{{ label }}}', 'default' => $defaults, 'prevent_empty' => false ) );
 	}
 	protected function register_controls() {
 		$this->start_controls_section( 'cta_section', array( 'label' => 'Call to action' ) );
-		$this->text_controls( $this, 'heading', 'Heading', '{{WRAPPER}} .clients-cta-content h2', "Dobrý nápad?\nDajme mu život.", true );
-		$this->text_controls( $this, 'description', 'Description', '{{WRAPPER}} .jn-cta-description', 'Web, značka alebo marketing. Povedzte nám, čo máte v hlave — spolu z toho spravíme niečo, čo funguje.', true );
+		$this->text_controls( $this, 'heading', 'Heading', '{{WRAPPER}} .clients-cta-content h2', "Spravme aj z vás jednotku\nvo vašom obore.", true );
+		$this->text_controls( $this, 'description', 'Description', '{{WRAPPER}} .jn-cta-description', 'Web, značka alebo marketing. Začneme tým, čo vás dnes najviac brzdí.', true );
 		$this->text_controls( $this, 'button_text', 'Button label', '{{WRAPPER}} .clients-cta-content .button', 'Poďme sa porozprávať' );
 		$this->add_control( 'button_link', array( 'label' => 'Button link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => home_url( '/kontakt/' ) ) ) );
 		$this->add_control( 'button_background', array( 'label' => 'Button background', 'type' => Controls_Manager::COLOR, 'selectors' => array( '{{WRAPPER}} .clients-cta-content .button' => '--button-bg: {{VALUE}};' ) ) );
@@ -111,7 +111,7 @@ class Clients_Footer_Widget extends Widget_Base {
 		$this->start_controls_section( 'footer_links_section', array( 'label' => 'Footer navigation and contact' ) );
 		$this->text_controls( $this, 'menu_heading', 'Menu heading', '{{WRAPPER}} .jn-footer-menu-heading', 'Menu' );
 		$menu_defaults = array();
-		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/' ) as $label => $url ) {
+		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/', 'Kontakt' => '/kontakt/' ) as $label => $url ) {
 			$menu_defaults[] = array( 'label' => $label, 'link' => array( 'url' => home_url( $url ) ) );
 		}
 		$this->link_repeater( 'menu_links', 'Menu links', $menu_defaults );
@@ -125,8 +125,8 @@ class Clients_Footer_Widget extends Widget_Base {
 
 		$this->start_controls_section( 'social_section', array( 'label' => 'Social links and copyright' ) );
 		$this->link_repeater( 'social_links', 'Social links', array(
+			array( 'label' => 'Fb', 'accessible_name' => 'Facebook', 'icon' => array( 'value' => 'fab fa-facebook-f', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
 			array( 'label' => 'Ig', 'accessible_name' => 'Instagram', 'icon' => array( 'value' => 'fab fa-instagram', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
-			array( 'label' => 'Bē', 'accessible_name' => 'Behance', 'icon' => array( 'value' => 'fab fa-behance', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
 			array( 'label' => 'In', 'accessible_name' => 'LinkedIn', 'icon' => array( 'value' => 'fab fa-linkedin-in', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
 		), true );
 		$this->text_controls( $this, 'copyright', 'Copyright', '{{WRAPPER}} .footer-side > p', '© 2026 Jednotka' );
@@ -183,7 +183,7 @@ class Clients_Footer_Widget extends Widget_Base {
 			$icon = $item['icon'] ?? array();
 			if ( 'social_links' === $key && empty( $icon['value'] ) ) {
 				// Older saved widgets have text labels only; give known networks their brand icon.
-				$brands = array( 'instagram' => 'instagram', 'ig' => 'instagram', 'behance' => 'behance', 'bē' => 'behance', 'linkedin' => 'linkedin-in', 'in' => 'linkedin-in' );
+				$brands = array( 'facebook' => 'facebook-f', 'fb' => 'facebook-f', 'instagram' => 'instagram', 'ig' => 'instagram', 'behance' => 'behance', 'bē' => 'behance', 'linkedin' => 'linkedin-in', 'in' => 'linkedin-in' );
 				$brand = $brands[ strtolower( $item['accessible_name'] ?? '' ) ] ?? $brands[ strtolower( $item['label'] ) ] ?? '';
 				if ( $brand ) { $icon = array( 'value' => 'fab fa-' . $brand, 'library' => 'fa-brands' ); }
 			}

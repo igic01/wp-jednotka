@@ -26,8 +26,8 @@ class Team_Widget extends Widget_Base {
 
 	protected function register_controls() {
 		$this->start_controls_section( 'intro_section', array( 'label' => 'Introduction' ) );
-		$this->text_controls( $this, 'heading', 'Heading', '{{WRAPPER}} .team__title', 'Meet our awesome team', true );
-		$this->text_controls( $this, 'description', 'Description', '{{WRAPPER}} .team__text', 'Strategists, designers, writers and developers who pull in one direction. Small enough to stay close to every project, experienced enough to make each one count.', true );
+		$this->text_controls( $this, 'heading', 'Heading', '{{WRAPPER}} .team__title', 'Náš tím', true );
+		$this->text_controls( $this, 'description', 'Description', '{{WRAPPER}} .team__text', 'Sme menší tím, ktorý pozná každý projekt zblízka. Každý z nás má na starosti svoju oblasť a spolu dbáme na to, aby všetko fungovalo ako celok.', true );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'members_section', array( 'label' => 'Team members' ) );

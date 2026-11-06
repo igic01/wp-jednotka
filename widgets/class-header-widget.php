@@ -84,7 +84,7 @@ class Header_Widget extends Widget_Base {
 			'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} .jn-header__nav-text',
 		) );
 		$defaults = array();
-		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/' ) as $label => $url ) {
+		foreach ( array( 'Domov' => '/', 'O nás' => '/o-nas/', 'Služby' => '/sluzby/', 'Kariéra' => '/kariera/', 'Blog' => '/blog/', 'Kontakt' => '/kontakt/' ) as $label => $url ) {
 			$defaults[] = array( 'label' => $label, 'link' => array( 'url' => '#' === substr( $url, 0, 1 ) ? $url : home_url( $url ) ) );
 		}
 		$add_control( 'nav_items', array(
@@ -96,8 +96,8 @@ class Header_Widget extends Widget_Base {
 
 		$section( 'button_section', array( 'label' => esc_html__( 'Action button', 'jednotka-elementor' ) ) );
 		$add_control( 'show_button', array( 'label' => 'Show button', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
-		$add_control( 'button_text', array( 'label' => 'Text', 'type' => Controls_Manager::TEXT, 'default' => 'Pozrieť služby' ) );
-		$add_control( 'button_link', array( 'label' => 'Link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => home_url( '/sluzby/' ) ) ) );
+		$add_control( 'button_text', array( 'label' => 'Text', 'type' => Controls_Manager::TEXT, 'default' => 'Napíšte nám' ) );
+		$add_control( 'button_link', array( 'label' => 'Link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => home_url( '/kontakt/' ) ) ) );
 		$this->end_controls_section();
 
 		$section( 'layout_section', array( 'label' => 'Header layout', 'tab' => Controls_Manager::TAB_STYLE ) );

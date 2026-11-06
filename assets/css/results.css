@@ -16,3 +16,5 @@
 .jn-results .project-card-link:focus-visible { outline: 2px solid currentColor; outline-offset: 6px; border-radius: 4px; }
 
 .jn-results .project-media { background: #1a1a1a; }
+
+.jn-results h2 { font-size: var(--jn-heading-xl); letter-spacing: var(--jn-heading-tracking); line-height: .98; }

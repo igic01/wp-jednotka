@@ -82,3 +82,8 @@
     animation: none;
   }
 }
+
+.jn-stats .testimonials-intro h2 { font-size: var(--jn-heading-xl); letter-spacing: var(--jn-heading-tracking); }
+@media (max-width: 520px) {
+  .jn-stats .testimonials-intro h2 { font-size: var(--jn-heading-lg); }
+}

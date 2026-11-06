@@ -20,14 +20,14 @@ class Contact_Widget extends Widget_Base {
 	protected function register_controls() {
 		$this->start_controls_section( 'content', array( 'label' => 'Contact section' ) );
 		foreach ( array(
-			'heading' => array( 'Heading', 'Napíšte nám, s čím začneme' ),
-			'description' => array( 'Description', 'Do 24 hodín sa vám ozveme s nezáväznou cenovou ponukou. Bez tlaku, bez záväzkov.' ),
-			'button' => array( 'Button', 'Získať nezáväznú ponuku' ),
-			'note' => array( 'Note below form', 'Bez záväzkov. Ozveme sa do 1 pracovného dňa.' ),
+			'heading' => array( 'Heading', 'Spravme aj z vášho biznisu Jednotku' ),
+			'description' => array( 'Description', 'Povedzte nám, kam chcete posunúť svoj biznis. Pozrieme sa, kde dnes strácate príležitosti a ako z nich spraviť rast.' ),
+			'button' => array( 'Button', 'Odoslať' ),
+			'note' => array( 'Note below form', 'Odpovieme do 24 h.' ),
 		) as $key => $field ) {
 			$this->add_control( $key, array( 'label' => $field[0], 'type' => Controls_Manager::TEXTAREA, 'default' => $field[1] ) );
 		}
-		$this->add_control( 'interests', array( 'label' => 'Service options (one per line)', 'type' => Controls_Manager::TEXTAREA, 'default' => "Web\nSpráva e-shopov\nEmail marketing\nPPC Reklamy\nBranding\nGrafika\nNeviem, poradíte mi" ) );
+		$this->add_control( 'interests', array( 'label' => 'Service options (one per line)', 'type' => Controls_Manager::TEXTAREA, 'default' => "Web / e-shop\nEmail marketing\nPPC reklamy\nGrafika\nBranding\nKomplexný online marketing\nIné" ) );
 		$this->add_control( 'delivery_info', array( 'type' => Controls_Manager::RAW_HTML, 'raw' => 'Enquiries are sent to the WordPress administration email from Settings → General using wp_mail. Configure your site’s email delivery before going live.' ) );
 		$this->end_controls_section();
 
@@ -36,7 +36,7 @@ class Contact_Widget extends Widget_Base {
 			$this->add_control( $key . '_label', array( 'label' => $field[0] . ' label', 'type' => Controls_Manager::TEXT, 'default' => $field[0] ) );
 			$this->add_control( $key . '_placeholder', array( 'label' => $field[0] . ' placeholder', 'type' => Controls_Manager::TEXT, 'default' => $field[1] ) );
 		}
-		$this->add_control( 'interest_label', array( 'label' => 'Service label', 'type' => Controls_Manager::TEXT, 'default' => 'Čo vás zaujíma?' ) );
+		$this->add_control( 'interest_label', array( 'label' => 'Service label', 'type' => Controls_Manager::TEXT, 'default' => 'S čím vám môžeme pomôcť?' ) );
 		$this->add_control( 'interest_placeholder', array( 'label' => 'Service placeholder', 'type' => Controls_Manager::TEXT, 'default' => 'Vyberte možnosť' ) );
 		$this->end_controls_section();
 
@@ -59,10 +59,10 @@ class Contact_Widget extends Widget_Base {
 
 	private function fields() {
 		return array(
-			'name' => array( 'Meno a priezvisko', 'Vaše meno', 'text', 'name', 200 ),
-			'email' => array( 'Email', 'vas@email.sk', 'email', 'email', 254 ),
-			'phone' => array( 'Telefón', '+421 900 000 000', 'tel', 'tel', 80 ),
-			'message' => array( 'Popíšte váš projekt', 'Pár viet o tom, čo potrebujete alebo čo vás trápi', 'textarea', '', 5000 ),
+			'name' => array( 'Meno a priezvisko', 'Meno a priezvisko / Firma', 'text', 'name', 200 ),
+			'email' => array( 'Email', 'Váš e-mail', 'email', 'email', 254 ),
+			'phone' => array( 'Telefón', 'Telefónne číslo', 'tel', 'tel', 80 ),
+			'message' => array( 'Popíšte váš projekt', 'Napíšte nám pár slov o vašom projekte alebo cieli…', 'textarea', '', 5000 ),
 		);
 	}
 

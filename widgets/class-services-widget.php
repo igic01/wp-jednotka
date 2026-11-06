@@ -69,10 +69,10 @@ class Services_Widget extends Widget_Base {
 
 	private function default_services() {
 		return array(
-			array( 'title' => 'Web', 'description' => 'Weby a e-shopy navrhujeme tak, aby neboli len pekné, ale hlavne prehľadné, funkčné a pripravené premieňať návštevníkov na zákazníkov.', 'icon_image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/services/web.png' ) ),
-			array( 'title' => 'Správa eshopov', 'description' => 'Nastavíme, upravíme aj rozbehneme e-shop na platforme, ktorú už používate. Platobné brány, redizajn, úpravy na mieru — všetko tak, aby e-shop reálne predával.', 'icon_image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/services/services-eshop.svg' ) ),
+			array( 'title' => 'Web', 'description' => 'Weby a e-shopy navrhujeme tak, aby neboli len pekné, ale hlavne prehľadné, funkčné a premieňali návštevníkov na zákazníkov.', 'icon_image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/services/web.png' ) ),
+			array( 'title' => 'Správa eshopov', 'description' => 'Nastavíme, upravíme aj rozbehneme e-shop na vašej platforme. Platobné brány, redizajn, a úpravy na mieru, aby e-shop reálne predával.', 'icon_image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/services/services-eshop.svg' ) ),
 			array( 'title' => 'Email marketing', 'description' => 'Tvoríme email marketing a automatizácie, ktoré pracujú s vašou databázou dlhodobo. Od prvého kontaktu až po opakovaný nákup.', 'icon_image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/services/email.png' ) ),
-			array( 'title' => 'PPC Reklamy', 'description' => 'Tvoríme všetky vizuálne materiály, ktoré váš biznis potrebuje: od príspevkov, reklám a bannerov až po tlačoviny a podklady pre každodennú komunikáciu.', 'icon_image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/services/ppc.png' ) ),
+			array( 'title' => 'PPC Reklamy', 'description' => 'Kampane v Google a na sociálnych sieťach, ktoré privádzajú zákazníkov, nie len kliky. Každé euro meriame a investujeme tam, kde sa vráti.', 'icon_image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/services/ppc.png' ) ),
 			array( 'title' => 'Grafika', 'description' => 'Tvoríme vizuály a komunikáciu, ktoré držia jednotný štýl naprieč reklamami, sociálnymi sieťami, emailami aj webom.', 'icon_image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/services/grafika.png' ) ),
 			array( 'title' => 'Branding', 'description' => 'Pomáhame značkám vytvoriť jasnú identitu a komunikáciu, vďaka ktorej sú rozpoznateľné, zapamätateľné a odlíšia sa od konkurencie.', 'icon_image' => array( 'url' => JEDNOTKA_ELEMENTOR_URL . 'assets/images/services/branding.png' ) ),
 		);

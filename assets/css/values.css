@@ -31,9 +31,10 @@
 .jn-values .values__title {
   margin: 0;
   font-family: "Urbanist", Arial, sans-serif;
-  font-size: clamp(48px, 6.4vw, 112px);
+  font-size: var(--jn-heading-xl);
   font-weight: 800;
-  line-height: 0.95;
+  letter-spacing: var(--jn-heading-tracking);
+  line-height: 0.98;
 }
 
 .jn-values .values__lead {

@@ -9,3 +9,10 @@ html:has(body.elementor-editor-active),
 body.elementor-editor-active {
     background-color: #FFFFFF !important;
 }
+
+/* Shared heading scale, based on the Stats heading. Change the look of section headings here. */
+:root {
+    --jn-heading-xl: clamp(48px, 7.2vw, 108px); /* short section headings */
+    --jn-heading-lg: clamp(42px, 5.2vw, 76px); /* longer section headings */
+    --jn-heading-tracking: -.02em;
+}
