@@ -19,9 +19,9 @@
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
         const originalText = text.textContent;
         const originalLabel = text.getAttribute('aria-label');
-        const images = [...section.querySelectorAll('.jn-our-story__image')].map(element => {
+        const images = [...section.querySelectorAll('.jn-our-story__image, .jn-focus__badge')].map(element => {
           const start = Math.max(0, Math.min(.99, Number(element.dataset.start) || 0));
-          return { element, start, end: Math.max(start + .01, Math.min(1, Number(element.dataset.end) || 1)) };
+          return { element, start, end: Math.max(start + .01, Math.min(1, Number(element.dataset.end) || 1)), stay: element.dataset.stay === 'yes' };
         });
         const channels = (hex, fallback) => {
           let value = /^#[\da-f]{3}([\da-f]{3})?$/i.test(hex || '') ? hex.slice(1) : fallback;
@@ -57,9 +57,9 @@
             const color = strength > 0 ? white.map((channel, i) => Math.round(channel + (purple[i] - channel) * lead)) : index < direction - 26 * .35 ? white : muted;
             span.style.setProperty('--wave-color', `rgb(${color[0]} ${color[1]} ${color[2]})`);
           });
-          images.forEach(({ element, start, end }) => {
+          images.forEach(({ element, start, end, stay }) => {
             const local = clamp((progress - start) / (end - start));
-            const visibility = clamp(Math.min(local / .25, (1 - local) / .25));
+            const visibility = stay ? clamp(local / .25) : clamp(Math.min(local / .25, (1 - local) / .25));
             element.style.setProperty('--visibility', visibility.toFixed(3));
           });
         };
@@ -75,7 +75,7 @@
             return;
           }
           if (!chars.length) {
-            const label = originalText.replace(/\s+/g, ' ').trim();
+            const label = section.dataset.breaks === 'yes' ? originalText.trim() : originalText.replace(/\s+/g, ' ').trim();
             text.setAttribute('aria-label', label); text.textContent = '';
             chars = [...label].map(char => {
               const span = document.createElement('span');
@@ -107,8 +107,10 @@
         super.onDestroy();
       }
     }
-    elementorFrontend.hooks.addAction('frontend/element_ready/jednotka-our-story.default', $element => {
-      elementorFrontend.elementsHandler.addHandler(OurStoryHandler, { $element });
+    ['jednotka-our-story', 'jednotka-focus'].forEach(name => {
+      elementorFrontend.hooks.addAction(`frontend/element_ready/${name}.default`, $element => {
+        elementorFrontend.elementsHandler.addHandler(OurStoryHandler, { $element });
+      });
     });
   }
   jQuery(window).on('elementor/frontend/init', register);

@@ -120,6 +120,8 @@ final class Plugin {
 		$widgets_manager->register( new Widgets\Team_Widget() );
 		require_once JEDNOTKA_ELEMENTOR_PATH . 'widgets/class-our-story-widget.php';
 		$widgets_manager->register( new Widgets\Our_Story_Widget() );
+		require_once JEDNOTKA_ELEMENTOR_PATH . 'widgets/class-focus-widget.php';
+		$widgets_manager->register( new Widgets\Focus_Widget() );
 		require_once JEDNOTKA_ELEMENTOR_PATH . 'widgets/class-posts-widget.php';
 		$widgets_manager->register( new Widgets\Posts_Widget() );
 		require_once JEDNOTKA_ELEMENTOR_PATH . 'widgets/class-blog-featured-widget.php';
@@ -167,6 +169,7 @@ final class Plugin {
 		wp_register_script( 'jednotka-values', JEDNOTKA_ELEMENTOR_URL . 'assets/js/values.js', array( 'elementor-frontend' ), $values_js_version, true );
 		wp_register_style( 'jednotka-our-story', JEDNOTKA_ELEMENTOR_URL . 'assets/css/our-story.css', array( 'jednotka-common' ), JEDNOTKA_ELEMENTOR_VERSION );
 		wp_register_script( 'jednotka-our-story', JEDNOTKA_ELEMENTOR_URL . 'assets/js/our-story.js', array( 'elementor-frontend' ), JEDNOTKA_ELEMENTOR_VERSION, true );
+		wp_register_style( 'jednotka-focus', JEDNOTKA_ELEMENTOR_URL . 'assets/css/focus.css', array( 'jednotka-our-story' ), JEDNOTKA_ELEMENTOR_VERSION );
 		wp_register_style( 'jednotka-team', JEDNOTKA_ELEMENTOR_URL . 'assets/css/team.css', array( 'jednotka-common' ), JEDNOTKA_ELEMENTOR_VERSION );
 		wp_register_script( 'jednotka-team', JEDNOTKA_ELEMENTOR_URL . 'assets/js/team.js', array( 'elementor-frontend' ), JEDNOTKA_ELEMENTOR_VERSION, true );
 		wp_register_style( 'jednotka-about-hero', JEDNOTKA_ELEMENTOR_URL . 'assets/css/about-hero.css', array( 'jednotka-common' ), JEDNOTKA_ELEMENTOR_VERSION );

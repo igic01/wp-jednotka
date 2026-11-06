@@ -443,6 +443,13 @@ all text is exposed once to screen readers. Assets do not depend on `temp/`.
 Run `node tests/our-story-scroll.test.cjs` for scroll windows, text accessibility,
 custom colors, static modes, batching, and lifecycle cleanup checks.
 
+## Focus widget
+
+**Jednotka Focus** is a full-screen scroll statement that shares the Our Story
+wave reveal. Up to five floating service badges appear one by one and stay
+visible. Edit the text and badges in the widget. Press Enter in the text to
+start a new line. Keep the parent container's overflow visible.
+
 ## Values widget
 
 **Jednotka Values** recreates `temp/values`: a pinned introduction beside a stack

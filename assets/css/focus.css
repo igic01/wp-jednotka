@@ -1,0 +1,20 @@
+/* Our Story's scroll statement with the hero's glass badges in place of photos. */
+.jn-focus .jn-focus__text { white-space: pre-line; }
+.jn-focus .jn-focus__badges { position: absolute; inset: 0; z-index: 0; width: min(1440px, 100%); margin-inline: auto; pointer-events: none; }
+.jn-focus .jn-focus__badge { --visibility: 0; position: absolute; left: var(--x); top: var(--y); opacity: var(--visibility); filter: blur(calc((1 - var(--visibility)) * 14px)); transform: translate3d(0, calc((1 - var(--visibility)) * 34px), 0) rotate(var(--r)); will-change: opacity, filter, transform; }
+.jn-focus .jn-focus__badge-inner { display: inline-flex; align-items: center; gap: 13px; height: 54px; padding: 0 26px; border: 1px solid #ffffff2e; border-radius: 999px; background: linear-gradient(135deg, #ffffff24, #ffffff0d); box-shadow: 0 18px 60px #0000004d; color: #fff; font-size: 24px; white-space: nowrap; backdrop-filter: blur(14px); animation: jn-focus-float 7s ease-in-out infinite; animation-delay: var(--delay, 0s); }
+.jn-focus .jn-focus__badge-inner img { display: block; width: 23px; height: 23px; object-fit: contain; }
+.jn-focus[data-static="yes"] .jn-focus__badge { --visibility: 1; }
+@keyframes jn-focus-float {
+  0%, 100% { transform: translate3d(-4px, 4px, 0); }
+  50% { transform: translate3d(5px, -7px, 0); }
+}
+@media (max-width: 800px) {
+  .jn-focus .jn-focus__badge { left: var(--mx); top: var(--my); }
+  .jn-focus .jn-focus__badge-inner { gap: 7px; height: 38px; padding: 0 14px; font-size: 15px; }
+  .jn-focus .jn-focus__badge-inner img { width: 16px; height: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jn-focus .jn-focus__badge { --visibility: 1; filter: none; transform: rotate(var(--r)); }
+  .jn-focus .jn-focus__badge-inner { animation: none; }
+}

@@ -79,18 +79,18 @@ class Stats_Widget extends Widget_Base {
 		$variants = array( 'one', 'two', 'three', 'four', 'five' );
 		?>
 		<section class="stats-section jn-stats" aria-label="Výsledky agentúry" data-editor="<?php echo $editing ? 'yes' : 'no'; ?>" data-count="<?php echo esc_attr( $s['count_animation'] ); ?>" data-reveal="<?php echo esc_attr( $s['reveal_animation'] ); ?>" data-drift="<?php echo esc_attr( $s['drift_animation'] ); ?>" data-many="<?php echo count( $s['testimonials'] ) > 5 ? 'yes' : 'no'; ?>">
-			<div class="stats-grid">
-				<?php foreach ( $s['stats'] as $index => $stat ) : ?>
-					<div class="stat-item elementor-repeater-item-<?php echo esc_attr( $stat['_id'] ); ?>">
-						<strong <?php $this->inline_text( $this->get_repeater_setting_key( 'value', 'stats', $index ), 'jn-stat-value' ); ?><?php if ( preg_match( '/^(\d+)([^\d]*)$/u', trim( $stat['value'] ), $match ) ) : ?> data-count-to="<?php echo esc_attr( $match[1] ); ?>" data-count-suffix="<?php echo esc_attr( $match[2] ); ?>"<?php endif; ?>><?php echo esc_html( $stat['value'] ); ?></strong>
-						<span <?php $this->inline_text( $this->get_repeater_setting_key( 'label', 'stats', $index ), 'jn-stat-label' ); ?>><?php echo esc_html( $stat['label'] ); ?></span>
-					</div>
-				<?php endforeach; ?>
-			</div>
 			<div class="testimonials-wrap" aria-labelledby="<?php echo esc_attr( $title_id ); ?>">
 				<div class="testimonials-intro">
 					<span <?php $this->inline_text( 'eyebrow' ); ?>><?php echo esc_html( $s['eyebrow'] ); ?></span>
 					<h2 id="<?php echo esc_attr( $title_id ); ?>" <?php $this->inline_text( 'heading' ); ?>><?php echo esc_html( $s['heading'] ); ?></h2>
+					<div class="stats-grid">
+						<?php foreach ( $s['stats'] as $index => $stat ) : ?>
+							<div class="stat-item elementor-repeater-item-<?php echo esc_attr( $stat['_id'] ); ?>">
+								<strong <?php $this->inline_text( $this->get_repeater_setting_key( 'value', 'stats', $index ), 'jn-stat-value' ); ?><?php if ( preg_match( '/^(\d+)([^\d]*)$/u', trim( $stat['value'] ), $match ) ) : ?> data-count-to="<?php echo esc_attr( $match[1] ); ?>" data-count-suffix="<?php echo esc_attr( $match[2] ); ?>"<?php endif; ?>><?php echo esc_html( $stat['value'] ); ?></strong>
+								<span <?php $this->inline_text( $this->get_repeater_setting_key( 'label', 'stats', $index ), 'jn-stat-label' ); ?>><?php echo esc_html( $stat['label'] ); ?></span>
+							</div>
+						<?php endforeach; ?>
+					</div>
 					<?php if ( 'yes' === $s['show_google_rating'] ) { echo \Jednotka\Elementor\Google_Rating::markup(); } // phpcs:ignore WordPress.Security.EscapeOutput -- Escaped in markup(). ?>
 				</div>
 				<div class="testimonials-field">

@@ -50,6 +50,7 @@ function assertRegistered(env) {
     'frontend/element_ready/jednotka-showcase.default',
     'frontend/element_ready/jednotka-team.default',
     'frontend/element_ready/jednotka-our-story.default',
+    'frontend/element_ready/jednotka-focus.default',
     'frontend/element_ready/jednotka-values.default',
     'frontend/element_ready/jednotka-projects.default',
     'frontend/element_ready/jednotka-contact.default',

@@ -27,7 +27,7 @@ function setup({ editing = false, reduced = false, animate = true, colors = {} }
     innerHeight: 1000, matchMedia: () => media,
     requestAnimationFrame: fn => { frames.set(++next, fn); return next; }, cancelAnimationFrame: id => frames.delete(id),
     IntersectionObserver: class { constructor(fn) { this.fn = fn; this.targets = new Set(); observers.push(this); } observe(e) { this.targets.add(e); } disconnect() { this.targets.clear(); } },
-    elementorFrontend: { isEditMode: () => editing, hooks: { addAction: (name, fn) => { assert.equal(name,'frontend/element_ready/jednotka-our-story.default'); hook = fn; } }, elementsHandler: { addHandler(Type, args) { handler = new Type(); Object.assign(handler, args); handler.onInit(); } } },
+    elementorFrontend: { isEditMode: () => editing, hooks: { addAction: (name, fn) => { assert.match(name,/^frontend\/element_ready\/jednotka-(our-story|focus)\.default$/); hook = fn; } }, elementsHandler: { addHandler(Type, args) { handler = new Type(); Object.assign(handler, args); handler.onInit(); } } },
     elementorModules: { frontend: { handlers: { Base: class { onInit(){} onDestroy(){} } } } },
   });
   vm.runInNewContext(source, { window, document, AbortController, elementorFrontend: window.elementorFrontend, elementorModules: window.elementorModules, jQuery: () => ({ on() {} }) });
