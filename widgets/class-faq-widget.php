@@ -24,7 +24,7 @@ class FAQ_Widget extends Widget_Base {
 		$this->add_control( 'description', array( 'label' => 'Description', 'type' => Controls_Manager::TEXTAREA, 'default' => 'Nenašli ste odpoveď? Napíšte nám a ozveme sa do 24 hodín.' ) );
 		$this->add_control( 'show_contact', array( 'label' => 'Show contact link', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
 		$this->add_control( 'contact_text', array( 'label' => 'Contact link text', 'type' => Controls_Manager::TEXT, 'default' => 'Napíšte nám', 'condition' => array( 'show_contact' => 'yes' ) ) );
-		$this->add_control( 'contact_link', array( 'label' => 'Contact link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#kontakt' ), 'condition' => array( 'show_contact' => 'yes' ), 'description' => 'For the default link, set the contact section’s Advanced → CSS ID to kontakt.' ) );
+		$this->add_control( 'contact_link', array( 'label' => 'Contact link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => home_url( '/kontakt/' ) ), 'condition' => array( 'show_contact' => 'yes' ) ) );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'questions_section', array( 'label' => 'Questions and answers' ) );
@@ -70,6 +70,7 @@ class FAQ_Widget extends Widget_Base {
 	protected function render() {
 		$s = $this->get_settings_for_display();
 		$editing = \Elementor\Plugin::$instance->editor->is_edit_mode();
+		if ( '#kontakt' === ( $s['contact_link']['url'] ?? '' ) ) { $s['contact_link']['url'] = home_url( '/kontakt/' ); }
 		$this->add_link_attributes( 'contact_link', $s['contact_link'] );
 		$this->add_render_attribute( 'contact_link', 'class', 'services-faq-cta' );
 		?>

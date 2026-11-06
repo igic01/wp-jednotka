@@ -50,8 +50,8 @@ class Clients_Footer_Widget extends Widget_Base {
 		$this->add_control( 'button_background', array( 'label' => 'Button background', 'type' => Controls_Manager::COLOR, 'selectors' => array( '{{WRAPPER}} .clients-cta-content .button' => '--button-bg: {{VALUE}};' ) ) );
 		$this->add_control( 'phone_show', array( 'label' => 'Show phone contact', 'type' => Controls_Manager::SWITCHER, 'default' => 'yes' ) );
 		$this->text_controls( $this, 'phone_label', 'Phone introduction', '{{WRAPPER}} .jn-cta-phone-label', 'Radšej zavoláte?' );
-		$this->text_controls( $this, 'phone_number', 'Phone number', '{{WRAPPER}} .jn-cta-phone-number', '+421 000 000 000' );
-		$this->add_control( 'phone_link', array( 'label' => 'Phone link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => 'tel:+421000000000' ), 'description' => 'Use tel: followed by your phone number, including the country code.' ) );
+		$this->text_controls( $this, 'phone_number', 'Phone number', '{{WRAPPER}} .jn-cta-phone-number', '+421 915 435 770' );
+		$this->add_control( 'phone_link', array( 'label' => 'Phone link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => 'tel:+421915435770' ), 'description' => 'Use tel: followed by your phone number, including the country code.' ) );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'cards_section', array( 'label' => 'Floating projects' ) );
@@ -117,17 +117,17 @@ class Clients_Footer_Widget extends Widget_Base {
 		$this->link_repeater( 'menu_links', 'Menu links', $menu_defaults );
 		$this->text_controls( $this, 'contact_heading', 'Contact heading', '{{WRAPPER}} .jn-footer-contact-heading', 'Kontakt' );
 		$this->link_repeater( 'contact_links', 'Contact links', array(
-			array( 'label' => 'hello@jednotka.sk', 'link' => array( 'url' => 'mailto:hello@jednotka.sk' ) ),
-			array( 'label' => '+421 000 000 000', 'link' => array( 'url' => 'tel:+421000000000' ) ),
+			array( 'label' => 'info@jednotka.studio', 'link' => array( 'url' => 'mailto:info@jednotka.studio' ) ),
+			array( 'label' => '+421 915 435 770', 'link' => array( 'url' => 'tel:+421915435770' ) ),
 			array( 'label' => 'Začať projekt', 'link' => array( 'url' => home_url( '/kontakt/' ) ) ),
 		) );
 		$this->end_controls_section();
 
 		$this->start_controls_section( 'social_section', array( 'label' => 'Social links and copyright' ) );
 		$this->link_repeater( 'social_links', 'Social links', array(
-			array( 'label' => 'Fb', 'accessible_name' => 'Facebook', 'icon' => array( 'value' => 'fab fa-facebook-f', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
-			array( 'label' => 'Ig', 'accessible_name' => 'Instagram', 'icon' => array( 'value' => 'fab fa-instagram', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
-			array( 'label' => 'In', 'accessible_name' => 'LinkedIn', 'icon' => array( 'value' => 'fab fa-linkedin-in', 'library' => 'fa-brands' ), 'link' => array( 'url' => '#' ) ),
+			array( 'label' => 'Fb', 'accessible_name' => 'Facebook', 'icon' => array( 'value' => 'fab fa-facebook-f', 'library' => 'fa-brands' ), 'link' => array( 'url' => 'https://www.facebook.com/profile.php?id=61595834379254', 'is_external' => 'on' ) ),
+			array( 'label' => 'Ig', 'accessible_name' => 'Instagram', 'icon' => array( 'value' => 'fab fa-instagram', 'library' => 'fa-brands' ), 'link' => array( 'url' => 'https://www.instagram.com/jednotka_creative/', 'is_external' => 'on' ) ),
+			array( 'label' => 'In', 'accessible_name' => 'LinkedIn', 'icon' => array( 'value' => 'fab fa-linkedin-in', 'library' => 'fa-brands' ), 'link' => array( 'url' => 'https://www.linkedin.com/company/jednotkacreative/', 'is_external' => 'on' ) ),
 		), true );
 		$this->text_controls( $this, 'copyright', 'Copyright', '{{WRAPPER}} .footer-side > p', '© 2026 Jednotka' );
 		$this->end_controls_section();
@@ -175,8 +175,26 @@ class Clients_Footer_Widget extends Widget_Base {
 			?><img src="<?php echo esc_url( $item[ $prefix . '_image' ]['url'] ); ?>" alt="<?php echo esc_attr( $alt ); ?>" /><?php
 		}
 	}
+	/** Saved widgets may still hold the launch placeholders; show the real details instead. */
+	private function current_item( $item, $key ) {
+		$url = $item['link']['url'] ?? '';
+		$real = array( 'tel:+421000000000' => 'tel:+421915435770', 'mailto:hello@jednotka.sk' => 'mailto:info@jednotka.studio', '+421 000 000 000' => '+421 915 435 770', 'hello@jednotka.sk' => 'info@jednotka.studio' );
+		if ( isset( $real[ $url ] ) ) { $item['link']['url'] = $real[ $url ]; }
+		if ( isset( $real[ $item['label'] ?? '' ] ) ) { $item['label'] = $real[ $item['label'] ]; }
+		if ( 'social_links' !== $key || '#' !== $url ) { return $item; }
+		$name = strtolower( ( $item['accessible_name'] ?? '' ) ?: ( $item['label'] ?? '' ) );
+		$facebook = 'https://www.facebook.com/profile.php?id=61595834379254';
+		$urls = array( 'facebook' => $facebook, 'fb' => $facebook, 'instagram' => 'https://www.instagram.com/jednotka_creative/', 'ig' => 'https://www.instagram.com/jednotka_creative/', 'linkedin' => 'https://www.linkedin.com/company/jednotkacreative/', 'in' => 'https://www.linkedin.com/company/jednotkacreative/' );
+		if ( in_array( $name, array( 'behance', 'bē' ), true ) ) {
+			$item = array_merge( $item, array( 'label' => 'Fb', 'accessible_name' => 'Facebook', 'icon' => array( 'value' => 'fab fa-facebook-f', 'library' => 'fa-brands' ) ) );
+			$name = 'facebook';
+		}
+		if ( isset( $urls[ $name ] ) ) { $item['link'] = array( 'url' => $urls[ $name ], 'is_external' => 'on' ); }
+		return $item;
+	}
 	private function render_links( $s, $key ) {
 		foreach ( $s[ $key ] as $index => $item ) {
+			$item = $this->current_item( $item, $key );
 			$text_key = $this->get_repeater_setting_key( 'label', $key, $index );
 			$this->add_link_attributes( $text_key, $item['link'] );
 			if ( ! empty( $item['accessible_name'] ) ) { $this->add_render_attribute( $text_key, 'aria-label', $item['accessible_name'] ); }
@@ -203,6 +221,8 @@ class Clients_Footer_Widget extends Widget_Base {
 		$this->add_render_attribute( 'button_link', 'class', 'button button--primary' );
 		$this->add_link_attributes( 'logo_link', $s['logo_link'] );
 		$this->add_render_attribute( 'logo_link', array( 'class' => 'footer-logo', 'aria-label' => $s['logo_name'] ) );
+		if ( '+421 000 000 000' === $s['phone_number'] ) { $s['phone_number'] = '+421 915 435 770'; }
+		if ( 'tel:+421000000000' === ( $s['phone_link']['url'] ?? '' ) ) { $s['phone_link']['url'] = 'tel:+421915435770'; }
 		$this->add_link_attributes( 'phone_link', $s['phone_link'] );
 		$this->add_render_attribute( 'phone_link', 'class', 'jn-cta-phone-number' );
 		$variants = array( 'one', 'two', 'three', 'four', 'five', 'six' );

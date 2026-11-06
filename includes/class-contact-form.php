@@ -4,9 +4,46 @@ namespace Jednotka\Elementor;
 defined( 'ABSPATH' ) || exit;
 
 final class Contact_Form {
+	const MAX_ATTACHMENT_BYTES = 10485760;
+	const ATTACHMENT_TYPES = array(
+		'pdf' => 'application/pdf',
+		'doc' => 'application/msword',
+		'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		'xls' => 'application/vnd.ms-excel',
+		'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+		'jpg|jpeg' => 'image/jpeg',
+		'png' => 'image/png',
+	);
+
 	public static function init() {
 		add_action( 'wp_ajax_jednotka_contact', array( __CLASS__, 'submit' ) );
 		add_action( 'wp_ajax_nopriv_jednotka_contact', array( __CLASS__, 'submit' ) );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_page_script' ) );
+	}
+
+	public static function enqueue_page_script() {
+		if ( ! is_page( 'kontakt' ) ) {
+			return;
+		}
+		wp_enqueue_script( 'jednotka-contact-page', JEDNOTKA_ELEMENTOR_URL . 'assets/js/contact-page.js', array(), JEDNOTKA_ELEMENTOR_VERSION, true );
+		wp_localize_script( 'jednotka-contact-page', 'jednotkaContact', array( 'url' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce( 'jednotka_contact' ) ) );
+	}
+
+	/** Validates the optional upload. Returns attachments for wp_mail, keyed by file name. */
+	private static function attachment() {
+		$file = $_FILES['attachment'] ?? null;
+		if ( ! is_array( $file ) || UPLOAD_ERR_NO_FILE === ( $file['error'] ?? UPLOAD_ERR_NO_FILE ) ) {
+			return array();
+		}
+		if ( UPLOAD_ERR_OK !== $file['error'] || ! is_string( $file['name'] ?? null ) || ! is_string( $file['tmp_name'] ?? null ) || (int) $file['size'] > self::MAX_ATTACHMENT_BYTES || ! is_uploaded_file( $file['tmp_name'] ) ) {
+			wp_send_json_error( array( 'message' => 'Súbor sa nepodarilo nahrať. Môže mať najviac 10 MB.' ), 400 );
+		}
+		$name = sanitize_file_name( wp_unslash( $file['name'] ) );
+		$type = wp_check_filetype_and_ext( $file['tmp_name'], $name, self::ATTACHMENT_TYPES );
+		if ( empty( $type['ext'] ) ) {
+			wp_send_json_error( array( 'message' => 'Tento typ súboru nie je podporovaný. Použite pdf, word, excel, jpg alebo png.' ), 400 );
+		}
+		return array( $name => $file['tmp_name'] );
 	}
 
 	public static function submit() {
@@ -32,6 +69,7 @@ final class Contact_Form {
 		if ( get_transient( $rate_key ) ) {
 			wp_send_json_error( array( 'message' => 'Pred ďalším odoslaním počkajte jednu minútu.' ), 429 );
 		}
+		$attachments = self::attachment();
 		$recipient = get_option( 'admin_email' );
 		if ( ! is_email( $recipient ) ) {
 			wp_send_json_error( array( 'message' => 'Formulár momentálne nie je dostupný. Skúste nás kontaktovať telefonicky.' ), 503 );
@@ -41,7 +79,7 @@ final class Contact_Form {
 		foreach ( array( 'name' => 'Meno', 'email' => 'Email', 'phone' => 'Telefón', 'interest' => 'Záujem', 'message' => 'Správa' ) as $key => $label ) {
 			$body .= $label . ': ' . $fields[ $key ] . "\n";
 		}
-		$sent = wp_mail( $recipient, 'Nový dopyt – Jednotka', $body, array( 'Content-Type: text/plain; charset=UTF-8', 'Reply-To: ' . $fields['email'] ) );
+		$sent = wp_mail( $recipient, 'Nový dopyt – Jednotka', $body, array( 'Content-Type: text/plain; charset=UTF-8', 'Reply-To: ' . $fields['email'] ), $attachments );
 		if ( ! $sent ) {
 			wp_send_json_error( array( 'message' => 'Správu sa nepodarilo odoslať. Skúste to neskôr alebo nám zavolajte.' ), 500 );
 		}

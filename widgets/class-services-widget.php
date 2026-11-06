@@ -44,7 +44,7 @@ class Services_Widget extends Widget_Base {
 		$item->add_control( 'detail_bullets', array( 'label' => 'Detail — Bullet points (one per line)', 'type' => Controls_Manager::TEXTAREA ) );
 		$item->add_control( 'detail_images', array( 'label' => 'Detail — Images', 'type' => Controls_Manager::GALLERY, 'default' => array(), 'description' => 'Choose two or three photos. Existing plugin photos are used until you choose your own.' ) );
 		$item->add_control( 'detail_cta', array( 'label' => 'Detail button text', 'type' => Controls_Manager::TEXT ) );
-		$item->add_control( 'detail_link', array( 'label' => 'Detail button link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => '#kontakt' ) ) );
+		$item->add_control( 'detail_link', array( 'label' => 'Detail button link', 'type' => Controls_Manager::URL, 'default' => array( 'url' => home_url( '/kontakt/' ) ) ) );
 		foreach ( array( 'icon' => 'Service icon', 'arrow' => 'Arrow' ) as $prefix => $label ) {
 			$options = array( 'image' => 'Image', 'video' => 'Uploaded video' );
 			if ( 'arrow' === $prefix ) { $options = array( 'reference' => 'Original arrow' ) + $options; }
@@ -164,7 +164,7 @@ Rozpoznateľná na prvý pohľad', 'cta' => 'Chcem branding' ),
 						<div class="service-row sv-row">
 							<span class="content-badge service-icon sv-badge" aria-hidden="true"><?php $this->render_media( $item, 'icon', 'content-badge-icon sv-badge-icon' ); ?></span>
 							<strong <?php $this->inline_text( $this->get_repeater_setting_key( 'title', 'services', $index ) ); ?>><?php echo esc_html( $item['title'] ); ?></strong>
-							<span <?php $this->inline_text( $this->get_repeater_setting_key( 'description', 'services', $index ), 'service-copy sv-row-copy' ); ?>><?php echo esc_html( $item['description'] ); ?></span>
+							<span <?php $this->inline_text( $this->get_repeater_setting_key( 'description', 'services', $index ), 'service-copy sv-row-copy' ); ?>><?php echo esc_html( strip_tags( $item['description'] ) ); ?></span>
 							<<?php echo $arrow_tag; ?> class="service-arrow sv-arrow" <?php if ( $external ) { $this->print_render_attribute_string( $arrow_key ); } else { ?>type="button" data-sv-open="<?php echo esc_attr( $model['id'] ); ?>" aria-controls="<?php echo esc_attr( $model['hash'] ); ?>"<?php } ?> data-sv-editor-open="<?php echo esc_attr( $model['id'] ); ?>" aria-label="<?php echo esc_attr( ( $external ? 'Otvoriť službu: ' : 'Zobraziť detail: ' ) . $item['title'] ); ?>">
 							<?php if ( 'reference' === $item['arrow_type'] ) : ?><svg class="service-arrow-icon sv-arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg><?php else : $this->render_media( $item, 'arrow', 'service-arrow-icon sv-arrow-icon' ); endif; ?>
 							</<?php echo $arrow_tag; ?>>
@@ -182,7 +182,9 @@ Rozpoznateľná na prvý pohľad', 'cta' => 'Chcem branding' ),
 					$bullet_text = $item['detail_bullets'] ?: $defaults['bullets'];
 					$bullets = preg_split( '/\R/u', $bullet_text );
 					$cta = $item['detail_cta'] ?: $defaults['cta'];
-					$cta_key = 'detail-cta-' . $index; $this->add_link_attributes( $cta_key, $item['detail_link'] );
+					$detail_link = $item['detail_link'];
+					if ( '#kontakt' === ( $detail_link['url'] ?? '' ) ) { $detail_link['url'] = home_url( '/kontakt/' ); }
+					$cta_key = 'detail-cta-' . $index; $this->add_link_attributes( $cta_key, $detail_link );
 					?>
 					<div class="sv-detail elementor-repeater-item-<?php echo esc_attr( $item['_id'] ); ?>" data-sv-detail="<?php echo esc_attr( $model['id'] ); ?>" data-service-index="<?php echo esc_attr( $index ); ?>" data-default-heading="<?php echo esc_attr( $heading ); ?>" data-default-bullets="<?php echo esc_attr( $bullet_text ); ?>" data-default-cta="<?php echo esc_attr( $cta ); ?>" data-sv-hash="<?php echo esc_attr( $model['hash'] ); ?>" id="<?php echo esc_attr( $model['hash'] ); ?>" hidden>
 						<div class="sv-copy"><div class="sv-editor-tools"><button type="button" data-sv-edit="detail_bullets">Edit bullet points</button><button type="button" data-sv-edit="detail_images">Edit images</button></div><h2 <?php $this->inline_text( $this->get_repeater_setting_key( 'detail_heading', 'services', $index ) ); ?>><?php echo esc_html( $heading ); ?></h2><div <?php $this->inline_text( $this->get_repeater_setting_key( 'detail_bullets', 'services', $index ), 'sv-bullets-editor' ); ?>><?php echo esc_html( $bullet_text ); ?></div><ul class="sv-bullets sv-bullets-readonly"><?php foreach ( $bullets as $k => $bullet ) : if ( '' === trim( $bullet ) ) { continue; } ?><li style="--k: <?php echo esc_attr( $k ); ?>;"><?php echo esc_html( $bullet ); ?></li><?php endforeach; ?></ul>

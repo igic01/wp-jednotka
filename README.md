@@ -508,6 +508,11 @@ refresh message. Errors retain the entered text; successful submissions reset
 the form. The button locks while sending and a live status announces results.
 Runtime assets do not depend on `temp`.
 
+The `/kontakt/` page uses an Elementor HTML block (`.jdn-form`) instead of this
+widget. `assets/js/contact-page.js` loads on that page and sends the block's form
+to the same handler, including an optional attachment (pdf, doc, docx, xls, xlsx,
+jpg, jpeg, or png, up to 10 MB). Keep the block's field names unchanged.
+
 ## Services Hero widget
 
 **Jednotka Services Hero** adapts `temp/hero`, `hero-badges`, and `drag-scroll`

@@ -19,11 +19,15 @@ function get_option( $key ) { return $GLOBALS['recipient']; }
 function get_transient( $key ) { return $GLOBALS['rates'][ $key ] ?? false; }
 function set_transient( $key, $value, $seconds ) { $GLOBALS['rates'][ $key ] = $value; }
 function wp_mail( ...$args ) { $GLOBALS['mail'][] = $args; return $GLOBALS['mail_success']; }
+function sanitize_file_name( $s ) { return basename( $s ); }
+function wp_check_filetype_and_ext( $file, $name, $types ) { return array( 'ext' => str_ends_with( $name, '.pdf' ) ? 'pdf' : false ); }
+eval( 'namespace Jednotka\\Elementor; function is_uploaded_file( $file ) { return "/tmp/upload" === $file; }' );
 require __DIR__ . '/../includes/class-contact-form.php';
 function check( $condition, $message ) { if ( ! $condition ) { throw new RuntimeException( $message ); } }
 function submit( $overrides = array(), $method = 'POST' ) {
 	$_POST = array_replace( array( 'nonce' => 'valid', 'name' => '<b>Test Visitor</b>', 'email' => 'visitor@example.com', 'phone' => '+421 900 000 000', 'interest' => 'Web', 'message' => "Line one\nLine two", 'website' => '' ), $overrides );
 	$_SERVER = array( 'REQUEST_METHOD' => $method, 'REMOTE_ADDR' => '192.0.2.42' );
+	$_FILES = $GLOBALS['files'] ?? array();
 	try { \Jednotka\Elementor\Contact_Form::submit(); } catch ( Contact_Response $response ) { return $response; }
 	throw new RuntimeException( 'Expected a JSON response' );
 }
@@ -52,4 +56,14 @@ $GLOBALS['rates'] = array(); $GLOBALS['mail_success'] = false;
 check( submit()->status === 500, 'Mail failure is never reported as success' );
 $GLOBALS['rates'] = array(); $GLOBALS['recipient'] = 'invalid';
 check( submit()->status === 503, 'Invalid site recipient is rejected' );
+$GLOBALS['recipient'] = 'admin@example.com'; $GLOBALS['mail_success'] = true;
+$upload = array( 'name' => 'brief.pdf', 'tmp_name' => '/tmp/upload', 'size' => 100, 'error' => UPLOAD_ERR_OK );
+$GLOBALS['rates'] = array(); $GLOBALS['mail'] = array(); $GLOBALS['files'] = array( 'attachment' => $upload );
+check( submit()->success && array( 'brief.pdf' => '/tmp/upload' ) === $GLOBALS['mail'][0][4], 'Attach a valid upload under its own name' );
+foreach ( array( array( 'size' => 10485761 ), array( 'name' => 'virus.exe' ), array( 'tmp_name' => '/etc/passwd' ), array( 'error' => UPLOAD_ERR_PARTIAL ) ) as $bad ) {
+	$GLOBALS['rates'] = array(); $GLOBALS['mail'] = array(); $GLOBALS['files'] = array( 'attachment' => array_replace( $upload, $bad ) );
+	check( 400 === submit()->status && ! $GLOBALS['mail'], 'Reject an unsafe upload' );
+}
+$GLOBALS['rates'] = array(); $GLOBALS['mail'] = array(); $GLOBALS['files'] = array( 'attachment' => array( 'error' => UPLOAD_ERR_NO_FILE ) );
+check( submit()->success && array() === $GLOBALS['mail'][0][4], 'A file is optional' );
 echo "Contact form delivery checks passed (no email sent).\n";

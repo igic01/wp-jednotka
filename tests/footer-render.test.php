@@ -57,7 +57,7 @@ namespace {
  check(str_contains($html,'<footer class="site-footer-card"'),'footer landmark');
  check(str_contains($html,'jn-footer-only'),'standalone wrapper');
  check(!str_contains($html,'jn-cta-stage')&&!str_contains($html,'floating-project-card')&&!str_contains($html,'cursor-trail-layer'),'no CTA or floating effects');
- check(str_contains($html,'mailto:hello@jednotka.sk')&&str_contains($html,'tel:+421000000000'),'contact links');
+ check(str_contains($html,'mailto:info@jednotka.studio')&&str_contains($html,'tel:+421915435770'),'contact links');
  check(str_contains($html,'data-elementor-setting-key="brand_text"'),'editable brand');
  check(str_contains($html,'data-elementor-setting-key="menu_links.0.label"'),'editable navigation');
  $header=new \Jednotka\Elementor\Widgets\Header_Widget;
@@ -72,6 +72,11 @@ namespace {
  $legacy=new \Jednotka\Elementor\Widgets\Footer_Widget;
  $legacy->overrides=['social_links'=>[['_id'=>'old','label'=>'Ig','accessible_name'=>'Instagram','link'=>['url'=>'https://example.com/social']]]];
  check(str_contains($legacy->output(),'fab fa-instagram'),'old saved social links receive icons');
+ $placeholder=new \Jednotka\Elementor\Widgets\Footer_Widget;
+ $placeholder->overrides=['social_links'=>[['_id'=>'a','label'=>'Ig','accessible_name'=>'Instagram','link'=>['url'=>'#']],['_id'=>'b','label'=>'Bē','accessible_name'=>'Behance','link'=>['url'=>'#']]],'contact_links'=>[['_id'=>'c','label'=>'hello@jednotka.sk','link'=>['url'=>'mailto:hello@jednotka.sk']],['_id'=>'d','label'=>'+421 000 000 000','link'=>['url'=>'tel:+421000000000']]]];
+ $placeholder_html=$placeholder->output();
+ check(str_contains($placeholder_html,'instagram.com/jednotka_creative')&&str_contains($placeholder_html,'facebook.com/profile.php')&&str_contains($placeholder_html,'fab fa-facebook-f')&&!str_contains($placeholder_html,'behance'),'saved placeholder social links use the real profiles');
+ check(str_contains($placeholder_html,'mailto:info@jednotka.studio')&&str_contains($placeholder_html,'tel:+421915435770')&&!str_contains($placeholder_html,'hello@'),'saved placeholder contact details are replaced');
 
  check(!isset($footer->get_controls()['cards'])&&!isset($footer->get_controls()['heading']),'only footer controls');
  check(isset($footer->get_controls()['newsletter_show']),'newsletter setting retained');
