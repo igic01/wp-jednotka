@@ -13,14 +13,17 @@
         this.controller = new AbortController();
         const { signal } = this.controller;
         if (elementorFrontend.isEditMode()) {
-          root.addEventListener('click', event => { if (event.target.closest('a')) event.preventDefault(); }, { signal });
+          // Keep every position expanded and stop links or <summary> from toggling while text is edited inline.
+          root.querySelectorAll('.career-job details').forEach(details => { details.open = true; });
+          root.addEventListener('click', event => { if (event.target.closest('a, summary')) event.preventDefault(); }, { signal });
           return;
         }
         const input = root.querySelector('input[type="search"]');
         const jobs = [...root.querySelectorAll('.career-job')];
         const empty = root.querySelector('.career-jobs-empty');
-        const normalize = text => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-        const searchable = jobs.map(job => ({ job, text: normalize(job.querySelector('.career-job-copy').textContent) }));
+        const normalize = text => text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+        // Search the whole position, including the expanded details.
+        const searchable = jobs.map(job => ({ job, text: normalize((job.querySelector('details') || job.querySelector('.career-job-copy')).textContent) }));
         const apply = () => {
           const query = normalize(input.value.trim());
           let shown = 0;

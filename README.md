@@ -700,22 +700,40 @@ This widget needs no JavaScript and has no runtime dependency on `temp`.
 
 ## Career Jobs widget
 
-**Jednotka Career Jobs** adapts `temp/jobs`: an **Otvorené pozície** heading,
-rounded search input, and an honest empty state. It starts with no positions.
-Find it in **Jednotka**, then add positions using the **Open positions** repeater.
-Each position has a title, short description, location, work type, and optional
-application/details link. Text supports inline editing. The list has a 1290px
-default maximum width and stacks its heading, search, and position actions on
-small screens. Colors, typography, width, and section padding are editable.
+**Jednotka Career Jobs** shows a **Výhody práce u nás** benefits block, then an
+**Otvorené pozície** heading with a position count and a rounded search input,
+and the open positions as expandable cards. Find it in **Jednotka**.
 
-Search matches titles, descriptions, locations, and work types, ignoring case
-and accents. The empty-archive and no-search-results messages are distinct and
-editable. Each widget filters only its own list; removing a widget cleans up
-its listeners. Search filtering is disabled in the Elementor editor so all
-positions remain available for inline editing; links do not navigate there.
-Without JavaScript, all positions remain visible. This is a manually managed
-list, not a jobs post type or application submission system. Assets are bundled
-locally and do not depend on `temp`.
+- **Benefits**: icon, title, and text cards (100 % remote, own time-management,
+  senior team support, form of cooperation). Remove all of them to hide the block.
+- **Open positions**: each position has a title, comma-separated labels (for
+  example *Senior* or *Vhodné pre absolventov*), short description, location,
+  work type/area, rich-text details (requirements, training, pay), button text,
+  and button link. The card expands with native `<details>`; details sit next
+  to a sticky apply box on desktop and below it on small screens.
+- The four current positions (PPC Senior, Account manažér/ka, Sales
+  Representative, Sales Executive) are the defaults. They are stored under a new
+  `positions` key, so pages saved with the earlier empty list show them without
+  re-editing. Each **Mám záujem** button opens an e-mail to
+  info@jednotka.studio with the position in the subject; change the link per
+  position if applications should go elsewhere.
+- The apply box heading and text are shared by all positions.
+
+Search matches titles, labels, descriptions, locations, work types, and
+details, ignoring case and accents. The empty-archive and no-search-results
+messages are distinct and editable. Each widget filters only its own list;
+removing a widget cleans up its listeners. In the Elementor editor all positions
+stay expanded, search filtering is disabled, and links and card headers do not
+navigate or collapse, so text remains available for inline editing. Without
+JavaScript, all positions remain visible and expandable. Browsers that support
+`::details-content` animate the expansion; reduced motion turns this off. This is
+a manually managed list, not a jobs post type or application submission system.
+Colors (including the accent and card background), typography, width, and
+section padding are editable. Assets are bundled locally and do not depend on
+`temp`.
+
+Run `node --test tests/career-jobs-search.test.cjs` and
+`php tests/career-jobs-render.test.php` to check search and markup.
 
 ## Adding widgets
 
